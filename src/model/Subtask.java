@@ -1,14 +1,20 @@
-import java.util.HashMap;
+package model;
 
 public class Subtask extends Task { // подзадача
-    Integer epicId;
+    private Integer epicId;
     public Subtask(String name, String description, Progress status, int id){
-        super(name, status,  id, description);
+        super(name, id, status, description);
     }
     public void setEpicId(Integer epicId){
         this.epicId = epicId ;
     }
     public Integer getEpicId(){
         return epicId;
+    }
+
+    public Subtask copy(){
+        Subtask result =  (Subtask) super.copy();
+        result.setEpicId(this.epicId);
+        return result;
     }
 }
