@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Epic extends Task {
     private  ArrayList <Subtask> subList = new ArrayList<>();
 
-    public Epic(String name, String description, int id) {
-        super(name, id, description);
+    public Epic(String name, String description) {
+        super(name, description);
     }
     public ArrayList<Subtask> returnSub(){
         return subList;
@@ -29,17 +29,10 @@ public class Epic extends Task {
     }
     public void removeAll(){
         subList.clear();
+
     }
     public ArrayList<Subtask> returnAllSubTasks(){
         return subList;
-    }
-    public Subtask returnSubTaskById(Integer id){
-        for (Subtask miniSub : subList){
-            if (miniSub.getId() == id){
-                return miniSub;
-            }
-        }
-        return null;
     }
     public void updateSubTask(Subtask subtask2, int idSub){
         for (Subtask subtask : subList){
@@ -88,16 +81,11 @@ public class Epic extends Task {
         }
         return resultStatus;
     }
-
     public Epic copy(){
-        Epic result = (Epic) super.copy();
+        Epic result = new Epic(this.getName(), this.getDescription());
         for (var subtask : this.subList){
             result.addSubTask(subtask.copy());
         }
         return result;
     }
 }
-
-
-
-
