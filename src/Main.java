@@ -27,8 +27,5 @@ public class Main {
         subtask3.setStatus(Progress.NEW);
         tm.deleteEpic(1);
 
-        task1.setId(tm.generateId());
-        System.out.println(task1.getId());
-        System.out.println(task2.getId());
     }
 }

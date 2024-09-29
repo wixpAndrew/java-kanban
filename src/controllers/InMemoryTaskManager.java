@@ -6,14 +6,19 @@ import java.util.stream.Collectors;
 import model.*;
 
 public class InMemoryTaskManager implements ITaskManager {
+    private  HistoryManager historyManager = null;
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private HashMap<Integer, Task> tasks = new HashMap<>();
+    //private HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int count = 0;
 
-    public int generateId() {
+    private int generateId() {
         return ++count;
     }
 
+    public InMemoryTaskManager(){
+        historyManager = Managers.getDefaultHistory();
+    }
     // Task
     //-----------------------------------------------------------
 
@@ -31,7 +36,7 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public Task getTaskById(Integer id) {
-        Managers.getDefaultHistory().add(tasks.get(id).copy());
+        historyManager.add(tasks.get(id).copy());
         return tasks.get(id).copy();
     }
 
@@ -47,10 +52,8 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public void updateTask(int taskId, Task task) {
-        Task taskOnId = tasks.get(taskId);
-        taskOnId.setName(task.getName());
-        taskOnId.setDescription(task.getDescription());
-        taskOnId.setStatus(task.getStatus());
+        Task taskOnId = tasks.get(task.getId());
+        tasks.put(taskId, task);
     }
 
     // Epic
@@ -64,12 +67,12 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public Collection<Epic> getAllEpics() {
-        return epics.values();
+        return new ArrayList<>(epics.values());
     }
 
     @Override
     public Epic getEpicById(Integer id) {
-        Managers.getDefaultHistory().add(epics.get(id).copy());
+        historyManager.add(epics.get(id).copy());
         return epics.get(id).copy();
     }
 
@@ -85,10 +88,9 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public void updateEpic(int epicId, Epic epic) {
-        Epic epicOnId = epics.get(epicId);
+        Epic epicOnId = epics.get(epic.getId());
         epicOnId.setName(epic.getName());
         epicOnId.setDescription(epic.getDescription());
-        epicOnId.setStatus(epic.getStatus());
     }
 
     // Subtasks
@@ -132,12 +134,19 @@ public class InMemoryTaskManager implements ITaskManager {
         for (Epic epic : epics.values()) {
             for (Subtask miniSub : printEpicSubTasks(epic)) {
                 if (miniSub.getId() == id) {
-                    Managers.getDefaultHistory().add(miniSub);
+                    historyManager.add(miniSub);
                     return miniSub.copy();
                 }
             }
         }
         return null;
     }
-
+    @Override
+    public ArrayList<Subtask> returnAllSubsOnEpidId(int epicId){
+        return epics.get(epicId).returnAllSubTasks();
+    }
+    @Override
+    public List<Task> getHistory(){
+        return historyManager.getHistory();
+    }
 }

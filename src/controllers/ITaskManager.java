@@ -20,7 +20,7 @@ public interface ITaskManager {
 
     void deleteTask(int taskID);
 
-    void updateTask(int taskId, Task task);
+    public void updateTask(int TaskId, Task task);
 
     // Epic
     int addEpic(Epic epic);
@@ -44,5 +44,8 @@ public interface ITaskManager {
     void deleteSub(Epic epic, int id);
 
     void updateSubTask(int epicId, int subTaskId, Subtask subtask);
+
     public Subtask returnSubTaskById(Integer id);
+    public ArrayList<Subtask> returnAllSubsOnEpidId(int epicId);
+    public List<Task> getHistory();
 }
