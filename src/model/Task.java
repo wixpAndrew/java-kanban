@@ -48,7 +48,4 @@ public class Task {// отдельная задача
         this.description = description;
     }
 
-    public Task copy() {
-        return new Task(this.name, this.status, this.description);
-    }
 }

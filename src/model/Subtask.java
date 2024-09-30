@@ -11,10 +11,4 @@ public class Subtask extends Task { // подзадача
     public Integer getEpicId(){
         return epicId;
     }
-
-    public Subtask copy() {
-        Subtask result = (Subtask) super.copy();
-        result.setEpicId(this.epicId);
-        return result;
-    }
 }
