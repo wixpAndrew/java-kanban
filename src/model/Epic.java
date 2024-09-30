@@ -15,36 +15,6 @@ public class Epic extends Task {
         subtask.setEpicId(this.getId());
         subList.add(subtask);
     }
-    public void removeSubTask(int id){
-        int index = -1;
-        for(Subtask sub : subList){
-            if (sub.getId() == id){
-                index = subList.indexOf(sub);
-                break;
-            }
-        }
-        if (index >= 0){
-            subList.remove(index);
-        }
-    }
-    public void removeAll(){
-        subList.clear();
-
-    }
-    public ArrayList<Subtask> returnAllSubTasks(){
-        return subList;
-    }
-    public void updateSubTask(Subtask subtask2, int idSub){
-        for (Subtask subtask : subList){
-            if (subtask.getId() == idSub){
-                subtask.setName(subtask2.getName());
-                subtask.setDescription(subtask2.getDescription());
-                subtask.setStatus(subtask2.getStatus());
-                break;
-            }
-        }
-    }
-
     @Override
     public Progress getStatus(){
         Progress newStatus = calculateStatus();
@@ -63,7 +33,6 @@ public class Epic extends Task {
                 break;
             }
         }
-
         Progress resultStatus = Progress.NEW;
         if (this.returnSub() == null || res) {
             return resultStatus;
@@ -80,12 +49,5 @@ public class Epic extends Task {
             }
         }
         return resultStatus;
-    }
-    public Epic copy(){
-        Epic result = new Epic(this.getName(), this.getDescription());
-        for (var subtask : this.subList){
-            result.addSubTask(subtask.copy());
-        }
-        return result;
     }
 }
