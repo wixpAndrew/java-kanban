@@ -1,10 +1,14 @@
-package Tests;
+package tests;
 
 import controllers.*;
 import model.Epic;
 import model.Progress;
+import model.Subtask;
 import model.Task;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +20,17 @@ class EpicTest {
        ITaskManager taskManager = Managers.getDefault();
         taskManager.addEpic(epic);
         taskManager.getEpicById(1);
-        assertEquals(historyM.getHistory().size(), 1);
+        assertEquals(taskManager.getAllEpics().size(),  1);
+    }
+    @Test
+        void checkClear(){
+            InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+            Epic epic1 = new Epic("name1", "dsdsds");
+            Epic epic2 = new Epic("name2", "dfdfdfd");
+            inMemoryTaskManager.addEpic(epic1);
+            inMemoryTaskManager.addEpic(epic2);
+            inMemoryTaskManager.deleteAllEpics();
+            ArrayList<Epic> ar = new ArrayList<>();
+            assertEquals(inMemoryTaskManager.getAllEpics(),ar);
     }
 }
