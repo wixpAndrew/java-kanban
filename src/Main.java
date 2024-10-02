@@ -11,8 +11,8 @@ public class Main {
         InMemoryTaskManager tm = new InMemoryTaskManager();
         Task task1 = new Task("Починка двери", Progress.NEW, "");
         Task task2 = task1;
-        Subtask subtask1 = new Subtask("Найти деньги", "",Progress.NEW );
-        Subtask subtask2 = new Subtask("Найти людей", "",Progress.NEW);
+        Subtask subtask1 = new Subtask("Найти деньги", "",Progress.IN_PROGRESS );
+        Subtask subtask2 = new Subtask("Найти людей", "",Progress.IN_PROGRESS);
         Subtask subtask3 = new Subtask("Найти что то ", "",Progress.DONE);
         Epic epic1 = new Epic("Первый эпик", "");
         Epic epic2 = new Epic("Второй эпик", "");
@@ -20,12 +20,13 @@ public class Main {
         epic1.setId(2);
         epic2.addSubTask(subtask1);
         epic2.addSubTask(subtask2);
-        epic1.addSubTask(subtask3);
+        epic2.addSubTask(subtask3);
 
         tm.addEpic(epic1);
         tm.addEpic(epic2);
-        subtask3.setStatus(Progress.NEW);
         tm.deleteEpic(1);
 
+        epic2.calculateStatus();
+        System.out.println(epic2.getStatus());
     }
 }

@@ -3,51 +3,50 @@ package model;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private  ArrayList <Subtask> subList = new ArrayList<>();
+    private ArrayList<Subtask> subList = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
     }
-    public ArrayList<Subtask> returnSub(){
+
+    public ArrayList<Subtask> returnSub() {
         return subList;
     }
-    public void addSubTask(Subtask subtask){
-        subtask.setEpicId(this.getId());
+
+    public void addSubTask(Subtask subtask) {
         subList.add(subtask);
     }
-    @Override
-    public Progress getStatus(){
-        Progress newStatus = calculateStatus();
-        this.setStatus(newStatus);
-        return newStatus;
-    }
 
-    private Progress calculateStatus(){
-        boolean res = false;
-        for (Subtask subtask : this.returnSub()){
-            if ( subtask.getStatus() == Progress.NEW){
-                res = true;
-            }
-            else {
-                res = false;
-                break;
-            }
-        }
-        Progress resultStatus = Progress.NEW;
-        if (this.returnSub() == null || res) {
-            return resultStatus;
-        }
-        else {
-            for (Subtask sub : this.returnSub()) {
-                if (sub.getStatus() == Progress.DONE) {
-                    resultStatus = Progress.DONE;
+    public void calculateStatus() {
+        Progress finalProgress;
+        boolean isNew = false;
+        boolean isInProgress = false;
+        boolean isDone = false;
+        if (this.returnSub() != null){
+            for(Subtask subtask : this.returnSub()){
+                if (subtask.getStatus() == Progress.IN_PROGRESS){
+                    isInProgress = true;
+                }
+                else if (subtask.getStatus() == Progress.DONE){
+                        isDone = true;
                 }
                 else {
-                    resultStatus = Progress.IN_PROGRESS;
-                    break;
+                    isNew = true;
                 }
             }
+            if (isNew == true && isDone == false && isInProgress == false ){
+                finalProgress = Progress.NEW;
+            }
+            else if( isDone == true && isNew == false && isInProgress == false){
+                finalProgress = Progress.DONE;
+            }
+            else {
+                finalProgress = Progress.IN_PROGRESS;
+            }
         }
-        return resultStatus;
+        else {
+            finalProgress = Progress.NEW;
+        }
+        this.setStatus(finalProgress);
     }
 }
