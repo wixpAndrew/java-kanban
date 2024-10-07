@@ -35,7 +35,7 @@ public interface ITaskManager {
 
     void updateEpic(int epicId, Epic epic);
 
-    int addSubTaskToEpic(Subtask subtask, int epicId);
+    int  createSubtask(Subtask subtask);
 
     ArrayList<Subtask> getAllEpicSubTasks(int epicId);
 
@@ -43,8 +43,8 @@ public interface ITaskManager {
 
     void deleteSub( int id);
 
-    void updateSubTask(int epicId, int subTaskId, Subtask subtask);
+    void updateSubTask( Subtask subtask);
 
-    public Subtask returnSubTaskById(Integer id);
+    public Subtask getSubtaskById(Integer id);
     public List<Task> getHistory();
 }

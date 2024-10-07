@@ -1,10 +1,9 @@
 package controllers;
 
-import java.beans.DefaultPersistenceDelegate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import model.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 public class InMemoryTaskManager implements ITaskManager {
     private  HistoryManager historyManager = null;
@@ -80,6 +79,7 @@ public class InMemoryTaskManager implements ITaskManager {
     @Override
     public void deleteAllEpics() {
         epics.clear();
+        subtasks.clear();
     }
 
     @Override
@@ -97,43 +97,74 @@ public class InMemoryTaskManager implements ITaskManager {
     // Subtasks
     //----------------------------------------------------------------
     @Override
-    public int addSubTaskToEpic(Subtask subtask, int epicId) {
+    public int createSubtask(Subtask subtask){
         subtask.setId(generateId());
-        subtask.setEpicId(epicId);
         subtasks.put(subtask.getId(), subtask);
+        epics.get(subtask.getEpicId()).addSubTask(subtask);
         return subtask.getId();
     }
 
     @Override
     public ArrayList<Subtask> getAllEpicSubTasks(int epicID) {
-        ArrayList<Subtask> ar = new ArrayList<>();
-        for (Subtask subtask : subtasks.values()){
-            if (subtask.getEpicId() == epics.get(epicID).getId()){
-                ar.add(subtask);
-            }
-        }
-        return ar;
+        return epics.get(epicID).getAllSubTasks();
     }
 
     @Override
     public void removeAllSubs() {
         subtasks.clear();
+        for (Epic epic : epics.values()){
+            epic.getAllSubTasks().clear();
+        }
     }
 
     @Override
     public void deleteSub(int subtaskID) {
       subtasks.remove(subtaskID);
+      int index = -1;
+      Subtask subtask1 = subtasks.get(subtaskID);
+      for (Epic epic1: epics.values()){ // проходимся по эпикам
+          if (epic1.getId() == subtask1.getEpicId()){ // сравниваем эпик айди
+              ArrayList<Subtask> ar = epic1.getAllSubTasks();
+              for (Subtask subtask : ar){ // проходимся по сабтаскам в листе конкретного эпика
+                  if (subtask.getId() == subtask1.getId()){ // сравниваем айдишники сабтасок
+                      index = ar.indexOf(subtask);// сохраняем индекс в списке найденной сабтаски
+                      break; // если успешно, то break тк айдишник сабтаски всегда уникальный
+                  }
+              }
+          }
+          if (index != -1){
+              epic1.getAllSubTasks().remove(index);
+              break;
+          }
+      }
     }
 
     @Override
-    public void updateSubTask(int epicId, int subTaskId, Subtask subtask) {
-        subtask.setId(subTaskId);
-        subtask.setEpicId(epicId);
-        subtasks.put(subTaskId, subtask);
+    public void updateSubTask(Subtask subtask) {
+        boolean res =false;
+        for(Epic epic : epics.values()){
+            if (epic.getId() == subtask.getEpicId()){
+                for (Subtask subtask1 : epic.getAllSubTasks()){
+                    if ( subtask1.getId() == subtask.getId()){
+                        subtask1.setDescription(subtask.getDescription());
+                        subtask1.setStatus(subtask.getStatus());
+                        subtask1.setName(subtask.getName());
+                        res = true;
+                        break;
+                    }
+                }
+            }
+            if (res){
+                epic.calculateStatus();
+                break;
+            }
+        }
     }
     @Override
-    public Subtask returnSubTaskById(Integer id) {
+    public Subtask getSubtaskById(Integer id) {
+        historyManager.add(subtasks.get(id));
         return subtasks.get(id);
+
     }
     @Override
     public List<Task> getHistory(){

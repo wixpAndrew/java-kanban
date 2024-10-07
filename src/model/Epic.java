@@ -9,7 +9,7 @@ public class Epic extends Task {
         super(name, description);
     }
 
-    public ArrayList<Subtask> returnSub() {
+    public ArrayList<Subtask> getAllSubTasks() {
         return subList;
     }
 
@@ -22,8 +22,8 @@ public class Epic extends Task {
         boolean isNew = false;
         boolean isInProgress = false;
         boolean isDone = false;
-        if (this.returnSub() != null){
-            for(Subtask subtask : this.returnSub()){
+        if (this.getAllSubTasks() != null){
+            for(Subtask subtask : this.getAllSubTasks()){
                 if (subtask.getStatus() == Progress.IN_PROGRESS){
                     isInProgress = true;
                 }
