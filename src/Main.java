@@ -18,15 +18,16 @@ public class Main {
         Epic epic2 = new Epic("Второй эпик", "");
         epic2.setId(1);
         epic1.setId(2);
-        epic2.addSubTask(subtask1);
-        epic2.addSubTask(subtask2);
-        epic2.addSubTask(subtask3);
-
+        epic1.addSubTask(subtask1);
+        epic1.addSubTask(subtask2);
+        epic1.addSubTask(subtask3);
+        tm.createSubtask(subtask1);
+        tm.createSubtask(subtask3);
+        tm.createSubtask(subtask2);
         tm.addEpic(epic1);
         tm.addEpic(epic2);
-        tm.deleteEpic(1);
-
-        epic2.calculateStatus();
-        System.out.println(epic2.getStatus());
+        System.out.println(epic1.getAllSubTasks());
+        tm.deleteSub(subtask3.getId());
+        ;
     }
 }
