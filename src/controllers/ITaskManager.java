@@ -20,7 +20,7 @@ public interface ITaskManager {
 
     void deleteTask(int taskID);
 
-    public void updateTask(int TaskId, Task task);
+    public void updateTask(Task task);
 
     // Epic
     int addEpic(Epic epic);
@@ -33,7 +33,7 @@ public interface ITaskManager {
 
     void deleteEpic(int taskID);
 
-    void updateEpic(int epicId, Epic epic);
+    void updateEpic( Epic epic);
 
     int  createSubtask(Subtask subtask);
 

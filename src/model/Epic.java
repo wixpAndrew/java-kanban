@@ -16,6 +16,14 @@ public class Epic extends Task {
     public void addSubTask(Subtask subtask) {
         subList.add(subtask);
     }
+    public void deleteSubTask(Subtask subtask){
+        for (Subtask subtask1 : subList){
+            if (subtask1.getId() == subtask.getId()){
+                subList.remove(subtask1);
+                break;
+            }
+        }
+    }
 
     public void calculateStatus() {
         Progress finalProgress;
