@@ -2,19 +2,21 @@ package controllers;
 
 import model.Task;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager{
-    private Queue<Task> history = new ArrayDeque<>(10);
+     public HistoryList historyList = new HistoryList();
+
     @Override
     public void add(Task task) {
-        history.add(task);
-    }
+        historyList.add(task);
+       }
     @Override
     public List<Task> getHistory() {
-        return history.stream().toList();
+       return historyList.getHistory();
+    }
+    @Override
+    public void remove(int id){
+        historyList.remove(id);
     }
 }

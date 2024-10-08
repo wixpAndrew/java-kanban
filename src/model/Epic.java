@@ -10,11 +10,16 @@ public class Epic extends Task {
     }
 
     public ArrayList<Subtask> getAllSubTasks() {
-        return subList;
+        if (subList.isEmpty()){
+            return subList;
+        }
+        else {
+            return new ArrayList<>();
+        }
     }
 
     public void addSubTask(Subtask subtask) {
-        subList.add(subtask);
+        subList.add(subtask);;
     }
     public void deleteSubTask(Subtask subtask){
         for (Subtask subtask1 : subList){
