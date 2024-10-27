@@ -25,6 +25,7 @@ public class Main {
         Epic epic2 = new Epic("Второй эпик", "");
         epic2.setId(1);
         epic1.setId(2);
+        sprint_6-solution
         tm.addEpic(epic1);
         tm.addEpic(epic2);
 
@@ -41,7 +42,6 @@ public class Main {
         result.add(task2);
 
         System.out.println(taskManager.getHistory());
-
 
     }
 }
