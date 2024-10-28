@@ -12,8 +12,7 @@ public class Epic extends Task {
     public ArrayList<Subtask> getAllSubTasks() {
         if (subList.isEmpty()){
             return subList;
-        }
-        else {
+        }else {
             return new ArrayList<>();
         }
     }
@@ -21,9 +20,9 @@ public class Epic extends Task {
     public void addSubTask(Subtask subtask) {
         subList.add(subtask);;
     }
-    public void deleteSubTask(Subtask subtask){
+    public void deleteSubTask(Subtask subtask) {
         for (Subtask subtask1 : subList){
-            if (subtask1.getId() == subtask.getId()){
+            if (subtask1.getId() == subtask.getId()) {
                 subList.remove(subtask1);
                 break;
             }
@@ -39,21 +38,17 @@ public class Epic extends Task {
             for(Subtask subtask : this.getAllSubTasks()){
                 if (subtask.getStatus() == Progress.IN_PROGRESS){
                     isInProgress = true;
-                }
-                else if (subtask.getStatus() == Progress.DONE){
+                } else if (subtask.getStatus() == Progress.DONE){
                         isDone = true;
-                }
-                else {
+                } else {
                     isNew = true;
                 }
             }
             if (isNew == true && isDone == false && isInProgress == false ){
                 finalProgress = Progress.NEW;
-            }
-            else if( isDone == true && isNew == false && isInProgress == false){
+            } else if( isDone == true && isNew == false && isInProgress == false){
                 finalProgress = Progress.DONE;
-            }
-            else {
+            } else {
                 finalProgress = Progress.IN_PROGRESS;
             }
         }
