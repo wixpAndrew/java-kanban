@@ -30,6 +30,7 @@ public class HistoryListTest {
 
         assertEquals(taskManger.getHistory(), result);
     }
+
     @Test
     public void checkRemoveFuction() {
         Task task1 = new Task("sf", "sfdf");

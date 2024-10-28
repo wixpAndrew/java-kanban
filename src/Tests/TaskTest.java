@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskTest {
+
     @Test
     void checkAddTask() {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
@@ -31,7 +32,7 @@ public class TaskTest {
     }
 
     @Test
-    void checkUpdateTask(){
+    void checkUpdateTask() {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         Task task1 = new Task("name1", "ndffdfdf");
         Task task2 = new Task("name2", "ndffdfdf");

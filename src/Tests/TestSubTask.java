@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestSubTask {
 
         @Test
-        void checkSubTaskById(){
+        void checkSubTaskById() {
             InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
             Epic epic1 = new Epic("name1", "dsdsds");
             Subtask subtask = new Subtask("nameSub", "opisanit", Progress.NEW);;
@@ -24,7 +24,7 @@ public class TestSubTask {
         }
 
         @Test
-        void checkReturnAllSubTasks(){
+        void checkReturnAllSubTasks() {
             InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
             Epic epic1 = new Epic("name1", "dsdsds");
             Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
@@ -39,7 +39,7 @@ public class TestSubTask {
         }
 
         @Test
-        void checkRemoveAllSubTasks(){
+        void checkRemoveAllSubTasks() {
             InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
             Epic epic1 = new Epic("name1", "dsdsds");
             Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
