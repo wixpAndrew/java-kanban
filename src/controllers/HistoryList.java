@@ -47,13 +47,9 @@ public class HistoryList {
         var task = tasksMap.get(taskId);
         if (task != null) {
             tasksMap.remove(task);
-            // значит она у нас хранится
-            // кейс 1 - мы = голова
             if (task == head) {
                 head = head.next;
             }
-            // кейс 2 - мы = где то между хвостом и голово
-            // кейс 3 - мы = хвост
             else if (task == tail) {
                 tail = tail.prev;
             }
