@@ -49,7 +49,7 @@ public class HistoryList {
             tasksMap.remove(taskId);
             if (task == head) {
                 head = head.next;
-            } else if (task == tail){
+            } else if (task == tail) {
                 tail = tail.prev;
             } else {
                 task.prev.next = task.next;
