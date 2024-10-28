@@ -1,6 +1,7 @@
 package model;
 
-public class Task {// отдельная задача
+public class Task {
+
     private String name;
     private Progress status;
     private Integer id;
@@ -11,6 +12,7 @@ public class Task {// отдельная задача
         this.status = status;
         this.description = description;
     }
+
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
