@@ -58,6 +58,8 @@ public class HistoryList {
                 tail = tail.prev;
             }
             else {
+                task.prev.next = task.next;
+                task.next.prev = task.prev;
                 tasksMap.remove(taskId);
             }
         }
