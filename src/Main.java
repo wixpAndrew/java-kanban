@@ -17,9 +17,9 @@ public class Main {
         InMemoryHistoryManager his = new InMemoryHistoryManager();
         Task task1 = new Task("Починка двери", Progress.NEW, "");
         Task task2 = new Task("dfdf", Progress.NEW, "");
-        Subtask subtask1 = new Subtask("Найти деньги", "", Progress.IN_PROGRESS );
-        Subtask subtask2 = new Subtask("Найти людей", "", Progress.IN_PROGRESS );
-        Subtask subtask3 = new Subtask("Найти что то ", "", Progress.DONE );
+        Subtask subtask1 = new Subtask("Найти деньги", "", Progress.IN_PROGRESS);
+        Subtask subtask2 = new Subtask("Найти людей", "", Progress.IN_PROGRESS);
+        Subtask subtask3 = new Subtask("Найти что то ", "", Progress.DONE);
         Epic epic1 = new Epic("Первый эпик", "");
         Epic epic2 = new Epic("Второй эпик", "");
         epic2.setId(1);
