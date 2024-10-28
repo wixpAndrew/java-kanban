@@ -37,7 +37,7 @@ public class Epic extends Task {
         boolean isDone = false;
 
         if (this.getAllSubTasks() != null) {
-            for (Subtask subtask : this.getAllSubTasks()){
+            for (Subtask subtask : this.getAllSubTasks()) {
                 if (subtask.getStatus() == Progress.IN_PROGRESS) {
                     isInProgress = true;
                 } else if (subtask.getStatus() == Progress.DONE) {
@@ -46,9 +46,9 @@ public class Epic extends Task {
                     isNew = true;
                 }
             }
-            if (isNew == true && isDone == false && isInProgress == false){
+            if (isNew == true && isDone == false && isInProgress == false) {
                 finalProgress = Progress.NEW;
-            } else if(isDone == true && isNew == false && isInProgress == false){
+            } else if (isDone == true && isNew == false && isInProgress == false) {
                 finalProgress = Progress.DONE;
             } else {
                 finalProgress = Progress.IN_PROGRESS;
