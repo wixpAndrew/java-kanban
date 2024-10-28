@@ -13,7 +13,7 @@ public class HistoryList {
         public HistoryNode<V> next;
         public HistoryNode<V> prev;
 
-        HistoryNode(V value, HistoryNode<V> next, HistoryNode<V> prev){
+        HistoryNode(V value, HistoryNode<V> next, HistoryNode<V> prev) {
             this.value = value;
             this.next = next;
             this.prev = prev;
@@ -24,12 +24,12 @@ public class HistoryList {
     private HistoryNode<Task> tail;
     private HashMap<Integer, HistoryNode<Task>> tasksMap;
 
-    HistoryList(){
+    HistoryList() {
         this.head = null;
         this.tasksMap = new HashMap<>();
     }
 
-    public void add(Task task){
+    public void add(Task task) {
         // пустой список - даже нет головы
         if (head == null) {
             // ни одного элемента еще не было добавлено
@@ -43,18 +43,18 @@ public class HistoryList {
         }
     }
 
-    public void remove(int taskId){
+    public void remove(int taskId) {
         var task = tasksMap.get(taskId);
-        if (task != null){
+        if (task != null) {
             tasksMap.remove(task);
             // значит она у нас хранится
             // кейс 1 - мы = голова
-            if( task == head ) {
+            if (task == head) {
                 head = head.next;
             }
             // кейс 2 - мы = где то между хвостом и голово
             // кейс 3 - мы = хвост
-            else if(task == tail){
+            else if (task == tail) {
                 tail = tail.prev;
             }
             else {
@@ -65,13 +65,13 @@ public class HistoryList {
         }
     }
 
-    public List<Task> getHistory(){
+    public List<Task> getHistory() {
         ArrayList<Task> result = new ArrayList<>();
 
-        if ( head != null ){
+        if (head != null) {
            result.add(head.value);
            var node = head.next;
-           while (node != null){
+           while (node != null) {
                result.add(node.value);
                node = node.next;
            }
