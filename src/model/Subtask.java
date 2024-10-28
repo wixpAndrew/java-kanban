@@ -8,7 +8,7 @@ public class Subtask extends Task { // подзадача
     }
 
     public void setEpicId(Integer epicId) {
-        this.epicId = epicId ;
+        this.epicId = epicId;
     }
 
     public Integer getEpicId() {
