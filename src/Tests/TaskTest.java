@@ -1,9 +1,6 @@
 package tests;
 
 import controllers.*;
-import model.Epic;
-import model.Progress;
-import model.Subtask;
 import model.Task;
 import org.junit.jupiter.api.Test;
 

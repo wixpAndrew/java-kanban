@@ -2,14 +2,9 @@ package tests;
 
 import controllers.*;
 import model.Epic;
-import model.Progress;
-import model.Subtask;
-import model.Task;
-import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
+import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 class EpicTest {
