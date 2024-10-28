@@ -3,7 +3,6 @@ package controllers;
 import java.util.*;
 
 import model.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 public class InMemoryTaskManager implements ITaskManager {
     private  HistoryManager historyManager = null;
@@ -16,7 +15,7 @@ public class InMemoryTaskManager implements ITaskManager {
         return ++count;
     }
 
-    public InMemoryTaskManager(){
+    public InMemoryTaskManager() {
         historyManager = Managers.getDefaultHistory();
     }
     // Task
@@ -85,7 +84,7 @@ public class InMemoryTaskManager implements ITaskManager {
     @Override
     public void deleteEpic(int taskID) {
         for (Integer key : subtasks.keySet()){
-            if (subtasks.get(key).getEpicId() == taskID){
+            if (subtasks.get(key).getEpicId() == taskID) {
                 subtasks.remove(key);
             }
         }
@@ -100,7 +99,7 @@ public class InMemoryTaskManager implements ITaskManager {
     // Subtasks
     //----------------------------------------------------------------
     @Override
-    public int createSubtask(Subtask subtask){
+    public int createSubtask(Subtask subtask) {
         subtask.setId(generateId());
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubTask(subtask);
@@ -115,7 +114,7 @@ public class InMemoryTaskManager implements ITaskManager {
     @Override
     public void removeAllSubs() {
         subtasks.clear();
-        for (Epic epic : epics.values()){
+        for (Epic epic : epics.values()) {
             epic.getAllSubTasks().clear();
         }
     }
