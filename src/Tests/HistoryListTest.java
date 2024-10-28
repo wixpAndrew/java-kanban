@@ -3,10 +3,8 @@ import controllers.InMemoryHistoryManager;
 import controllers.InMemoryTaskManager;
 import model.Task;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HistoryListTest {
@@ -46,10 +44,12 @@ public class HistoryListTest {
 
         taskManger.getTaskById(task1.getId());
         taskManger.getTaskById(task2.getId());
+        taskManger.getTaskById(task3.getId());
 
-        result.add(task2);
+        result.add(task1);
+        result.add(task3);
 
-        taskManger.deleteTask(task1.getId());
+        taskManger.deleteTask(task2.getId());
         assertEquals(taskManger.getHistory(), result);
     }
 }
