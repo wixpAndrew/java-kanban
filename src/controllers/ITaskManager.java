@@ -33,7 +33,7 @@ public interface ITaskManager {
 
     void deleteEpic(int taskID);
 
-    void updateEpic( Epic epic);
+    void updateEpic(Epic epic);
 
     int  createSubtask(Subtask subtask);
 
@@ -41,9 +41,9 @@ public interface ITaskManager {
 
     void removeAllSubs();
 
-    void deleteSub( int id);
+    void deleteSub(int id);
 
-    void updateSubTask( Subtask subtask);
+    void updateSubTask(Subtask subtask);
 
     public Subtask getSubtaskById(Integer id);
     public List<Task> getHistory();
