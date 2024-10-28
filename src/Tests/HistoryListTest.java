@@ -8,8 +8,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HistoryListTest {
+
     @Test
-    public void checkAddFunction(){
+    public void checkAddFunction() {
         Task task1 = new Task("sf", "sfdf");
         Task task2 = new Task("aaaa", "ffff");
         Task task3 = new Task("theiii", "dggg");
@@ -30,7 +31,7 @@ public class HistoryListTest {
         assertEquals(taskManger.getHistory(), result);
     }
     @Test
-    public void checkRemoveFuction(){
+    public void checkRemoveFuction() {
         Task task1 = new Task("sf", "sfdf");
         Task task2 = new Task("aaaa", "ffff");
         Task task3 = new Task("theiii", "dggg");

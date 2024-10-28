@@ -22,8 +22,9 @@ class EpicTest {
         taskManager.getEpicById(1);
         assertEquals(taskManager.getAllEpics().size(),  1);
     }
+
     @Test
-        void checkClear(){
+        void checkClear() {
             InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
             Epic epic1 = new Epic("name1", "dsdsds");
             Epic epic2 = new Epic("name2", "dfdfdfd");

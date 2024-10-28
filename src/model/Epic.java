@@ -10,9 +10,9 @@ public class Epic extends Task {
     }
 
     public ArrayList<Subtask> getAllSubTasks() {
-        if (subList.isEmpty()){
+        if (subList.isEmpty()) {
             return subList;
-        }else {
+        } else {
             return new ArrayList<>();
         }
     }
@@ -20,8 +20,9 @@ public class Epic extends Task {
     public void addSubTask(Subtask subtask) {
         subList.add(subtask);;
     }
+
     public void deleteSubTask(Subtask subtask) {
-        for (Subtask subtask1 : subList){
+        for (Subtask subtask1 : subList) {
             if (subtask1.getId() == subtask.getId()) {
                 subList.remove(subtask1);
                 break;
@@ -34,25 +35,25 @@ public class Epic extends Task {
         boolean isNew = false;
         boolean isInProgress = false;
         boolean isDone = false;
-        if (this.getAllSubTasks() != null){
-            for(Subtask subtask : this.getAllSubTasks()){
-                if (subtask.getStatus() == Progress.IN_PROGRESS){
+
+        if (this.getAllSubTasks() != null) {
+            for (Subtask subtask : this.getAllSubTasks()){
+                if (subtask.getStatus() == Progress.IN_PROGRESS) {
                     isInProgress = true;
-                } else if (subtask.getStatus() == Progress.DONE){
+                } else if (subtask.getStatus() == Progress.DONE) {
                         isDone = true;
                 } else {
                     isNew = true;
                 }
             }
-            if (isNew == true && isDone == false && isInProgress == false ){
+            if (isNew == true && isDone == false && isInProgress == false){
                 finalProgress = Progress.NEW;
-            } else if( isDone == true && isNew == false && isInProgress == false){
+            } else if(isDone == true && isNew == false && isInProgress == false){
                 finalProgress = Progress.DONE;
             } else {
                 finalProgress = Progress.IN_PROGRESS;
             }
-        }
-        else {
+        } else {
             finalProgress = Progress.NEW;
         }
         this.setStatus(finalProgress);

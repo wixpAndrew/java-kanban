@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSubTask {
+
         @Test
         void checkSubTaskById(){
             InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
@@ -21,6 +22,7 @@ public class TestSubTask {
 
             assertEquals(inMemoryTaskManager.getSubtaskById(subtask.getId()), subtask);
         }
+
         @Test
         void checkReturnAllSubTasks(){
             InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
@@ -35,6 +37,7 @@ public class TestSubTask {
             ar.add(subtask2);
             assertEquals(inMemoryTaskManager.getAllEpicSubTasks(epic1.getId()), ar);
         }
+
         @Test
         void checkRemoveAllSubTasks(){
             InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();

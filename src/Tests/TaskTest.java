@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskTest {
     @Test
-    void checkAddTask(){
+    void checkAddTask() {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         Task task = new Task("name1", "ndffdfdf");
         inMemoryTaskManager.addTask(task);
@@ -21,13 +21,15 @@ public class TaskTest {
         ar.add(task);
         assertEquals(inMemoryTaskManager.getTasks(), ar);
     }
+
     @Test
-    void getTaskBtId(){
+    void getTaskBtId() {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         Task task = new Task("name1", "ndffdfdf");
         inMemoryTaskManager.addTask(task);
         assertEquals(inMemoryTaskManager.getTaskById(task.getId()), task);
     }
+
     @Test
     void checkUpdateTask(){
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
