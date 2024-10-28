@@ -19,7 +19,6 @@ public class TestSubTask {
             Subtask subtask = new Subtask("nameSub", "opisanit", Progress.NEW);;
             inMemoryTaskManager.addEpic(epic1);
             inMemoryTaskManager.createSubtask(subtask);
-
             assertEquals(inMemoryTaskManager.getSubtaskById(subtask.getId()), subtask);
         }
 
