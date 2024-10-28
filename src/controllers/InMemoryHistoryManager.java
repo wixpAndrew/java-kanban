@@ -5,6 +5,7 @@ import model.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager{
+
      public HistoryList historyList = new HistoryList();
 
     @Override
