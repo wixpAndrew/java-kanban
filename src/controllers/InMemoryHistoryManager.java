@@ -4,8 +4,7 @@ import model.Task;
 
 import java.util.*;
 
-public class InMemoryHistoryManager implements HistoryManager{
-
+public class InMemoryHistoryManager implements HistoryManager {
      public HistoryList historyList = new HistoryList();
 
     @Override
@@ -19,7 +18,7 @@ public class InMemoryHistoryManager implements HistoryManager{
     }
 
     @Override
-    public void remove(int id){
+    public void remove(int id) {
         historyList.remove(id);
     }
 }
