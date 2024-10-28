@@ -136,13 +136,15 @@ public class InMemoryTaskManager implements ITaskManager {
         epic.addSubTask(subtask);
         epic.calculateStatus();
     }
+
     @Override
     public Subtask getSubtaskById(Integer id) {
         historyManager.add(subtasks.get(id));
         return subtasks.get(id);
     }
+
     @Override
-    public List<Task> getHistory(){
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 }

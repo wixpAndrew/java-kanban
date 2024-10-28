@@ -46,14 +46,12 @@ public class HistoryList {
     public void remove(int taskId) {
         var task = tasksMap.get(taskId);
         if (task != null) {
-            tasksMap.remove(task);
+            tasksMap.remove(taskId);
             if (task == head) {
                 head = head.next;
-            }
-            else if (task == tail) {
+            } else if (task == tail){
                 tail = tail.prev;
-            }
-            else {
+            } else {
                 task.prev.next = task.next;
                 task.next.prev = task.prev;
                 tasksMap.remove(taskId);
