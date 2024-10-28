@@ -83,7 +83,7 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public void deleteEpic(int taskID) {
-        for (Integer key : subtasks.keySet()){
+        for (Integer key : subtasks.keySet()) {
             if (subtasks.get(key).getEpicId() == taskID) {
                 subtasks.remove(key);
             }
