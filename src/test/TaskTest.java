@@ -1,4 +1,4 @@
-package tests;
+package test;
 
 import controllers.*;
 import model.Task;
@@ -33,9 +33,8 @@ public class TaskTest {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         Task task1 = new Task("name1", "ndffdfdf");
         Task task2 = new Task("name2", "ndffdfdf");
-        task2.setId(8);
         inMemoryTaskManager.addTask(task1);
-
+        task2.setId(task1.getId());
         inMemoryTaskManager.updateTask(task2);
 
         assertEquals(inMemoryTaskManager.getTaskById(task1.getId()), task2);

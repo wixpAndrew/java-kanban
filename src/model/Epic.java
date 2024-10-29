@@ -13,12 +13,13 @@ public class Epic extends Task {
         if (subList.isEmpty()) {
             return subList;
         } else {
-            return new ArrayList<>();
+            return subList;
         }
     }
 
     public void addSubTask(Subtask subtask) {
-        subList.add(subtask);;
+        subtask.setEpicId(this.getId());
+        subList.add(subtask);
     }
 
     public void deleteSubTask(Subtask subtask) {
