@@ -39,6 +39,13 @@ public class Main {
         result.add(task2);
 
         System.out.println(taskManager.getHistory());
-
+        taskManager.addEpic(epic1);
+        taskManager.addEpic(epic2);
+        System.out.println(taskManager.getAllEpics());
+        epic1.addSubTask(subtask1);
+        epic1.addSubTask(subtask2);
+        System.out.println(taskManager.getAllEpicSubTasks(epic1.getId()));
+        taskManager.removeAllSubs();
+        System.out.println(epic1.getAllSubTasks());
     }
 }

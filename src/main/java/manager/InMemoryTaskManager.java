@@ -122,7 +122,7 @@ public class InMemoryTaskManager implements ITaskManager {
     public void removeAllSubs() {
         subtasks.clear();
         for (Epic epic : epics.values()) {
-            epic.getAllSubTasks().clear();
+           epic.deleteAllSubTasks();
         }
     }
 

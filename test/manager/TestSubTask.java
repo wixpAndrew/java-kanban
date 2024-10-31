@@ -46,20 +46,20 @@ public class TestSubTask {
 
     @Test
     void checkRemoveAllSubTasks() {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        InMemoryTaskManager inMemoryTaskManager3 = new InMemoryTaskManager();
         Epic epic1 = new Epic("name1", "dsdsds");
         Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
         Subtask subtask2 = new Subtask("nameSub2", "opisanitdfdf", Progress.NEW);
 
-        inMemoryTaskManager.addEpic(epic1);
+        inMemoryTaskManager3.addEpic(epic1);
         subtask1.setEpicId(epic1.getId());
         subtask2.setEpicId(epic1.getId());
 
-        inMemoryTaskManager.createSubtask(subtask1);
-        inMemoryTaskManager.createSubtask(subtask2);
-        inMemoryTaskManager.removeAllSubs();
+        inMemoryTaskManager3.createSubtask(subtask1);
+        inMemoryTaskManager3.createSubtask(subtask2);
+        inMemoryTaskManager3.removeAllSubs();
 
         ArrayList<Subtask> ar = new ArrayList<>();
-        assertEquals(inMemoryTaskManager.getAllEpicSubTasks(epic1.getId()), ar);
+        assertEquals(ar, inMemoryTaskManager3.getAllEpicSubTasks(epic1.getId()));
     }
 }

@@ -11,12 +11,7 @@ public class Epic extends Task {
     }
 
     public List<Subtask> getAllSubTasks() {
-        List<Subtask> result = new ArrayList<>(subList);
-        if (result.isEmpty()) {
-            return result;
-        } else {
-            return result;
-        }
+        return new ArrayList<>(subList);
     }
 
     public void addSubTask(Subtask subtask) {
@@ -60,5 +55,9 @@ public class Epic extends Task {
             finalProgress = Progress.NEW;
         }
         this.setStatus(finalProgress);
+    }
+
+    public void deleteAllSubTasks() {
+        subList.clear();
     }
 }
