@@ -1,3 +1,5 @@
+package manager;
+
 import manager.InMemoryTaskManager;
 import org.junit.jupiter.api.Test;
 import task.Epic;
