@@ -11,6 +11,7 @@ public class HistoryList {
     private HistoryNode<Task> head;
     private HistoryNode<Task> tail;
     private final HashMap<Integer, HistoryNode<Task>> tasksMap;
+
     public HistoryList() {
         this.head = null;
         this.tasksMap = new HashMap<>();
