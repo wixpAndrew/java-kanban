@@ -1,19 +1,21 @@
 package task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
-    private final ArrayList<Subtask> subList = new ArrayList<>();
+    private final List<Subtask> subList = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
     }
 
-    public ArrayList<Subtask> getAllSubTasks() {
-        if (subList.isEmpty()) {
-            return subList;
+    public List<Subtask> getAllSubTasks() {
+        List<Subtask> result = new ArrayList<>(subList);
+        if (result.isEmpty()) {
+            return result;
         } else {
-            return subList;
+            return result;
         }
     }
 

@@ -51,6 +51,6 @@ public class HistoryListTest {
         result.add(task3);
 
         taskManger.deleteTask(task2.getId());
-        assertEquals(taskManger.getHistory(), result);
+       assertEquals(taskManger.getHistory(), result);
     }
 }

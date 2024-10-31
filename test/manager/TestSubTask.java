@@ -20,7 +20,7 @@ public class TestSubTask {
         inMemoryTaskManager.addEpic(epic1);
         epic1.addSubTask(subtask);
         inMemoryTaskManager.createSubtask(subtask);
-        assertEquals(inMemoryTaskManager.getSubtaskById(subtask.getId()), subtask);
+        assertEquals(subtask, inMemoryTaskManager.getSubtaskById(subtask.getId()));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class TestSubTask {
         ar.add(subtask1);
         ar.add(subtask2);
 
-        assertEquals(ar, inMemoryTaskManager.getAllEpicSubTasks(epic2.getId()));
+       assertEquals(ar, inMemoryTaskManager.getAllEpicSubTasks(epic2.getId()));
     }
 
     @Test

@@ -13,21 +13,21 @@ class EpicTest {
     void add() {
         HistoryManager historyM = Managers.getDefaultHistory();
         Epic epic = new Epic("name", "dfd");
-        ITaskManager taskManager = Managers.getDefault();
-        taskManager.addEpic(epic);
-        taskManager.getEpicById(1);
-        assertEquals(1, taskManager.getAllEpics().size());
+        ITaskManager taskManager1 = Managers.getDefault();
+        taskManager1.addEpic(epic);
+        taskManager1.getEpicById(1);
+        assertEquals(1, taskManager1.getAllEpics().size());
     }
 
     @Test
     void checkClear() {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        InMemoryTaskManager inMemoryTaskManager2 = new InMemoryTaskManager();
         Epic epic1 = new Epic("name1", "dsdsds");
         Epic epic2 = new Epic("name2", "dfdfdfd");
-        inMemoryTaskManager.addEpic(epic1);
-        inMemoryTaskManager.addEpic(epic2);
-        inMemoryTaskManager.deleteAllEpics();
+        inMemoryTaskManager2.addEpic(epic1);
+        inMemoryTaskManager2.addEpic(epic2);
+        inMemoryTaskManager2.deleteAllEpics();
         ArrayList<Epic> ar = new ArrayList<>();
-        assertEquals(inMemoryTaskManager.getAllEpics(), ar);
+        assertEquals(inMemoryTaskManager2.getAllEpics(), ar);
     }
 }

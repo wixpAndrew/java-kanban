@@ -38,7 +38,7 @@ public interface ITaskManager {
 
     int createSubtask(Subtask subtask);
 
-    ArrayList<Subtask> getAllEpicSubTasks(int epicId);
+    List<Subtask> getAllEpicSubTasks(int epicId);
 
     void removeAllSubs();
 

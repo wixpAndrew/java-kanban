@@ -114,7 +114,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public ArrayList<Subtask> getAllEpicSubTasks(int epicID) {
+    public List<Subtask> getAllEpicSubTasks(int epicID) {
         return epics.get(epicID).getAllSubTasks();
     }
 

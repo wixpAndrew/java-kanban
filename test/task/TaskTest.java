@@ -36,6 +36,6 @@ public class TaskTest {
         task2.setId(task1.getId());
         inMemoryTaskManager.updateTask(task2);
 
-        assertEquals(inMemoryTaskManager.getTaskById(task1.getId()), task2);
+       assertEquals(inMemoryTaskManager.getTaskById(task1.getId()), task2);
     }
 }
