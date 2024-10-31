@@ -2,10 +2,12 @@ package history;
 
 import manager.InMemoryHistoryManager;
 import manager.InMemoryTaskManager;
-import task.Task;
 import org.junit.jupiter.api.Test;
+import task.Task;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HistoryListTest {
@@ -13,7 +15,7 @@ public class HistoryListTest {
     public Task task1 = new Task("sf", "sfdf");
     public Task task2 = new Task("aaaa", "ffff");
     public Task task3 = new Task("theiii", "dggg");
-     InMemoryTaskManager taskManger = new InMemoryTaskManager();
+    InMemoryTaskManager taskManger = new InMemoryTaskManager();
     InMemoryHistoryManager history = new InMemoryHistoryManager();
     List<Task> result = new ArrayList<>();
 

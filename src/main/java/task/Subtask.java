@@ -7,11 +7,11 @@ public class Subtask extends Task { // подзадача
         super(name, status, description);
     }
 
-    public void setEpicId(Integer epicId) {
-        this.epicId = epicId;
-    }
-
     public Integer getEpicId() {
         return epicId;
+    }
+
+    public void setEpicId(Integer epicId) {
+        this.epicId = epicId;
     }
 }

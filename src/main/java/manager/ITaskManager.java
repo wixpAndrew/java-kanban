@@ -1,11 +1,12 @@
 package manager;
-import java.util.List;
+
 import task.Epic;
 import task.Subtask;
 import task.Task;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public interface ITaskManager {
 
@@ -20,7 +21,7 @@ public interface ITaskManager {
 
     void deleteTask(int taskID);
 
-    public void updateTask(Task task);
+    void updateTask(Task task);
 
     // Epic
     int addEpic(Epic epic);
@@ -35,7 +36,7 @@ public interface ITaskManager {
 
     void updateEpic(Epic epic);
 
-    int  createSubtask(Subtask subtask);
+    int createSubtask(Subtask subtask);
 
     ArrayList<Subtask> getAllEpicSubTasks(int epicId);
 

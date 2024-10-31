@@ -1,5 +1,9 @@
 package task;
-import manager.*;
+
+import manager.HistoryManager;
+import manager.ITaskManager;
+import manager.InMemoryHistoryManager;
+import manager.InMemoryTaskManager;
 
 public class Managers {
 
@@ -7,7 +11,7 @@ public class Managers {
         return new InMemoryTaskManager();
     }
 
-    public static HistoryManager getDefaultHistory()    {
+    public static HistoryManager getDefaultHistory() {
         return new InMemoryHistoryManager();
     }
 }

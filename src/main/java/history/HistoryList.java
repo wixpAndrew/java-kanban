@@ -8,21 +8,9 @@ import java.util.List;
 
 public class HistoryList {
 
-    private class HistoryNode<V> {
-        public V value;
-        public HistoryNode<V> next;
-        public HistoryNode<V> prev;
-
-        HistoryNode(V value, HistoryNode<V> next, HistoryNode<V> prev) {
-            this.value = value;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
     private HistoryNode<Task> head;
     private HistoryNode<Task> tail;
-    private HashMap<Integer, HistoryNode<Task>> tasksMap;
-
+    private final HashMap<Integer, HistoryNode<Task>> tasksMap;
     public HistoryList() {
         this.head = null;
         this.tasksMap = new HashMap<>();
@@ -36,7 +24,7 @@ public class HistoryList {
             tail = head;
             tasksMap.put(task.getId(), head);
         } else {
-            tail.next = new HistoryNode<>(task,null, tail);
+            tail.next = new HistoryNode<>(task, null, tail);
             tail = tail.next;
             tasksMap.put(task.getId(), tail);
         }
@@ -62,14 +50,26 @@ public class HistoryList {
         ArrayList<Task> result = new ArrayList<>();
 
         if (head != null) {
-           result.add(head.value);
-           var node = head.next;
-           while (node != null) {
-               result.add(node.value);
-               node = node.next;
-           }
+            result.add(head.value);
+            var node = head.next;
+            while (node != null) {
+                result.add(node.value);
+                node = node.next;
+            }
         }
 
         return result;
+    }
+
+    private class HistoryNode<V> {
+        public V value;
+        public HistoryNode<V> next;
+        public HistoryNode<V> prev;
+
+        HistoryNode(V value, HistoryNode<V> next, HistoryNode<V> prev) {
+            this.value = value;
+            this.next = next;
+            this.prev = prev;
+        }
     }
 }

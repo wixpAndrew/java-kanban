@@ -1,22 +1,29 @@
 package manager;
 
-import java.util.*;
-import task.*;
+import task.Epic;
+import task.Managers;
+import task.Subtask;
+import task.Task;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class InMemoryTaskManager implements ITaskManager {
-    private  HistoryManager historyManager = null;
-    private HashMap<Integer, Epic> epics = new HashMap<>();
-    private HashMap<Integer, Task> tasks = new HashMap<>();
-    private HashMap<Integer,Subtask> subtasks = new HashMap<>();
+    private HistoryManager historyManager = null;
+    private final HashMap<Integer, Epic> epics = new HashMap<>();
+    private final HashMap<Integer, Task> tasks = new HashMap<>();
+    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int count = 0;
-
-    private int generateId() {
-        return ++count;
-    }
 
     public InMemoryTaskManager() {
         historyManager = Managers.getDefaultHistory();
+    }
+
+    private int generateId() {
+        return ++count;
     }
     // Task
     //-----------------------------------------------------------

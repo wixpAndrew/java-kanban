@@ -3,7 +3,7 @@ package task;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private ArrayList<Subtask> subList = new ArrayList<>();
+    private final ArrayList<Subtask> subList = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
@@ -42,12 +42,12 @@ public class Epic extends Task {
                 if (subtask.getStatus() == Progress.IN_PROGRESS) {
                     isInProgress = true;
                 } else if (subtask.getStatus() == Progress.DONE) {
-                        isDone = true;
+                    isDone = true;
                 } else {
                     isNew = true;
                 }
             }
-            if (isNew && !isDone && !isInProgress)  {
+            if (isNew && !isDone && !isInProgress) {
                 finalProgress = Progress.NEW;
             } else if (isDone && !isNew && !isInProgress) {
                 finalProgress = Progress.DONE;
