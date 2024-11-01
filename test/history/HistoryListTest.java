@@ -1,8 +1,6 @@
 package history;
 
 import manager.ITaskManager;
-import manager.InMemoryHistoryManager;
-import manager.InMemoryTaskManager;
 import org.junit.jupiter.api.Test;
 import task.Managers;
 import task.Task;
