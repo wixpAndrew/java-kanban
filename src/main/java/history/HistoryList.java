@@ -62,10 +62,10 @@ public class HistoryList {
         return result;
     }
 
-    private class HistoryNode<V> {
-        public V value;
-        public HistoryNode<V> next;
-        public HistoryNode<V> prev;
+    private static class HistoryNode<V> {
+        private final V value;
+        private HistoryNode<V> next;
+        private HistoryNode<V> prev;
 
         HistoryNode(V value, HistoryNode<V> next, HistoryNode<V> prev) {
             this.value = value;

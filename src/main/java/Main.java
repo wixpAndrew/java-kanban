@@ -1,9 +1,7 @@
+import manager.ITaskManager;
 import manager.InMemoryHistoryManager;
 import manager.InMemoryTaskManager;
-import task.Epic;
-import task.Progress;
-import task.Subtask;
-import task.Task;
+import task.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        InMemoryTaskManager tm = new InMemoryTaskManager();
+        ITaskManager taskManager  = Managers.getDefault();
         InMemoryHistoryManager his = new InMemoryHistoryManager();
         Task task1 = new Task("Починка двери", Progress.NEW, "");
         Task task2 = new Task("dfdf", Progress.NEW, "");
@@ -23,20 +21,15 @@ public class Main {
         Epic epic2 = new Epic("Второй эпик", "");
         epic2.setId(1);
         epic1.setId(2);
-        tm.addEpic(epic1);
-        tm.addEpic(epic2);
+        taskManager.addEpic(epic1);
+        taskManager.addEpic(epic2);
 
-        InMemoryHistoryManager history = new InMemoryHistoryManager();
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
-        List<Task> result = new ArrayList<>();
         taskManager.addTask(task1);
         taskManager.addTask(task2);
 
         taskManager.getTaskById(task1.getId());
         taskManager.getTaskById(task2.getId());
 
-        result.add(task1);
-        result.add(task2);
 
         System.out.println(taskManager.getHistory());
         taskManager.addEpic(epic1);

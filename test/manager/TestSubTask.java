@@ -3,6 +3,7 @@ package manager;
 import manager.InMemoryTaskManager;
 import org.junit.jupiter.api.Test;
 import task.Epic;
+import task.Managers;
 import task.Progress;
 import task.Subtask;
 
@@ -14,7 +15,7 @@ public class TestSubTask {
 
     @Test
     void checkSubTaskById() {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        ITaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epic1 = new Epic("name1", "dsdsds");
         Subtask subtask = new Subtask("nameSub", "opisanit", Progress.NEW);
         inMemoryTaskManager.addEpic(epic1);
@@ -50,7 +51,6 @@ public class TestSubTask {
         Epic epic1 = new Epic("name1", "dsdsds");
         Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
         Subtask subtask2 = new Subtask("nameSub2", "opisanitdfdf", Progress.NEW);
-
         inMemoryTaskManager3.addEpic(epic1);
         subtask1.setEpicId(epic1.getId());
         subtask2.setEpicId(epic1.getId());
@@ -60,6 +60,6 @@ public class TestSubTask {
         inMemoryTaskManager3.removeAllSubs();
 
         ArrayList<Subtask> ar = new ArrayList<>();
-        assertEquals(ar, inMemoryTaskManager3.getAllEpicSubTasks(epic1.getId()));
+        assertEquals(0, inMemoryTaskManager3.getAllEpicSubTasks(epic1.getId()).size());
     }
 }

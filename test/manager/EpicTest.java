@@ -5,6 +5,7 @@ import task.Epic;
 import task.Managers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,13 +22,13 @@ class EpicTest {
 
     @Test
     void checkClear() {
-        InMemoryTaskManager inMemoryTaskManager2 = new InMemoryTaskManager();
+        ITaskManager inMemoryTaskManager2 = Managers.getDefault();
         Epic epic1 = new Epic("name1", "dsdsds");
         Epic epic2 = new Epic("name2", "dfdfdfd");
         inMemoryTaskManager2.addEpic(epic1);
         inMemoryTaskManager2.addEpic(epic2);
         inMemoryTaskManager2.deleteAllEpics();
         ArrayList<Epic> ar = new ArrayList<>();
-        assertEquals(inMemoryTaskManager2.getAllEpics(), ar);
+        assertEquals(0, inMemoryTaskManager2.getAllEpics().size());
     }
 }

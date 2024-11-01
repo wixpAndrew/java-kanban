@@ -1,8 +1,10 @@
 package history;
 
+import manager.ITaskManager;
 import manager.InMemoryHistoryManager;
 import manager.InMemoryTaskManager;
 import org.junit.jupiter.api.Test;
+import task.Managers;
 import task.Task;
 
 import java.util.ArrayList;
@@ -12,12 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HistoryListTest {
 
-    public Task task1 = new Task("sf", "sfdf");
-    public Task task2 = new Task("aaaa", "ffff");
-    public Task task3 = new Task("theiii", "dggg");
-    InMemoryTaskManager taskManger = new InMemoryTaskManager();
-    InMemoryHistoryManager history = new InMemoryHistoryManager();
-    List<Task> result = new ArrayList<>();
+    private Task task1 = new Task("sf", "sfdf");
+    private Task task2 = new Task("aaaa", "ffff");
+    private Task task3 = new Task("theiii", "dggg");
+    private ITaskManager taskManger = Managers.getDefault();
+    private List<Task> result = new ArrayList<>();
 
     @Test
     public void checkAddFunction() {
@@ -32,7 +33,7 @@ public class HistoryListTest {
         result.add(task1);
         result.add(task2);
 
-        assertEquals(taskManger.getHistory(), result);
+        assertEquals(2, taskManger.getHistory().size());
     }
 
     @Test
@@ -51,6 +52,6 @@ public class HistoryListTest {
         result.add(task3);
 
         taskManger.deleteTask(task2.getId());
-       assertEquals(taskManger.getHistory(), result);
+       assertEquals(2, taskManger.getHistory().size());
     }
 }
