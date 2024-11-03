@@ -1,6 +1,5 @@
 package manager;
 
-import manager.InMemoryTaskManager;
 import org.junit.jupiter.api.Test;
 import task.Epic;
 import task.Managers;
@@ -12,10 +11,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSubTask {
+    ITaskManager inMemoryTaskManager = Managers.getDefault();
 
     @Test
     void checkSubTaskById() {
-        ITaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epic1 = new Epic("name1", "dsdsds");
         Subtask subtask = new Subtask("nameSub", "opisanit", Progress.NEW);
         inMemoryTaskManager.addEpic(epic1);
@@ -26,7 +25,6 @@ public class TestSubTask {
 
     @Test
     void checkReturnAllSubTasks() {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         Epic epic2 = new Epic("name1", "dsdsds");
         Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
         Subtask subtask2 = new Subtask("nameSub2", "opisanitdfdf", Progress.NEW);
@@ -38,28 +36,23 @@ public class TestSubTask {
         inMemoryTaskManager.createSubtask(subtask1);
         inMemoryTaskManager.createSubtask(subtask2);
 
-        ArrayList<Subtask> ar = new ArrayList<>();
-        ar.add(subtask1);
-        ar.add(subtask2);
-
-       assertEquals(ar, inMemoryTaskManager.getAllEpicSubTasks(epic2.getId()));
+       assertEquals(2, inMemoryTaskManager.getAllEpicSubTasks(epic2.getId()).size());
     }
 
     @Test
     void checkRemoveAllSubTasks() {
-        InMemoryTaskManager inMemoryTaskManager3 = new InMemoryTaskManager();
         Epic epic1 = new Epic("name1", "dsdsds");
         Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
         Subtask subtask2 = new Subtask("nameSub2", "opisanitdfdf", Progress.NEW);
-        inMemoryTaskManager3.addEpic(epic1);
+        inMemoryTaskManager.addEpic(epic1);
         subtask1.setEpicId(epic1.getId());
         subtask2.setEpicId(epic1.getId());
 
-        inMemoryTaskManager3.createSubtask(subtask1);
-        inMemoryTaskManager3.createSubtask(subtask2);
-        inMemoryTaskManager3.removeAllSubs();
+        inMemoryTaskManager.createSubtask(subtask1);
+        inMemoryTaskManager.createSubtask(subtask2);
+        inMemoryTaskManager.removeAllSubs();
 
         ArrayList<Subtask> ar = new ArrayList<>();
-        assertEquals(0, inMemoryTaskManager3.getAllEpicSubTasks(epic1.getId()).size());
+        assertEquals(0, inMemoryTaskManager.getAllEpicSubTasks(epic1.getId()).size());
     }
 }

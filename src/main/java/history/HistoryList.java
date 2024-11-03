@@ -5,12 +5,13 @@ import task.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HistoryList {
 
     private HistoryNode<Task> head;
     private HistoryNode<Task> tail;
-    private final HashMap<Integer, HistoryNode<Task>> tasksMap;
+    private final Map<Integer, HistoryNode<Task>> tasksMap;
 
     public HistoryList() {
         this.head = null;
@@ -48,7 +49,7 @@ public class HistoryList {
     }
 
     public List<Task> getHistory() {
-        ArrayList<Task> result = new ArrayList<>();
+        List<Task> result = new ArrayList<>();
 
         if (head != null) {
             result.add(head.value);
@@ -67,7 +68,7 @@ public class HistoryList {
         private HistoryNode<V> next;
         private HistoryNode<V> prev;
 
-        HistoryNode(V value, HistoryNode<V> next, HistoryNode<V> prev) {
+        private HistoryNode(V value, HistoryNode<V> next, HistoryNode<V> prev) {
             this.value = value;
             this.next = next;
             this.prev = prev;
