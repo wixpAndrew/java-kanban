@@ -13,7 +13,7 @@ public interface ITaskManager {
     // Task
     void addTask(Task task);
 
-    ArrayList<Task> getTasks();
+    List<Task> getTasks();
 
     Task getTaskById(Integer id);
 

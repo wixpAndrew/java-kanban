@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class InMemoryTaskManager implements ITaskManager {
@@ -32,11 +33,10 @@ public class InMemoryTaskManager implements ITaskManager {
     public void addTask(Task task) {
         task.setId(generateId());
         tasks.put(task.getId(), task);
-        task.getId();
     }
 
     @Override
-    public ArrayList<Task> getTasks() {
+    public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 

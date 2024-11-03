@@ -52,7 +52,6 @@ public class TestSubTask {
         inMemoryTaskManager.createSubtask(subtask2);
         inMemoryTaskManager.removeAllSubs();
 
-        ArrayList<Subtask> ar = new ArrayList<>();
         assertEquals(0, inMemoryTaskManager.getAllEpicSubTasks(epic1.getId()).size());
     }
 }
