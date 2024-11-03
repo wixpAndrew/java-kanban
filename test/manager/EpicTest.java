@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import task.Epic;
 import task.Managers;
 
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

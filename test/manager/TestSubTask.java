@@ -6,7 +6,6 @@ import task.Managers;
 import task.Progress;
 import task.Subtask;
 
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
