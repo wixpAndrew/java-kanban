@@ -50,4 +50,8 @@ public class Task {
         this.description = description;
     }
 
+    public String TasktoString(){
+        return this.getName() + " " + this.getStatus() + this.getDescription();
+    }
+
 }

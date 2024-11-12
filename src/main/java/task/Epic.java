@@ -60,4 +60,8 @@ public class Epic extends Task {
     public void deleteAllSubTasks() {
         subList.clear();
     }
+
+    public String EpictoString(){
+        return this.getName() + " " + this.getStatus() + " " + this.getDescription();
+    }
 }
