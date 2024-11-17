@@ -47,7 +47,7 @@ public class Task {
         this.description = description;
     }
 
-    public String TasktoString(){
+    public String tasktoString() {
             return this.getId() + "," + "TASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
 
     }
