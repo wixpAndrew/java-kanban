@@ -46,6 +46,7 @@ public interface ITaskManager {
     void updateSubTask(Subtask subtask);
 
     Subtask getSubtaskById(Integer id);
+
     List<Subtask> getAllSubs();
 
     List<Task> getHistory();
