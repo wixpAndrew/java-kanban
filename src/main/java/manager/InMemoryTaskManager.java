@@ -164,11 +164,14 @@ public class InMemoryTaskManager implements ITaskManager {
         historyManager.add(subtasks.get(id));
         return subtasks.get(id);
     }
+
     @Override
     public List<Subtask> getAllSubs(){
         return new ArrayList<>(subtasks.values());
     }
+
     // ----------------------------------------------------------------------------------------------
+    
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
