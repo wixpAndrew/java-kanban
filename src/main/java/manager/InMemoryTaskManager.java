@@ -30,7 +30,9 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public void addTask(Task task) {
-        task.setId(generateId());
+        if (task.getId() < 0) {
+            task.setId(generateId());
+        }
         tasks.put(task.getId(), task);
     }
 
@@ -68,7 +70,9 @@ public class InMemoryTaskManager implements ITaskManager {
     // -------------------------------------------------------------------------------------------------
     @Override
     public int addEpic(Epic epic) {
-        epic.setId(generateId());
+        if (epic.getId() < 0) {
+            epic.setId(generateId());
+        }
         epics.put(epic.getId(), epic);
         return epic.getId();
     }
@@ -113,7 +117,9 @@ public class InMemoryTaskManager implements ITaskManager {
     //---------------------------------------------------------------------------------------------
     @Override
     public int createSubtask(Subtask subtask) {
-        subtask.setId(generateId());
+        if (subtask.getId() < 0) {
+            subtask.setId(generateId());
+        }
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubTask(subtask);
         return subtask.getId();

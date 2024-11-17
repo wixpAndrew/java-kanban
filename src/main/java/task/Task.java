@@ -11,12 +11,9 @@ public class Task {
         this.name = name;
         this.status = status;
         this.description = description;
+        this.id = -1;
     }
 
-    public Task(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 
     public String getName() {
         return name;
@@ -51,7 +48,7 @@ public class Task {
     }
 
     public String TasktoString(){
-        return this.getName() + " " + this.getStatus() + this.getDescription();
-    }
+            return this.getId() + "," + "TASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
 
+    }
 }

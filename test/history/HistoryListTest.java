@@ -3,15 +3,16 @@ package history;
 import manager.ITaskManager;
 import org.junit.jupiter.api.Test;
 import task.Managers;
+import task.Progress;
 import task.Task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HistoryListTest {
 
-    private final Task task1 = new Task("sf", "sfdf");
-    private final Task task2 = new Task("aaaa", "ffff");
-    private final Task task3 = new Task("theiii", "dggg");
+    private final Task task1 = new Task("sf", Progress.NEW, "");
+    private final Task task2 = new Task("aaaa", Progress.NEW, "ffff");
+    private final Task task3 = new Task("theiii", Progress.NEW, "");
     private final ITaskManager taskManger = Managers.getDefault();
 
     @Test

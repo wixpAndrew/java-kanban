@@ -12,7 +12,7 @@ public class TaskTest {
     ITaskManager inMemoryTaskManager = Managers.getDefault();
     @Test
     void checkAddTask() {
-        Task task = new Task("name1", "ndffdfdf");
+        Task task = new Task("name1",Progress.NEW, "ndffdfdf");
         inMemoryTaskManager.addTask(task);
         List<Task> ar = new ArrayList<>();
         ar.add(task);
@@ -21,15 +21,15 @@ public class TaskTest {
 
     @Test
     void getTaskBtId() {
-        Task task = new Task("name1", "ndffdfdf");
+        Task task = new Task("name1", Progress.NEW, "ndffdfdf");
         inMemoryTaskManager.addTask(task);
         assertEquals(inMemoryTaskManager.getTaskById(task.getId()), task);
     }
 
     @Test
     void checkUpdateTask() {
-        Task task1 = new Task("name1", "ndffdfdf");
-        Task task2 = new Task("name2", "ndffdfdf");
+        Task task1 = new Task("name1", Progress.NEW, "");
+        Task task2 = new Task("name2", Progress.NEW, "");
         inMemoryTaskManager.addTask(task1);
         task2.setId(task1.getId());
         inMemoryTaskManager.updateTask(task2);

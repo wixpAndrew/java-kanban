@@ -6,15 +6,15 @@ import task.*;
 public class Main {
     public static void main(String[] args) {
         ITaskManager taskManager  = Managers.getDefault();
-        Task task1 = new Task("Починка двери", Progress.NEW, "");
+        Task task1 = new Task("Починка двери", Progress.DONE, "");
         Task task2 = new Task("dfdf", Progress.NEW, "");
 
         Subtask subtask1 = new Subtask("Найти деньги", "", Progress.IN_PROGRESS);
         Subtask subtask2 = new Subtask("Найти людей", "", Progress.IN_PROGRESS);
         Subtask subtask3 = new Subtask("Найти что то ", "", Progress.DONE);
 
-        Epic epic1 = new Epic("Первый эпик", "");
-        Epic epic2 = new Epic("Второй эпик", "");
+        Epic epic1 = new Epic("Первый эпик", Progress.NEW, "");
+        Epic epic2 = new Epic("Второй эпик", Progress.IN_PROGRESS,  "");
 
         epic2.setId(1);
         epic1.setId(2);

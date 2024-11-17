@@ -3,6 +3,7 @@ package manager;
 import org.junit.jupiter.api.Test;
 import task.Epic;
 import task.Managers;
+import task.Progress;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +13,7 @@ class EpicTest {
 
     @Test
     void add() {
-        Epic epic = new Epic("name", "dfd");
+        Epic epic = new Epic("name", Progress.NEW, "");
         taskManager.addEpic(epic);
         taskManager.getEpicById(1);
         assertEquals(1, taskManager.getAllEpics().size());
@@ -20,8 +21,8 @@ class EpicTest {
 
     @Test
     void checkClear() {
-        Epic epic1 = new Epic("name1", "dsdsds");
-        Epic epic2 = new Epic("name2", "dfdfdfd");
+        Epic epic1 = new Epic("name1", Progress.NEW, "dsdsds");
+        Epic epic2 = new Epic("name2", Progress.NEW, "");
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
         taskManager.deleteAllEpics();

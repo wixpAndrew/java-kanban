@@ -14,7 +14,7 @@ public class TestSubTask {
 
     @Test
     void checkSubTaskById() {
-        Epic epic1 = new Epic("name1", "dsdsds");
+        Epic epic1 = new Epic("name1", Progress.NEW, "");
         Subtask subtask = new Subtask("nameSub", "opisanit", Progress.NEW);
         inMemoryTaskManager.addEpic(epic1);
         epic1.addSubTask(subtask);
@@ -24,7 +24,7 @@ public class TestSubTask {
 
     @Test
     void checkReturnAllSubTasks() {
-        Epic epic2 = new Epic("name1", "dsdsds");
+        Epic epic2 = new Epic("name1", Progress.NEW, "dsdsds");
         Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
         Subtask subtask2 = new Subtask("nameSub2", "opisanitdfdf", Progress.NEW);
 
@@ -40,7 +40,7 @@ public class TestSubTask {
 
     @Test
     void checkRemoveAllSubTasks() {
-        Epic epic1 = new Epic("name1", "dsdsds");
+        Epic epic1 = new Epic("name1", Progress.NEW, "");
         Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
         Subtask subtask2 = new Subtask("nameSub2", "opisanitdfdf", Progress.NEW);
         inMemoryTaskManager.addEpic(epic1);
