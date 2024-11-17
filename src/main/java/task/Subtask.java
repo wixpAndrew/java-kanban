@@ -1,6 +1,5 @@
 package task;
 
-import javax.print.attribute.SupportedValuesAttribute;
 
 public class Subtask extends Task { // подзадача
     private Integer epicId;
@@ -17,8 +16,7 @@ public class Subtask extends Task { // подзадача
         this.epicId = epicId;
     }
 
-    public String SubTasktoString() {
+    public String subTasktoString() {
         return this.getId() + "," + "SUBTASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + "," + this.getEpicId() + ",";
-
     }
 }
