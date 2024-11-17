@@ -19,15 +19,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         fileWriter.write("id,type,name,status,description,epic\n");
         try {
             for (Task task : super.getTasks()) {
-                fileWriter.write( task.TasktoString());
+                fileWriter.write(task.TasktoString());
                 fileWriter.write("\n");
             }
             for (Epic epic : super.getAllEpics()) {
-                fileWriter.write( epic.EpictoString());
+                fileWriter.write(epic.EpictoString());
                 fileWriter.write("\n");
             }
             for (Subtask subtask : super.getAllSubs()) {
-                fileWriter.write( subtask.SubTasktoString());
+                fileWriter.write(subtask.SubTasktoString());
                 fileWriter.write("\n");
             }
         } catch (IOException exception) {
@@ -51,7 +51,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     fileBackedTaskManager.addTask(task);
                 }
                 case "EPIC" -> {
-                    Epic epic = new Epic(arrayList.get(2), Progress.valueOf(arrayList.get(3)) ,arrayList.get(4));
+                    Epic epic = new Epic(arrayList.get(2), Progress.valueOf(arrayList.get(3)), arrayList.get(4));
                     epic.setId(Integer.parseInt(arrayList.get(0)));
                     fileBackedTaskManager.addEpic(epic);
                 }
