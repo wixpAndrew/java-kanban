@@ -30,7 +30,7 @@ public class SavingTest {
 
         ArrayList<String> res = new ArrayList<>();
         res.add(task.TasktoString());
-        res.add(epic.EpictoString());
+        res.add(epic.epictoString());
         res.add(subtask1.subTasktoString());
 
         fileBackedTaskManager.save();
