@@ -118,7 +118,7 @@ public class InMemoryTaskManager implements ITaskManager {
     //---------------------------------------------------------------------------------------------
     @Override
     public int addSubtask(Subtask subtask) {
-        if (subtask.getId() == null ) {
+        if (subtask.getId() == null) {
             subtask.setId(generateId());
         }
         subtasks.put(subtask.getId(), subtask);
