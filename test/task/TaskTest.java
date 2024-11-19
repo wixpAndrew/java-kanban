@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskTest {
-    ITaskManager inMemoryTaskManager = Managers.getDefault();
+    private final ITaskManager inMemoryTaskManager = Managers.getDefault();
     @Test
     void checkAddTask() {
         Task task = new Task("name1",Progress.NEW, "ndffdfdf");

@@ -10,7 +10,7 @@ import java.util.List;
 public interface ITaskManager {
 
     // Task
-    void addTask(Task task);
+    int addTask(Task task);
 
     List<Task> getTasks();
 
@@ -35,7 +35,7 @@ public interface ITaskManager {
 
     void updateEpic(Epic epic);
 
-    int createSubtask(Subtask subtask);
+    int addSubtask(Subtask subtask);
 
     List<Subtask> getAllEpicSubTasks(int epicId);
 

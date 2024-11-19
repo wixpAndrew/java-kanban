@@ -13,7 +13,7 @@ class EpicTest {
 
     @Test
     void add() {
-        Epic epic = new Epic("name", Progress.NEW, "");
+        Epic epic = new Epic("name",  "");
         taskManager.addEpic(epic);
         taskManager.getEpicById(1);
         assertEquals(1, taskManager.getAllEpics().size());
@@ -21,8 +21,8 @@ class EpicTest {
 
     @Test
     void checkClear() {
-        Epic epic1 = new Epic("name1", Progress.NEW, "dsdsds");
-        Epic epic2 = new Epic("name2", Progress.NEW, "");
+        Epic epic1 = new Epic("name1",  "dsdsds");
+        Epic epic2 = new Epic("name2",  "");
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
         taskManager.deleteAllEpics();

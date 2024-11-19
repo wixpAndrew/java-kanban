@@ -11,7 +11,6 @@ public class Task {
         this.name = name;
         this.status = status;
         this.description = description;
-        this.id = -1;
     }
 
 
@@ -23,7 +22,7 @@ public class Task {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

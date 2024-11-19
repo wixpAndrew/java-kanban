@@ -1,23 +1,21 @@
 package manager;
 
+import org.junit.jupiter.api.Test;
 import task.*;
 
 import java.io.*;
 import java.util.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    File file;
-    ITaskManager inMemoryTaskManager = Managers.getDefault();
+    private final File file;
 
-    public FileBackedTaskManager(File file) throws IOException {
+    public FileBackedTaskManager(File file) {
         this.file = file;
     }
 
-    public void save() throws IOException, ManagerSaveException {
-        new FileWriter(file, false).close();
-        Writer fileWriter = new FileWriter(file);
-        fileWriter.write("id,type,name,status,description,epic\n");
-        try {
+    public void save() throws  ManagerSaveException {
+        try (Writer fileWriter = new FileWriter(file)) {
+            fileWriter.write("id,type,name,status,description,epic\n");
             for (Task task : super.getTasks()) {
                 fileWriter.write(task.tasktoString());
                 fileWriter.write("\n");
@@ -31,9 +29,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fileWriter.write("\n");
             }
         } catch (IOException exception) {
-            throw  new ManagerSaveException("Ошибка сохранения!");
+            throw new ManagerSaveException("Ошибка сохранения!");
         }
-        fileWriter.close();
     }
 
     public static FileBackedTaskManager loadFromFile(File file) throws IOException {
@@ -42,28 +39,63 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String line;
         reader.readLine();
         while ((line = reader.readLine()) != null) {
-            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(line.split(",")));
+            List<String> splitLine = new ArrayList<>(Arrays.asList(line.split(",")));
 
-            switch (arrayList.get(1)) {
+            switch (splitLine.get(1)) {
                 case "TASK" -> {
-                    Task task = new Task(arrayList.get(2), Progress.valueOf(arrayList.get(3)),arrayList.get(4));
-                    task.setId(Integer.parseInt(arrayList.get(0)));
+                    Task task = new Task(splitLine.get(2), Progress.valueOf(splitLine.get(3)), splitLine.get(4));
+                    task.setId(Integer.parseInt(splitLine.get(0)));
                     fileBackedTaskManager.addTask(task);
                 }
                 case "EPIC" -> {
-                    Epic epic = new Epic(arrayList.get(2), Progress.valueOf(arrayList.get(3)), arrayList.get(4));
-                    epic.setId(Integer.parseInt(arrayList.get(0)));
+                    Epic epic = new Epic(splitLine.get(2), splitLine.get(4));
+                    epic.setStatus(Progress.valueOf(splitLine.get(3)));
+                    epic.setId(Integer.parseInt(splitLine.get(0)));
                     fileBackedTaskManager.addEpic(epic);
                 }
                 case "SUBTASK" -> {
-                    Subtask subtask = new Subtask(arrayList.get(2), arrayList.get(4), Progress.valueOf(arrayList.get(3)));
-                    subtask.setId(Integer.parseInt(arrayList.get(0)));
-                    subtask.setEpicId(Integer.parseInt(arrayList.get(5)));
-                    fileBackedTaskManager.createSubtask(subtask);
+                    Subtask subtask = new Subtask(splitLine.get(2), splitLine.get(4), Progress.valueOf(splitLine.get(3)));
+                    subtask.setId(Integer.parseInt(splitLine.get(0)));
+                    subtask.setEpicId(Integer.parseInt(splitLine.get(5)));
+                    fileBackedTaskManager.addSubtask(subtask);
                 }
             }
         }
         reader.close();
         return fileBackedTaskManager;
     }
+
+    @Override
+    public int addSubtask(Subtask subtask) {
+        int res = super.addSubtask(subtask);
+        try{
+            save();
+        } catch (ManagerSaveException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return res;
+    }
+
+    @Override
+    public int addEpic (Epic epic) {
+        int res = super.addEpic(epic);
+        try{
+            save();
+        } catch (ManagerSaveException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return res;
+    }
+
+    @Override
+    public int addTask(Task task) {
+        int res = super.addTask(task);
+        try{
+            save();
+        } catch (ManagerSaveException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return res;
+    }
+
 }

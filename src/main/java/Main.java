@@ -13,8 +13,8 @@ public class Main {
         Subtask subtask2 = new Subtask("Найти людей", "", Progress.IN_PROGRESS);
         Subtask subtask3 = new Subtask("Найти что то ", "", Progress.DONE);
 
-        Epic epic1 = new Epic("Первый эпик", Progress.NEW, "");
-        Epic epic2 = new Epic("Второй эпик", Progress.IN_PROGRESS,  "");
+        Epic epic1 = new Epic("Первый эпик", "");
+        Epic epic2 = new Epic("Второй эпик",  "");
 
         epic2.setId(1);
         epic1.setId(2);
