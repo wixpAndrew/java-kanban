@@ -1,8 +1,6 @@
 package manager;
 
-import org.junit.jupiter.api.Test;
 import task.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -13,7 +11,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-    public void save() throws  ManagerSaveException {
+    public void save() throws ManagerSaveException {
         try (Writer fileWriter = new FileWriter(file)) {
             fileWriter.write("id,type,name,status,description,epic\n");
             for (Task task : super.getTasks()) {
@@ -68,7 +66,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public int addSubtask(Subtask subtask) {
         int res = super.addSubtask(subtask);
-        try{
+        try {
             save();
         } catch (ManagerSaveException exception) {
             System.out.println(exception.getMessage());
@@ -77,9 +75,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public int addEpic (Epic epic) {
+    public int addEpic(Epic epic) {
         int res = super.addEpic(epic);
-        try{
+        try {
             save();
         } catch (ManagerSaveException exception) {
             System.out.println(exception.getMessage());
@@ -90,12 +88,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public int addTask(Task task) {
         int res = super.addTask(task);
-        try{
+        try {
             save();
         } catch (ManagerSaveException exception) {
             System.out.println(exception.getMessage());
         }
         return res;
     }
-
 }
