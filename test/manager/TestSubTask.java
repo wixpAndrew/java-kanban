@@ -49,7 +49,7 @@ public class TestSubTask {
 
         inMemoryTaskManager.addSubtask(subtask1);
         inMemoryTaskManager.addSubtask(subtask2);
-        inMemoryTaskManager.removeAllSubs();
+        inMemoryTaskManager.deleteSubtasks();
 
         assertEquals(0, inMemoryTaskManager.getAllEpicSubTasks(epic1.getId()).size());
     }

@@ -38,7 +38,7 @@ public class Main {
         epic1.addSubTask(subtask2);
 
         System.out.println(taskManager.getAllEpicSubTasks(epic1.getId()));
-        taskManager.removeAllSubs();
+        taskManager.deleteSubtasks();
 
         System.out.println(epic1.getAllSubTasks());
     }

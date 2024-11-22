@@ -11,7 +11,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-    public void save() throws ManagerSaveException {
+    public void save() {
         try (Writer fileWriter = new FileWriter(file)) {
             fileWriter.write("id,type,name,status,description,epic\n");
             for (Task task : super.getTasks()) {
@@ -94,5 +94,71 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             System.out.println(exception.getMessage());
         }
         return res;
+    }
+    @Override
+    public void deleteTask(int taskID) {
+        super.deleteTask(taskID);
+        super.getHistoryManager().remove(taskID);
+        save();
+    }
+    @Override
+    public void updateTask(Task task) {
+        super.addTask(task);
+        save();
+    }
+    @Override
+    public void deleteAllEpics() {
+        for (Epic epic : super.getAllEpics()) {
+            super.getHistoryManager().remove(epic.getId());
+        }
+        super.deleteAllEpics();
+        super.deleteSubtasks();
+        save();
+    }
+    @Override
+    public void deleteEpic(int taskID) {
+        for (Integer key : super.getSubTasksMap().keySet()) {
+            if (super.getSubtaskById(key).getEpicId() == taskID) {
+                super.deleteSub(key);
+            }
+        }
+        super.deleteEpic(taskID);
+        super.getHistoryManager().remove(taskID);
+        save();
+    }
+    @Override
+    public void updateEpic(Epic epic) {
+        super.addEpic(epic);
+        save();
+    }
+    @Override
+    public void deleteSubtasks() {
+        getAllSubs().clear();
+        for (Epic epic : super.getAllEpics()) {
+            for (Subtask subtask : epic.getAllSubTasks()) {
+                super.deleteSub(subtask.getId());
+            }
+            epic.deleteAllSubTasks();
+        }
+        save();
+    }
+    @Override
+    public void deleteSub(int subtaskID) {
+        Subtask subtask1 = super.getSubTasksMap().get(subtaskID);
+        Epic epic1 = super.getEpicById(subtask1.getEpicId());
+        epic1.deleteSubTask(subtask1);
+        super.deleteSub(subtaskID);
+        epic1.calculateStatus();
+        super.getHistoryManager().remove(subtaskID);
+        save();
+    }
+
+    @Override
+    public void updateSubTask(Subtask subtask) {
+        super.addSubtask(subtask);
+        Epic epic = super.getEpicById(subtask.getEpicId());
+        epic.addSubTask(subtask);
+        epic.calculateStatus();
+        save();
     }
 }

@@ -132,7 +132,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public void removeAllSubs() {
+    public void deleteSubtasks() {
         subtasks.clear();
         for (Epic epic : epics.values()) {
             for (Subtask subtask : epic.getAllSubTasks()) {
@@ -170,10 +170,18 @@ public class InMemoryTaskManager implements ITaskManager {
     public List<Subtask> getAllSubs() {
         return new ArrayList<>(subtasks.values());
     }
-
+    @Override
+    public Map<Integer, Subtask> getSubTasksMap(){
+        return subtasks;
+    }
     // ----------------------------------------------------------------------------------------------
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    @Override
+    public HistoryManager getHistoryManager(){
+        return historyManager;
     }
 }

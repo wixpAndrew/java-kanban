@@ -6,6 +6,7 @@ import task.Task;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface ITaskManager {
 
@@ -39,7 +40,7 @@ public interface ITaskManager {
 
     List<Subtask> getAllEpicSubTasks(int epicId);
 
-    void removeAllSubs();
+    void deleteSubtasks();
 
     void deleteSub(int id);
 
@@ -50,4 +51,8 @@ public interface ITaskManager {
     List<Subtask> getAllSubs();
 
     List<Task> getHistory();
+
+    HistoryManager getHistoryManager();
+
+    Map<Integer, Subtask> getSubTasksMap();
 }

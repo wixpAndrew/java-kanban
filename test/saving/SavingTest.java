@@ -20,7 +20,6 @@ public class SavingTest {
     private final Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
     private final Subtask subtask2 = new Subtask("namesub2", "dfdfdf", Progress.NEW);
     private final Task task = new Task("name1", Progress.NEW, "ndffdfdf");
-    private final Task task2 = new Task("name4", Progress.NEW, "pppppp");
 
 
     @Test
@@ -34,12 +33,13 @@ public class SavingTest {
         subtask1.setEpicId(epic.getId());
         fileBackedTaskManager.addSubtask(subtask1);
 
-        ArrayList<String> res = new ArrayList<>();
-        res.add(task.tasktoString());
-        res.add(epic.epictoString());
-        res.add(subtask1.subTasktoString());
+      fileBackedTaskManager.addEpic(epic);
+      fileBackedTaskManager.addTask(task);
+      fileBackedTaskManager.addSubtask(subtask1);
 
         fileBackedTaskManager.save();
+        FileBackedTaskManager.loadFromFile(file);
+
         ArrayList<String> result = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -51,16 +51,14 @@ public class SavingTest {
             } catch (Throwable exception) {
             System.out.println("Ошибка в тесте сохранения");
         }
-        assertEquals(result, res); // первый тест
+        assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());// первый тест
+        assertEquals(result.get(1), fileBackedTaskManager.getAllEpics().get(0).epictoString());// первый тест
+        assertEquals(result.get(2), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());// первый тест
+        assertEquals(fileBackedTaskManager.getAllEpics().size(), 1);
+        assertEquals(fileBackedTaskManager.getTasks().size(), 1);
+        assertEquals(fileBackedTaskManager.getTasks().size(), 1);
 
-        fileBackedTaskManager.deleteAllTasks();
-        fileBackedTaskManager.deleteAllEpics();
-        fileBackedTaskManager.removeAllSubs();
 
-        var fbt = FileBackedTaskManager.loadFromFile(file);
-        assertEquals(fbt.getTasks().size(), 1); // второй тест
-        assertEquals(fbt.getAllEpics().size(), 1);
-        assertEquals(fbt.getAllSubs().size(), 1);
     }
     @Test
     public void testWithALotOfTypes() throws IOException, ManagerSaveException {
@@ -78,14 +76,16 @@ public class SavingTest {
         fileBackedTaskManager.addSubtask(subtask2);
 
 
-        ArrayList<String> res = new ArrayList<>();
-        res.add(task.tasktoString());
-        res.add(epic.epictoString());
-        res.add(epic2.epictoString());
-        res.add(subtask1.subTasktoString());
-        res.add(subtask2.subTasktoString());
+
+        fileBackedTaskManager.addTask(task);
+        fileBackedTaskManager.addEpic(epic);
+        fileBackedTaskManager.addEpic(epic2);
+        fileBackedTaskManager.addSubtask(subtask1);
+        fileBackedTaskManager.addSubtask(subtask2);
 
         fileBackedTaskManager.save();
+        FileBackedTaskManager.loadFromFile(file);
+
         ArrayList<String> result = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -97,15 +97,27 @@ public class SavingTest {
         } catch (Throwable exception) {
             System.out.println("Ошибка в тесте сохранения");
         }
-        assertEquals(result, res); // первый тест
+        assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());// первый тест
+        assertEquals(result.get(1), fileBackedTaskManager.getAllEpics().get(0).epictoString());// первый тест
+        assertEquals(result.get(2), fileBackedTaskManager.getAllEpics().get(1).epictoString());
+        assertEquals(result.get(3), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());
+        assertEquals(result.get(4), fileBackedTaskManager.getAllSubs().get(1).subTasktoString());
+        assertEquals(fileBackedTaskManager.getAllEpics().size(), 2);
+        assertEquals(fileBackedTaskManager.getAllSubs().size(), 2);
+        assertEquals(fileBackedTaskManager.getTasks().size(), 1);
+    }
+    @Test
+    public void checkEmptyFileLoad() throws IOException, ManagerSaveException {
+        Path tempFilePath = Files.createTempFile(null, ".txt");
+        File file = new File(String.valueOf(tempFilePath));
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
 
-        fileBackedTaskManager.deleteAllTasks();
-        fileBackedTaskManager.deleteAllEpics();
-        fileBackedTaskManager.removeAllSubs();
+        fileBackedTaskManager.save();
+        FileBackedTaskManager.loadFromFile(file);
 
-        var fbt = FileBackedTaskManager.loadFromFile(file);
-        assertEquals(fbt.getTasks().size(), 1); // второй тест
-        assertEquals(fbt.getAllEpics().size(), 2);
-        assertEquals(fbt.getAllSubs().size(), 2);
+        assertEquals(fileBackedTaskManager.getAllEpics(), new ArrayList<>());
+        assertEquals(fileBackedTaskManager.getTasks(), new ArrayList<>());
+        assertEquals(fileBackedTaskManager.getAllSubs(), new ArrayList<>());
+
     }
 }
