@@ -95,17 +95,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
         return res;
     }
+
     @Override
     public void deleteTask(int taskID) {
         super.deleteTask(taskID);
         super.getHistoryManager().remove(taskID);
         save();
     }
+
     @Override
     public void updateTask(Task task) {
         super.addTask(task);
         save();
     }
+
     @Override
     public void deleteAllEpics() {
         for (Epic epic : super.getAllEpics()) {
@@ -115,6 +118,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         super.deleteSubtasks();
         save();
     }
+
     @Override
     public void deleteEpic(int taskID) {
         for (Integer key : super.getSubTasksMap().keySet()) {
@@ -126,11 +130,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         super.getHistoryManager().remove(taskID);
         save();
     }
+
     @Override
     public void updateEpic(Epic epic) {
         super.addEpic(epic);
         save();
     }
+
     @Override
     public void deleteSubtasks() {
         getAllSubs().clear();
@@ -142,6 +148,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
         save();
     }
+    
     @Override
     public void deleteSub(int subtaskID) {
         Subtask subtask1 = super.getSubTasksMap().get(subtaskID);
