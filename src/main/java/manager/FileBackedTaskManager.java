@@ -149,7 +149,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-
     @Override
     public void deleteSub(int subtaskID) {
         Subtask subtask1 = super.getSubTasksMap().get(subtaskID);
