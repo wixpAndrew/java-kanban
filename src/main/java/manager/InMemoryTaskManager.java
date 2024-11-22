@@ -170,18 +170,21 @@ public class InMemoryTaskManager implements ITaskManager {
     public List<Subtask> getAllSubs() {
         return new ArrayList<>(subtasks.values());
     }
+
     @Override
-    public Map<Integer, Subtask> getSubTasksMap(){
+    public Map<Integer, Subtask> getSubTasksMap() {
         return subtasks;
     }
+
     // ----------------------------------------------------------------------------------------------
+
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 
     @Override
-    public HistoryManager getHistoryManager(){
+    public HistoryManager getHistoryManager() {
         return historyManager;
     }
 }
