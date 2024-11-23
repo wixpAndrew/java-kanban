@@ -23,6 +23,8 @@ public interface ITaskManager {
 
     void updateTask(Task task);
 
+    Map<Integer, Task> getTaskMap();
+
     // Epic
     int addEpic(Epic epic);
 

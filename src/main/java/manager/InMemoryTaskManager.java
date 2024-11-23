@@ -67,6 +67,11 @@ public class InMemoryTaskManager implements ITaskManager {
         tasks.put(task.getId(), task);
     }
 
+    @Override
+    public Map<Integer, Task> getTaskMap() {
+        return tasks;
+    }
+
     // Epic
     // -------------------------------------------------------------------------------------------------
     @Override

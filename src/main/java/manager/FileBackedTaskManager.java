@@ -66,40 +66,27 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public int addSubtask(Subtask subtask) {
         int res = super.addSubtask(subtask);
-        try {
-            save();
-        } catch (ManagerSaveException exception) {
-            System.out.println(exception.getMessage());
-        }
+        save();
         return res;
     }
 
     @Override
     public int addEpic(Epic epic) {
         int res = super.addEpic(epic);
-        try {
-            save();
-        } catch (ManagerSaveException exception) {
-            System.out.println(exception.getMessage());
-        }
+        save();
         return res;
     }
 
     @Override
     public int addTask(Task task) {
         int res = super.addTask(task);
-        try {
-            save();
-        } catch (ManagerSaveException exception) {
-            System.out.println(exception.getMessage());
-        }
+        save();
         return res;
     }
 
     @Override
     public void deleteTask(int taskID) {
         super.deleteTask(taskID);
-        super.getHistoryManager().remove(taskID);
         save();
     }
 
