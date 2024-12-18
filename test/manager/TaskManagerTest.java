@@ -51,8 +51,60 @@ abstract class TaskManagerTest<T extends ITaskManager> {
     }
 
     @Test
-    public void testGetAllEpics() {
+    public void testDeleteAllEpics() {
 
     }
 
+    @Test
+    public void testDeleteEpic() {
+
+    }
+    @Test
+    public void testUpdateEpic() {
+
+    }
+    @Test
+    public void testAddSubtask() {
+
+    }
+    @Test
+    public void testGetAllEpicSubTasks() {
+
+    }
+    @Test
+    public void testDeleteSubtasks() {
+
+    }
+    @Test
+    public void testUpdateSubTask() {
+
+    }
+    @Test
+    public void testGetSubtaskById() {
+
+    }
+    @Test
+    public void testGetAllSubs() {
+
+    }
+    @Test
+    public void testGetHistory() {
+
+    }
+    @Test
+    public void testGetHistoryManager() {
+
+    }
+    @Test
+    public void testGetSubTasksMap() {
+
+    }
+    @Test
+    public void testGetPrioritizedTasks() {
+
+    }
+    @Test
+    public void testIsItRightWorkingTasks() {
+
+    }
 }
