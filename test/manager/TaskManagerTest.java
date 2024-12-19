@@ -103,8 +103,4 @@ abstract class TaskManagerTest<T extends ITaskManager> {
     public void testGetPrioritizedTasks() {
 
     }
-    @Test
-    public void testIsItRightWorkingTasks() {
-
-    }
 }

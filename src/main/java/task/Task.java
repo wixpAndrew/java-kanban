@@ -13,10 +13,10 @@ public class Task {
     private Progress status;
     private Integer id;
     private String description;
-    LocalDateTime startTime;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    Duration duration;
-    LocalDateTime endTime;
+    private LocalDateTime startTime;
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private Duration duration;
+    private LocalDateTime endTime;
 
     public Task(String name, Progress status, String description) {
         this.name = name;
@@ -24,7 +24,7 @@ public class Task {
         this.description = description;
 
         if (status == null) {
-            System.out.println("Ошибка , статус == null");
+        // ???
         } else if (status.equals(Progress.IN_PROGRESS)) {
             String strTime = LocalDateTime.now().format(formatter);
             startTime= LocalDateTime.parse(strTime, formatter);
@@ -74,10 +74,15 @@ public class Task {
             return this.getId() + "," + "TASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
     }
     public LocalDateTime getEndTime() {
-            if (startTime != null && duration != null) {
+            if (startTime != null && duration != null && endTime == null) {
                 return startTime.plusMinutes(duration.toMinutes());
+            } else if (endTime != null) {
+                return endTime;
             }
-            return null;
+            else {
+                System.out.println("Ошибка при возвращении конеч. времени");
+                return null;
+            }
     }
 
     public LocalDateTime getStartTime() {
@@ -86,7 +91,23 @@ public class Task {
         }
         else {
             System.out.println("Ошибка при выводе старта !");
+            return null;
         }
-        return null;
+    }
+
+    public void setStartTime(LocalDateTime start) {
+        this.startTime =  start;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public Duration getDuration() {
+        return duration;
     }
 }

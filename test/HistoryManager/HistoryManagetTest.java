@@ -18,7 +18,6 @@ public class HistoryManagetTest {
     void checkEmptyHistory() {
         assertEquals(new ArrayList<>(), historyManager.getHistory());
     }
-
     @Test
     void checkDeleting() {
         Task task1 = new Task("sfd", Progress.NEW, "sss");

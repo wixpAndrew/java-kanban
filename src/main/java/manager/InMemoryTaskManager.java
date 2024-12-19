@@ -195,14 +195,21 @@ public class InMemoryTaskManager implements ITaskManager {
     public boolean isItRightWorkingTasks() {
         boolean res = false;
         List<Task> lis = new ArrayList<>(prioritTasks);
-        for (int i = 0; i < prioritTasks.size(); i++) {
-            if (!lis.get(i + 1).getStartTime().isAfter(lis.get(i).getEndTime())) {
+
+        for (int i = 0; i < lis.size() - 1; i++) {
+            Task task1 = lis.get(i);
+            Task task2 = lis.get(i + 1);
+
+            // Проверка на null для времени начала и окончания
+            if (task1.getStartTime() == null || task1.getEndTime() == null || task2.getStartTime() == null || task2.getEndTime() == null) {
+                throw new IllegalArgumentException("Ошибка при выводе времени.");
+            }
+
+            if (task2.getStartTime().isBefore(task1.getEndTime())) {
                 res = true;
                 break;
-            } else {
-                res = false;
             }
         }
         return res;
-    }
 }
+    }

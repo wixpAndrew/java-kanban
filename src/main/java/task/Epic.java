@@ -71,9 +71,7 @@ public class Epic extends Task {
     public String epictoString() {
         return this.getId() + "," + "EPIC" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
     }
-    //public LocalDateTime getEndTime() {
 
-    //}
     public LocalDateTime getEndTime(){
         LocalDateTime result = null;
         result = subList.get(0).getStartTime();
@@ -86,8 +84,7 @@ public class Epic extends Task {
     }
 
     public LocalDateTime getStartTime(){
-        LocalDateTime result = null;
-        result = subList.get(0).getStartTime();
+        LocalDateTime result = subList.get(0).getStartTime();
 
         for (int i = 1; i < subList.size(); i++) {
             if (result.isBefore(subList.get(i).getStartTime())) {
