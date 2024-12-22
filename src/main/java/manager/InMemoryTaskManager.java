@@ -16,7 +16,7 @@ public class InMemoryTaskManager implements ITaskManager {
     Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
     public InMemoryTaskManager() {
-        historyManager = Managers.getDefaultHistory();
+        historyManager=Managers.getDefaultHistory();
     }
 
     private int generateId() {
@@ -25,6 +25,7 @@ public class InMemoryTaskManager implements ITaskManager {
 
     // Task
     //-----------------------------------------------------------
+    
     @Override
     public int addTask(Task task) {
         if (task.getId() == null) {
