@@ -77,7 +77,7 @@ public class Epic extends Task {
                 this.getDuration();
     }
 
-    public LocalDateTime getEndTime(){
+    public LocalDateTime getEndTime() {
         LocalDateTime result = null;
         if (subList.isEmpty()) return null;
         result = subList.get(0).getStartTime();
@@ -106,7 +106,7 @@ public class Epic extends Task {
         LocalDateTime result = list.get(0).getStartTime();
 
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getStartTime().isBefore(list.get(i).getStartTime())) {
+            if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
                 result = list.get(i).getStartTime();
             }
         }
