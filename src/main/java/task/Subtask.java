@@ -16,7 +16,7 @@ public class Subtask extends Task { // подзадача
         super(name, status, description);
         if (status.equals(Progress.IN_PROGRESS)) {
             String str = LocalDateTime.now().format(formatter);
-            startTime= LocalDateTime.parse(str, formatter);
+            startTime = LocalDateTime.parse(str, formatter);
         } else if (status.equals(Progress.DONE)) {
             endTime = LocalDateTime.now();
         }
@@ -58,6 +58,7 @@ public class Subtask extends Task { // подзадача
                 this.getStartTime() + "," +
                 this.getDuration();
     }
+    
     public void setStartTime(LocalDateTime start) {
         this.startTime = start;
     }
