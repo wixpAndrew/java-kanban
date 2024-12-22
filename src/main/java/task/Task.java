@@ -22,7 +22,7 @@ public class Task implements Serializable {
 
           if (status.equals(Progress.IN_PROGRESS)) {
             String strTime = LocalDateTime.now().format(formatter);
-            startTime= LocalDateTime.parse(strTime, formatter);
+            startTime = LocalDateTime.parse(strTime, formatter);
         } else if (status.equals(Progress.DONE)) {
             String strTime = LocalDateTime.now().format(formatter);
             endTime = LocalDateTime.parse(strTime, formatter);
@@ -74,6 +74,7 @@ public class Task implements Serializable {
                     + this.getStartTime() + ","
                     + this.getDuration();
     }
+    
     public LocalDateTime getEndTime() {
             if (startTime != null && duration != null && endTime == null) {
                 return startTime.plusMinutes(duration.toMinutes());
