@@ -32,7 +32,6 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         this.task = new Task("name1", Progress.NEW, "ndffdfdf");
     }
 
-
     @Test
     public void testWithOneTypesOfTask() throws IOException, ManagerSaveException {
         Path tempFilePath = Files.createTempFile(null, ".txt");
@@ -42,10 +41,6 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         fileBackedTaskManager.addTask(task);
         fileBackedTaskManager.addEpic(epic);
         subtask1.setEpicId(epic.getId());
-        fileBackedTaskManager.addSubtask(subtask1);
-
-        fileBackedTaskManager.addEpic(epic);
-        fileBackedTaskManager.addTask(task);
         fileBackedTaskManager.addSubtask(subtask1);
 
         fileBackedTaskManager.save();
@@ -62,6 +57,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         } catch (Throwable exception) {
             System.out.println("Ошибка в тесте сохранения");
         }
+
         assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());// первый тест
         assertEquals(result.get(1), fileBackedTaskManager.getAllEpics().get(0).epictoString());// первый тест
         assertEquals(result.get(2), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());// первый тест
@@ -76,21 +72,16 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
         epic2.setStatus(Progress.NEW);
         epic.setStatus(Progress.NEW);
+
         fileBackedTaskManager.addTask(task);
         fileBackedTaskManager.addEpic(epic);
+
         subtask1.setEpicId(epic.getId());
         fileBackedTaskManager.addSubtask(subtask1);
         fileBackedTaskManager.addEpic(epic2);
         subtask2.setEpicId(epic2.getId());
         fileBackedTaskManager.addSubtask(subtask2);
 
-
-
-        fileBackedTaskManager.addTask(task);
-        fileBackedTaskManager.addEpic(epic);
-        fileBackedTaskManager.addEpic(epic2);
-        fileBackedTaskManager.addSubtask(subtask1);
-        fileBackedTaskManager.addSubtask(subtask2);
 
         fileBackedTaskManager.save();
         FileBackedTaskManager.loadFromFile(file);

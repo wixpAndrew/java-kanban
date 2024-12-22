@@ -13,7 +13,7 @@ public class InMemoryTaskManager implements ITaskManager {
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private int count = 0;
-    Set<Task> prioritTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+    Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
     public InMemoryTaskManager() {
         historyManager = Managers.getDefaultHistory();
@@ -22,14 +22,16 @@ public class InMemoryTaskManager implements ITaskManager {
     private int generateId() {
         return ++count;
     }
+
     // Task
     //-----------------------------------------------------------
-
-
     @Override
     public int addTask(Task task) {
         if (task.getId() == null) {
             task.setId(generateId());
+        }
+        if (task.getStartTime() != null) {
+            prioritizedTasks.add(task);
         }
         tasks.put(task.getId(), task);
         return task.getId();
@@ -75,6 +77,9 @@ public class InMemoryTaskManager implements ITaskManager {
         if (epic.getId() == null) {
             epic.setId(generateId());
         }
+        if (epic.getStartTime() != null) {
+            prioritizedTasks.add(epic);
+        }
         epics.put(epic.getId(), epic);
         return epic.getId();
     }
@@ -118,6 +123,9 @@ public class InMemoryTaskManager implements ITaskManager {
     public int addSubtask(Subtask subtask) {
         if (subtask.getId() == null) {
             subtask.setId(generateId());
+        }
+        if (subtask.getStartTime() != null) {
+            prioritizedTasks.add(subtask);
         }
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubTask(subtask);
@@ -188,13 +196,13 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public List<Task> getPrioritizedTasks() {
-        return new ArrayList<Task>(prioritTasks);
+        return new ArrayList<Task>(prioritizedTasks);
     }
 
     @Override
-    public boolean isItRightWorkingTasks() {
+    public boolean isHereCrossing() { // есть ли пересечение? да - true/ нет - false;
         boolean res = false;
-        List<Task> lis = new ArrayList<>(prioritTasks);
+        List<Task> lis = new ArrayList<>(prioritizedTasks);
 
         for (int i = 0; i < lis.size() - 1; i++) {
             Task task1 = lis.get(i);

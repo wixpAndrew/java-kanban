@@ -1,20 +1,22 @@
 package task;
 
 import jdk.jfr.DataAmount;
+
+import java.io.Serializable;
 import java.sql.SQLOutput;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Task {
+public class Task implements Serializable {
 
     private String name;
     private Progress status;
     private Integer id;
     private String description;
     private LocalDateTime startTime;
-     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private Duration duration;
     private LocalDateTime endTime;
 
@@ -71,7 +73,13 @@ public class Task {
     }
 
     public String tasktoString() {
-            return this.getId() + "," + "TASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
+            return this.getId() + ","
+                    + "TASK" + ","
+                    + this.getName() + ","
+                    + this.getStatus() + ","
+                    + this.getDescription() + ","
+                    + this.getStartTime() + ","
+                    + this.getDuration();
     }
     public LocalDateTime getEndTime() {
             if (startTime != null && duration != null && endTime == null) {
@@ -90,7 +98,6 @@ public class Task {
             return startTime;
         }
         else {
-            System.out.println("Ошибка при выводе старта !");
             return null;
         }
     }

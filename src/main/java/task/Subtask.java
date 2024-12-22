@@ -33,7 +33,6 @@ public class Subtask extends Task { // подзадача
             return startTime;
         }
         else {
-            System.out.println("Ошибка при выводе старта !");
             return null;
         }
     }
@@ -55,7 +54,13 @@ public class Subtask extends Task { // подзадача
     }
 
     public String subTasktoString() {
-        return this.getId() + "," + "SUBTASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + "," + this.getEpicId() + ",";
+        return this.getId() + "," + "SUBTASK" + "," +
+                this.getName() + "," +
+                this.getStatus() + "," +
+                this.getDescription() + "," +
+                this.getEpicId() + "," +
+                this.getStartTime() + "," +
+                this.getDuration();
     }
     public void setStartTime(LocalDateTime start) {
         this.startTime = start;
