@@ -1,13 +1,20 @@
 package task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Epic extends Task {
     private final List<Subtask> subList = new ArrayList<>();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    LocalDateTime startTime;
+    Duration duration;
 
     public Epic(String name, String description) {
-        super(name, description);
+        super(name, null, description);
     }
 
     public List<Subtask> getAllSubTasks() {
@@ -15,17 +22,17 @@ public class Epic extends Task {
     }
 
     public void addSubTask(Subtask subtask) {
+        if (subtask.getStatus() == Progress.IN_PROGRESS && subList.isEmpty()) {
+            startTime = subtask.getStartTime();
+        }
         subtask.setEpicId(this.getId());
         subList.add(subtask);
     }
 
     public void deleteSubTask(Subtask subtask) {
-        for (Subtask subtask1 : subList) {
-            if (subtask1.getId() == subtask.getId()) {
-                subList.remove(subtask1);
-                break;
-            }
-        }
+        subList.stream()
+                .filter((n) -> Objects.equals(n.getId(), subtask.getId()))
+                .forEach(subList::remove);
     }
 
     public void calculateStatus() {
@@ -59,5 +66,31 @@ public class Epic extends Task {
 
     public void deleteAllSubTasks() {
         subList.clear();
+    }
+
+    public String epictoString() {
+        return this.getId() + "," + "EPIC" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
+    }
+
+    public LocalDateTime getEndTime(){
+        LocalDateTime result = null;
+        result = subList.get(0).getStartTime();
+        for (int i = 1; i < subList.size(); i++) {
+            if (result.isAfter(subList.get(i).getStartTime())) {
+                result = subList.get(i).getStartTime();
+            }
+        }
+        return result;
+    }
+
+    public LocalDateTime getStartTime(){
+        LocalDateTime result = subList.get(0).getStartTime();
+
+        for (int i = 1; i < subList.size(); i++) {
+            if (result.isBefore(subList.get(i).getStartTime())) {
+                result = subList.get(i).getStartTime();
+            }
+        }
+        return result;
     }
 }

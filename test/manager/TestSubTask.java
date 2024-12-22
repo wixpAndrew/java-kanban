@@ -14,11 +14,11 @@ public class TestSubTask {
 
     @Test
     void checkSubTaskById() {
-        Epic epic1 = new Epic("name1", "dsdsds");
+        Epic epic1 = new Epic("name1",  "");
         Subtask subtask = new Subtask("nameSub", "opisanit", Progress.NEW);
         inMemoryTaskManager.addEpic(epic1);
         epic1.addSubTask(subtask);
-        inMemoryTaskManager.createSubtask(subtask);
+        inMemoryTaskManager.addSubtask(subtask);
         assertEquals(subtask, inMemoryTaskManager.getSubtaskById(subtask.getId()));
     }
 
@@ -32,24 +32,24 @@ public class TestSubTask {
         subtask1.setEpicId(epic2.getId());
         subtask2.setEpicId(epic2.getId());
 
-        inMemoryTaskManager.createSubtask(subtask1);
-        inMemoryTaskManager.createSubtask(subtask2);
+        inMemoryTaskManager.addSubtask(subtask1);
+        inMemoryTaskManager.addSubtask(subtask2);
 
        assertEquals(2, inMemoryTaskManager.getAllEpicSubTasks(epic2.getId()).size());
     }
 
     @Test
     void checkRemoveAllSubTasks() {
-        Epic epic1 = new Epic("name1", "dsdsds");
+        Epic epic1 = new Epic("name1", "");
         Subtask subtask1 = new Subtask("nameSub1", "opisanitdfdfdf", Progress.NEW);
         Subtask subtask2 = new Subtask("nameSub2", "opisanitdfdf", Progress.NEW);
         inMemoryTaskManager.addEpic(epic1);
         subtask1.setEpicId(epic1.getId());
         subtask2.setEpicId(epic1.getId());
 
-        inMemoryTaskManager.createSubtask(subtask1);
-        inMemoryTaskManager.createSubtask(subtask2);
-        inMemoryTaskManager.removeAllSubs();
+        inMemoryTaskManager.addSubtask(subtask1);
+        inMemoryTaskManager.addSubtask(subtask2);
+        inMemoryTaskManager.deleteSubtasks();
 
         assertEquals(0, inMemoryTaskManager.getAllEpicSubTasks(epic1.getId()).size());
     }
