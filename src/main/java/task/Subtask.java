@@ -17,8 +17,7 @@ public class Subtask extends Task { // подзадача
         if (status.equals(Progress.IN_PROGRESS)) {
             String str = LocalDateTime.now().format(formatter);
             startTime= LocalDateTime.parse(str, formatter);
-        }
-        else if (status.equals(Progress.DONE)) {
+        } else if (status.equals(Progress.DONE)) {
             endTime = LocalDateTime.now();
         }
     }
@@ -30,8 +29,7 @@ public class Subtask extends Task { // подзадача
     public LocalDateTime getStartTime() {
         if (startTime != null) {
             return startTime;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -41,8 +39,7 @@ public class Subtask extends Task { // подзадача
             return startTime.plusMinutes(duration.toMinutes());
         } else if (endTime != null) {
             return endTime;
-        }
-        else {
+        } else {
             System.out.println("Ошибка при возвращении конеч. времени");
             return null;
         }

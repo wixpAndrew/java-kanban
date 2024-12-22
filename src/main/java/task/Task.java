@@ -20,9 +20,7 @@ public class Task implements Serializable {
         this.status = status;
         this.description = description;
 
-        if (status == null) {
-        // ???
-        } else if (status.equals(Progress.IN_PROGRESS)) {
+          if (status.equals(Progress.IN_PROGRESS)) {
             String strTime = LocalDateTime.now().format(formatter);
             startTime= LocalDateTime.parse(strTime, formatter);
         } else if (status.equals(Progress.DONE)) {
@@ -81,8 +79,7 @@ public class Task implements Serializable {
                 return startTime.plusMinutes(duration.toMinutes());
             } else if (endTime != null) {
                 return endTime;
-            }
-            else {
+            } else {
                 System.out.println("Ошибка при возвращении конеч. времени");
                 return null;
             }
@@ -91,8 +88,7 @@ public class Task implements Serializable {
     public LocalDateTime getStartTime() {
         if (startTime != null) {
             return startTime;
-        }
-        else {
+        } else {
             return null;
         }
     }
