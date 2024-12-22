@@ -91,7 +91,6 @@ public class Epic extends Task {
 
     public LocalDateTime getStartTime() {
         if (subList.isEmpty()) return null;
-        if (subList.size() == 1) return subList.get(0).getStartTime();
 
         List<Subtask> list = new ArrayList<>();
 
@@ -104,6 +103,9 @@ public class Epic extends Task {
         if (list.isEmpty()) return null;
 
         LocalDateTime result = list.get(0).getStartTime();
+
+        if (list.size() == 1) return list.get(0).getStartTime();
+
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
