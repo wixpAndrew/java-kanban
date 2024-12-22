@@ -74,7 +74,6 @@ public class Task implements Serializable {
                     + this.getStartTime() + ","
                     + this.getDuration();
     }
-    
     public LocalDateTime getEndTime() {
             if (startTime != null && duration != null && endTime == null) {
                 return startTime.plusMinutes(duration.toMinutes());

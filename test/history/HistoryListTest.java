@@ -40,6 +40,7 @@ public class HistoryListTest {
         taskManger.getTaskById(task2.getId());
         taskManger.getTaskById(task3.getId());
         taskManger.deleteTask(task2.getId());
+
        assertEquals(2, taskManger.getHistory().size());
     }
 }
