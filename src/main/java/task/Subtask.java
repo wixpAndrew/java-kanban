@@ -58,7 +58,7 @@ public class Subtask extends Task { // подзадача
                 this.getStartTime() + "," +
                 this.getDuration();
     }
-    
+
     public void setStartTime(LocalDateTime start) {
         this.startTime = start;
     }
