@@ -20,7 +20,9 @@ public class Task implements Serializable {
         this.status = status;
         this.description = description;
 
-          if (status.equals(Progress.IN_PROGRESS)) {
+        if (status == null) {
+
+        } else if (status.equals(Progress.IN_PROGRESS)) {
             String strTime = LocalDateTime.now().format(formatter);
             startTime = LocalDateTime.parse(strTime, formatter);
         } else if (status.equals(Progress.DONE)) {
