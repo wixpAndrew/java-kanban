@@ -11,7 +11,7 @@ public class Task implements Serializable {
     private Integer id;
     private String description;
     private LocalDateTime startTime;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private Duration duration;
     private LocalDateTime endTime;
 

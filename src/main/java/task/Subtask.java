@@ -26,24 +26,6 @@ public class Subtask extends Task { // подзадача
         return epicId;
     }
 
-    public LocalDateTime getStartTime() {
-        if (startTime != null) {
-            return startTime;
-        } else {
-            return null;
-        }
-    }
-
-    public LocalDateTime getEndTime() {
-        if (startTime != null && duration != null && endTime == null) {
-            return startTime.plusMinutes(duration.toMinutes());
-        } else if (endTime != null) {
-            return endTime;
-        } else {
-            System.out.println("Ошибка при возвращении конеч. времени");
-            return null;
-        }
-    }
 
     public void setEpicId(Integer epicId) {
         this.epicId = epicId;

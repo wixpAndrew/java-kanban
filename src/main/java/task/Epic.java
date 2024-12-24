@@ -9,9 +9,7 @@ import java.util.Objects;
 
 public class Epic extends Task {
     private final List<Subtask> subList = new ArrayList<>();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    LocalDateTime startTime = null;
-    Duration duration;
+    private LocalDateTime startTime;
 
     public Epic(String name, String description) {
         super(name, null, description);
@@ -78,7 +76,7 @@ public class Epic extends Task {
     }
 
     public LocalDateTime getEndTime() {
-        LocalDateTime result = null;
+        LocalDateTime result;
         if (subList.isEmpty()) return null;
         result = subList.get(0).getStartTime();
         for (int i = 1; i < subList.size(); i++) {
@@ -94,6 +92,10 @@ public class Epic extends Task {
 
         List<Subtask> list = new ArrayList<>();
 
+        subList.stream()
+                .filter(Objects::nonNull)
+                .forEach(list::add);
+
         for (Subtask subtask : subList) {
             if (subtask.getStartTime() != null) {
                 list.add(subtask);
@@ -107,8 +109,11 @@ public class Epic extends Task {
         if (list.size() == 1) return list.get(0).getStartTime();
 
 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()){
+                result = list.get(i).getStartTime();
+            }
+            else if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
                 result = list.get(i).getStartTime();
             }
         }
