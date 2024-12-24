@@ -1,8 +1,6 @@
 package task;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -110,10 +108,9 @@ public class Epic extends Task {
 
 
         for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()){
+            if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()) {
                 result = list.get(i).getStartTime();
-            }
-            else if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
+            } else if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
                 result = list.get(i).getStartTime();
             }
         }
