@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import task.Progress;
 import task.Task;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 abstract class TaskManagerTest<T extends ITaskManager> {
 

@@ -2,7 +2,6 @@ package task;
 
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,9 +16,8 @@ public class Subtask extends Task { // подзадача
         super(name, status, description);
         if (status.equals(Progress.IN_PROGRESS)) {
             String str = LocalDateTime.now().format(formatter);
-            startTime= LocalDateTime.parse(str, formatter);
-        }
-        else if (status.equals(Progress.DONE)) {
+            startTime = LocalDateTime.parse(str, formatter);
+        } else if (status.equals(Progress.DONE)) {
             endTime = LocalDateTime.now();
         }
     }
@@ -28,35 +26,21 @@ public class Subtask extends Task { // подзадача
         return epicId;
     }
 
-    public LocalDateTime getStartTime() {
-        if (startTime != null) {
-            return startTime;
-        }
-        else {
-            System.out.println("Ошибка при выводе старта !");
-            return null;
-        }
-    }
-
-    public LocalDateTime getEndTime() {
-        if (startTime != null && duration != null && endTime == null) {
-            return startTime.plusMinutes(duration.toMinutes());
-        } else if (endTime != null) {
-            return endTime;
-        }
-        else {
-            System.out.println("Ошибка при возвращении конеч. времени");
-            return null;
-        }
-    }
 
     public void setEpicId(Integer epicId) {
         this.epicId = epicId;
     }
 
     public String subTasktoString() {
-        return this.getId() + "," + "SUBTASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + "," + this.getEpicId() + ",";
+        return this.getId() + "," + "SUBTASK" + "," +
+                this.getName() + "," +
+                this.getStatus() + "," +
+                this.getDescription() + "," +
+                this.getEpicId() + "," +
+                this.getStartTime() + "," +
+                this.getDuration();
     }
+
     public void setStartTime(LocalDateTime start) {
         this.startTime = start;
     }

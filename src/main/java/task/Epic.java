@@ -1,17 +1,13 @@
 package task;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
     private final List<Subtask> subList = new ArrayList<>();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    LocalDateTime startTime;
-    Duration duration;
+    private LocalDateTime startTime;
 
     public Epic(String name, String description) {
         super(name, null, description);
@@ -69,11 +65,17 @@ public class Epic extends Task {
     }
 
     public String epictoString() {
-        return this.getId() + "," + "EPIC" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
+        return this.getId() + "," + "EPIC" + "," +
+                this.getName() + "," +
+                this.getStatus() + "," +
+                this.getDescription() + "," +
+                this.getStartTime() + "," +
+                this.getDuration();
     }
 
-    public LocalDateTime getEndTime(){
-        LocalDateTime result = null;
+    public LocalDateTime getEndTime() {
+        LocalDateTime result;
+        if (subList.isEmpty()) return null;
         result = subList.get(0).getStartTime();
         for (int i = 1; i < subList.size(); i++) {
             if (result.isAfter(subList.get(i).getStartTime())) {
@@ -83,12 +85,33 @@ public class Epic extends Task {
         return result;
     }
 
-    public LocalDateTime getStartTime(){
-        LocalDateTime result = subList.get(0).getStartTime();
+    public LocalDateTime getStartTime() {
+        if (subList.isEmpty()) return null;
 
-        for (int i = 1; i < subList.size(); i++) {
-            if (result.isBefore(subList.get(i).getStartTime())) {
-                result = subList.get(i).getStartTime();
+        List<Subtask> list = new ArrayList<>();
+
+        subList.stream()
+                .filter(Objects::nonNull)
+                .forEach(list::add);
+
+        for (Subtask subtask : subList) {
+            if (subtask.getStartTime() != null) {
+                list.add(subtask);
+            }
+        }
+
+        if (list.isEmpty()) return null;
+
+        LocalDateTime result = list.get(0).getStartTime();
+
+        if (list.size() == 1) return list.get(0).getStartTime();
+
+
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()) {
+                result = list.get(i).getStartTime();
+            } else if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
+                result = list.get(i).getStartTime();
             }
         }
         return result;
