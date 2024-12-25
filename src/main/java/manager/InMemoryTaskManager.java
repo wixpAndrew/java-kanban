@@ -122,12 +122,14 @@ public class InMemoryTaskManager implements ITaskManager {
     @Override
     public int addSubtask(Subtask subtask) {
 
-        if (subtask.getId() == null) {
+        Optional.ofNullable(subtask.getId()).orElseGet(() -> {
             subtask.setId(generateId());
-        }
-        if (subtask.getStartTime() != null) {
-            prioritizedTasks.add(subtask);
-        }
+            return subtask.getId();
+        });
+
+        Optional.ofNullable(subtask.getStartTime())
+                .ifPresent(startTime -> prioritizedTasks.add(subtask));
+
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubTask(subtask);
         return subtask.getId();

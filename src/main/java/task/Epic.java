@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class Epic extends Task {
     private final List<Subtask> subList = new ArrayList<>();
-    private LocalDateTime startTime;
 
     public Epic(String name, String description) {
         super(name, null, description);
@@ -19,7 +18,7 @@ public class Epic extends Task {
 
     public void addSubTask(Subtask subtask) {
         if (subtask.getStatus() == Progress.IN_PROGRESS && subList.isEmpty()) {
-            startTime = subtask.getStartTime();
+            LocalDateTime startTime = subtask.getStartTime();
         }
         subtask.setEpicId(this.getId());
         subList.add(subtask);
@@ -93,12 +92,6 @@ public class Epic extends Task {
         subList.stream()
                 .filter(Objects::nonNull)
                 .forEach(list::add);
-
-        for (Subtask subtask : subList) {
-            if (subtask.getStartTime() != null) {
-                list.add(subtask);
-            }
-        }
 
         if (list.isEmpty()) return null;
 
