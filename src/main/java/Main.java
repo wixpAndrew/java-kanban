@@ -8,13 +8,15 @@ public class Main {
         Subtask subtask1 = new Subtask("Найти деньги", "", Progress.IN_PROGRESS);
         Subtask subtask2 = new Subtask("Найти людей", "", Progress.IN_PROGRESS);
         Subtask subtask3 = new Subtask("Найти что то ", "", Progress.DONE);
-
+        Task tas1 = new Task("name1", Progress.DONE, "dfdf");
+        Task task2 = new Task("name2", Progress.NEW, "dfdf");
         Epic epic2 = new Epic("Второй эпик",  "");
 
        epic2.setId(1);
 
        epic2.addSubTask(subtask1);
        epic2.addSubTask(subtask2);
+
 
         //System.out.println(subtask2.getEndTime());
         //System.out.println(epic2.getEndTime());

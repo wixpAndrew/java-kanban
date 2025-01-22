@@ -1,4 +1,7 @@
 package task;
+import com.google.gson.annotations.Expose;
+import server.User;
+
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -6,14 +9,15 @@ import java.time.format.DateTimeFormatter;
 
 public class Task implements Serializable {
 
-    private String name;
-    private Progress status;
-    private Integer id;
-    private String description;
-    private LocalDateTime startTime;
+    @Expose private String name;
+    @Expose private Progress status;
+    @Expose private Integer id;
+    @Expose private String description;
+    @Expose private LocalDateTime startTime;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private Duration duration;
-    private LocalDateTime endTime;
+    @Expose private Duration duration;
+    @Expose private LocalDateTime endTime;
+
 
     public Task(String name, Progress status, String description) {
         this.name = name;
