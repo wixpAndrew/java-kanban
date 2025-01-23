@@ -17,7 +17,7 @@ class EpicTest {
         Epic epic = new Epic("name",  "");
         taskManager.addEpic(epic);
         taskManager.getEpicById(1);
-        assertEquals(1, taskManager.getAllEpics().size());
+        assertEquals(1, taskManager.getEpics().size());
     }
 
     @Test
@@ -27,7 +27,7 @@ class EpicTest {
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
         taskManager.deleteAllEpics();
-        assertEquals(0, taskManager.getAllEpics().size());
+        assertEquals(0, taskManager.getEpics().size());
     }
 
     @Test

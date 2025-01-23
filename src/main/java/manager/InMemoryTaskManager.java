@@ -86,7 +86,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public List<Epic> getAllEpics() {
+    public List<Epic> getEpics() {
         return new ArrayList<>(epics.values());
     }
 
