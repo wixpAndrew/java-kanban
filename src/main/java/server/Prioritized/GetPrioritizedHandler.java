@@ -14,13 +14,12 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public class GetTasksHandler implements HttpHandler {
+public class GetPrioritizedHandler implements HttpHandler {
     private ITaskManager taskManager;
 
-    public GetTasksHandler (ITaskManager taskManager) {
+    public GetPrioritizedHandler (ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
-
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
@@ -28,27 +27,20 @@ public class GetTasksHandler implements HttpHandler {
 
         String name = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         String exchangeMethod = httpExchange.getRequestMethod();
-        System.out.println("Тело запроса:\n" + name);
-
-        switch (exchangeMethod) {
-            case "GET" :
-                List<Task> tasks = taskManager.getTasks();
+                System.out.println("Тело запроса:\n" + name);
+                List<Task> tasks = taskManager.getPrioritizedTasks();
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()
                         .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                    @Override
-                    public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                        return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-                    }
-                }).create();
+                            @Override
+                            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                                return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+                            }
+                        }).create();
                 String response = gson.toJson(tasks);
-
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
                     os.write(response.getBytes(StandardCharsets.UTF_8));
                 }
-            case "POST" :
-
-        }
     }
 }
