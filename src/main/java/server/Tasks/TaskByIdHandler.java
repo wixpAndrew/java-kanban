@@ -1,5 +1,6 @@
 package server.Tasks;
 
+import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
@@ -8,7 +9,10 @@ import task.Task;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class TaskByIdHandler implements HttpHandler {
 
@@ -37,9 +41,18 @@ public class TaskByIdHandler implements HttpHandler {
 
                 httpExchange.sendResponseHeaders(200, 0);
 
+                Gson gson = new GsonBuilder()
+                        .excludeFieldsWithoutExposeAnnotation()
+                        .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+                            @Override
+                            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                                return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+                            }
+                        }).create();
+                    String response = gson.toJson(result);
+
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     assert result != null;
-                    String response = result.tasktoString();
                     os.write(response.getBytes());
                 }
             case "DELETE" :

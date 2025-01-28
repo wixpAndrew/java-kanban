@@ -25,7 +25,7 @@ public class GetTasksHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         InputStream inputStream = httpExchange.getRequestBody();
-
+        Gson gson = new Gson();
         String name = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         String exchangeMethod = httpExchange.getRequestMethod();
         System.out.println("Тело запроса:\n" + name);
@@ -33,7 +33,7 @@ public class GetTasksHandler implements HttpHandler {
         switch (exchangeMethod) {
             case "GET" :
                 List<Task> tasks = taskManager.getTasks();
-                Gson gson = new GsonBuilder()
+                Gson gson_builder = new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()
                         .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
@@ -41,7 +41,7 @@ public class GetTasksHandler implements HttpHandler {
                         return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
                     }
                 }).create();
-                String response = gson.toJson(tasks);
+                String response = gson_builder.toJson(tasks);
 
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);

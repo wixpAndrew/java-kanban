@@ -14,7 +14,6 @@ class HelloHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        // считываем тело запроса и преобразуем в строку
         InputStream inputStream = httpExchange.getRequestBody();
         String name = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         System.out.println("Тело запроса:\n" + name);
