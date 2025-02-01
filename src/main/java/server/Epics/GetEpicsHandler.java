@@ -5,10 +5,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
 import task.Epic;
+import task.Task;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -26,30 +25,40 @@ public class GetEpicsHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         InputStream inputStream = httpExchange.getRequestBody();
-
-        String name = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         String exchangeMethod = httpExchange.getRequestMethod();
+
+        Gson gson_builder = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+                    @Override
+                    public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                        return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+                    }
+                }).create();
 
         switch (exchangeMethod) {
             case "GET" :
-                System.out.println("Тело запроса:\n" + name);
+                System.out.println("Тело запроса:\n" + body);
                 List<Epic> epics = (List<Epic>) taskManager.getEpics();
-                Gson gson = new GsonBuilder()
-                        .excludeFieldsWithoutExposeAnnotation()
-                        .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                            @Override
-                            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                                return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-                            }
-                        }).create();
-                String response = gson.toJson(epics);
+                String response = gson_builder.toJson(epics);
 
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
                     os.write(response.getBytes(StandardCharsets.UTF_8));
                 }
+                break;
             case "POST" :
-                System.out.println("Тело запроса:\n" + name);
+                StringBuilder sb = new StringBuilder(body);
+                String json = sb.toString();
+                Epic epic = gson_builder.fromJson(json, Epic.class);
+                taskManager.createEpic(epic);
+                try (OutputStream os = httpExchange.getResponseBody()) {
+                    String respons = "заебись";
+                    httpExchange.sendResponseHeaders(201, respons.getBytes(StandardCharsets.UTF_8).length);
+                    os.write(respons.getBytes(StandardCharsets.UTF_8));
+                }
+                break;
         }
     }
 }

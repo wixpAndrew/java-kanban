@@ -42,5 +42,5 @@ public class GetPrioritizedHandler implements HttpHandler {
                     httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
                     os.write(response.getBytes(StandardCharsets.UTF_8));
                 }
-    }
+        }
 }
