@@ -30,6 +30,15 @@ public class EpicByIdHandler implements HttpHandler {
         String name = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         System.out.println("Тело запроса:\n" + name);
 
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+                    @Override
+                    public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                        return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+                    }
+                }).create();
+
         switch (exchangeMethod) {
             case "GET" :
                 try {
@@ -37,20 +46,11 @@ public class EpicByIdHandler implements HttpHandler {
                 } catch (NullPointerException exception) {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
-
-                httpExchange.sendResponseHeaders(200, 0);
-                Gson gson = new GsonBuilder()
-                        .excludeFieldsWithoutExposeAnnotation()
-                        .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                            @Override
-                            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                                return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-                            }
-                        }).create();
                 String response = gson.toJson(result);
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     assert result != null;
                     os.write(response.getBytes());
+                    httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
                 }
                 break;
             case "DELETE" :
@@ -64,7 +64,6 @@ public class EpicByIdHandler implements HttpHandler {
                 break;
         }
 }
-
     public static String extractAfterSlash(String url) {
         int slashIndex = url.indexOf("/");
 

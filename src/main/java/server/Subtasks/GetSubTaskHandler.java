@@ -1,4 +1,4 @@
-package server.Tasks;
+package server.Subtasks;
 
 import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;

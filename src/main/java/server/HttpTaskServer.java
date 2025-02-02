@@ -8,7 +8,7 @@ import server.Subtasks.SubTaskById;
 import server.Tasks.*;
 import server.Epics.GetEpicsHandler;
 import server.Tasks.GetPrioritizedHandler;
-import server.Tasks.GetSubTaskHandler;
+import server.Subtasks.GetSubTaskHandler;
 import task.*;
 
 import java.io.IOException;
@@ -49,14 +49,18 @@ public class HttpTaskServer {
 
 
         httpServer.createContext("/hello", new HelloHandler());//+++
+
         httpServer.createContext("/tasks", new GetTasksHandler(taskManager));//+++
         httpServer.createContext("/subtasks", new GetSubTaskHandler(taskManager));//+++
         httpServer.createContext("/epics", new GetEpicsHandler(taskManager));//+++
+        //classic
         httpServer.createContext("/task_by_id", new TaskByIdHandler(taskManager));//+++
         httpServer.createContext("/epic_by_id", new EpicByIdHandler(taskManager));//+++
-        httpServer.createContext("/subtask_by_id", new SubTaskById(taskManager));// +/- ,  надо понять баг с айдишниками
+        httpServer.createContext("/subtask_by_id", new SubTaskById(taskManager));// +/-
+        // with id
         httpServer.createContext("/prioritized", new GetPrioritizedHandler(taskManager));
         httpServer.createContext("/history", new GetPrioritizedHandler(taskManager));
+        //other
         httpServer.start();
 
         System.out.println("HTTP-сервер запущен на " + PORT + " порту!");

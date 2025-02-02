@@ -54,7 +54,7 @@ public class GetTasksHandler implements HttpHandler {
 
                 Task task = gson_builder.fromJson(json, Task.class);
                 if (task.getId() == null) {
-
+                    taskManager.createTask(task);
                 } else {
                     taskManager.updateTask(task);
                 }

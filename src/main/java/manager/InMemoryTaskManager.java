@@ -124,6 +124,7 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public void createEpic(Epic epic) {
+        epic.setId(generateId());
         epics.put(epic.getId(), epic);
     }
 

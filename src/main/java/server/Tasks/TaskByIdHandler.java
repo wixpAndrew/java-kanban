@@ -31,6 +31,15 @@ public class TaskByIdHandler implements HttpHandler {
         System.out.println("Тело запроса:\n" + name);
         String exchangeMethod = httpExchange.getRequestMethod();
 
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+                    @Override
+                    public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                        return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+                    }
+                }).create();
+
         switch (exchangeMethod) {
             case "GET":
                 try {
@@ -39,21 +48,12 @@ public class TaskByIdHandler implements HttpHandler {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
 
-                httpExchange.sendResponseHeaders(200, 0);
-
-                Gson gson = new GsonBuilder()
-                        .excludeFieldsWithoutExposeAnnotation()
-                        .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                            @Override
-                            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                                return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-                            }
-                        }).create();
-                    String response = gson.toJson(result);
+                String response = gson.toJson(result);
 
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     assert result != null;
                     os.write(response.getBytes());
+                    httpExchange.sendResponseHeaders(200, 0);
                 }
             case "DELETE" :
                 try {
