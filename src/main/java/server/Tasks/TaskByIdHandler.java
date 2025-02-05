@@ -11,12 +11,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TaskByIdHandler implements HttpHandler {
 
     private ITaskManager taskManager;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");;
 
     public TaskByIdHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
@@ -31,12 +34,30 @@ public class TaskByIdHandler implements HttpHandler {
         System.out.println("Тело запроса:\n" + name);
         String exchangeMethod = httpExchange.getRequestMethod();
 
-        Gson gson = new GsonBuilder()
+        Gson gson_builder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
                     public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                        return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+                        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), formatter);
+                    }
+                })
+                .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
+                    @Override
+                    public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.toString()); // Преобразуем LocalDateTime в строку ISO
+                    }
+                })
+                .registerTypeAdapter(Duration.class, new JsonDeserializer<Duration>() {
+                    @Override
+                    public Duration deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+                        return Duration.parse(json.getAsString()); // Преобразуем строку в Duration
+                    }
+                })
+                .registerTypeAdapter(Duration.class, new JsonSerializer<Duration>() {
+                    @Override
+                    public JsonElement serialize(Duration src, Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.toString()); // Преобразуем Duration в строку ISO
                     }
                 }).create();
 
@@ -48,21 +69,23 @@ public class TaskByIdHandler implements HttpHandler {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
 
-                String response = gson.toJson(result);
+                String response = gson_builder.toJson(result);
 
+                httpExchange.sendResponseHeaders(200, response.getBytes().length);
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     assert result != null;
                     os.write(response.getBytes());
-                    httpExchange.sendResponseHeaders(200, 0);
                 }
+                break;
             case "DELETE" :
                 try {
                     taskManager.deleteTask(Integer.parseInt(extractAfterSlash(httpExchange.getRequestURI().toString())));
+                    httpExchange.sendResponseHeaders(200, 0);
                 } catch (NullPointerException exception) {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
-
-                httpExchange.sendResponseHeaders(200, 0);
+                httpExchange.getResponseBody().close();
+                break;
         }
     }
 

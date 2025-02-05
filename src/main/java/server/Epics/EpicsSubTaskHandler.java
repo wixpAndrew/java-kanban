@@ -12,13 +12,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class EpicsSubTaskHandler implements HttpHandler {
 
     private ITaskManager taskManager;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
 
     public EpicsSubTaskHandler (ITaskManager taskManager) {
         this.taskManager = taskManager;
@@ -36,7 +39,25 @@ public class EpicsSubTaskHandler implements HttpHandler {
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
                     public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                        return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+                        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), formatter);
+                    }
+                })
+                .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
+                    @Override
+                    public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.toString()); // Преобразуем LocalDateTime в строку ISO
+                    }
+                })
+                .registerTypeAdapter(Duration.class, new JsonDeserializer<Duration>() {
+                    @Override
+                    public Duration deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+                        return Duration.parse(json.getAsString()); // Преобразуем строку в Duration
+                    }
+                })
+                .registerTypeAdapter(Duration.class, new JsonSerializer<Duration>() {
+                    @Override
+                    public JsonElement serialize(Duration src, Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.toString()); // Преобразуем Duration в строку ISO
                     }
                 }).create();
 
@@ -57,10 +78,10 @@ public class EpicsSubTaskHandler implements HttpHandler {
 
         String response = gson_builder.toJson(result);
 
+        httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
         try (OutputStream os = httpExchange.getResponseBody()) {
             assert result != null;
             os.write(response.getBytes());
-            httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
         }
     }
 
