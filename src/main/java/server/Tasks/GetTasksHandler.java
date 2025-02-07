@@ -17,7 +17,7 @@ public class GetTasksHandler implements HttpHandler {
     private ITaskManager taskManager;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
-    public GetTasksHandler (ITaskManager taskManager) {
+    public GetTasksHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
