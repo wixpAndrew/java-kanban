@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class TaskByIdHandler implements HttpHandler {
 
     private ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
     public TaskByIdHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
