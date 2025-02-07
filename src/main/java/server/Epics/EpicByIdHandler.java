@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class EpicByIdHandler implements HttpHandler {
 
     private ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     public EpicByIdHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
@@ -32,7 +32,7 @@ public class EpicByIdHandler implements HttpHandler {
         String name = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         System.out.println("Тело запроса:\n" + name);
 
-        Gson gson_builder = new GsonBuilder()
+        Gson gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
@@ -66,7 +66,7 @@ public class EpicByIdHandler implements HttpHandler {
                 } catch (NullPointerException exception) {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
-                String response = gson_builder.toJson(result);
+                String response = gsonBuilder.toJson(result);
                 httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     assert result != null;
@@ -84,6 +84,7 @@ public class EpicByIdHandler implements HttpHandler {
                 break;
         }
 }
+
     public static String extractAfterSlash(String url) {
         int slashIndex = url.indexOf("/");
 
