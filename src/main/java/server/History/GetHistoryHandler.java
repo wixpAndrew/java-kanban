@@ -3,8 +3,6 @@ package server.History;
 import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import history.HistoryList;
-import manager.HistoryManager;
 import manager.ITaskManager;
 import task.Task;
 import java.io.IOException;
