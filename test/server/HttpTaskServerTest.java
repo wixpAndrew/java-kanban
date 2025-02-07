@@ -5,14 +5,10 @@ import manager.ITaskManager;
 import manager.InMemoryTaskManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
-import server.HttpTaskServer;
 import task.Epic;
 import task.Progress;
 import task.Subtask;
 import task.Task;
-import task.Progress;
-import com.google.gson.*;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -22,28 +18,15 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import com.google.gson.Gson;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static task.Progress.IN_PROGRESS;
 
-public class HttpTaskServerTest  {
+public class HttpTaskServerTest {
 
     private static final String path = "http://localhost:8080";
     ITaskManager taskManager = new InMemoryTaskManager();
@@ -75,40 +58,6 @@ public class HttpTaskServerTest  {
                     return new JsonPrimitive(src.toString()); // Преобразуем Duration в строку ISO
                 }
             }).create();
-
-
-
-
-//    @BeforeEach
-//    public void beforeEach() throws Exception {
-//        // передаём его в качестве аргумента в конструктор HttpTaskServer
-//
-//
-//        Task task1 = new Task("task1", Progress.NEW, "dfdf");
-//        Epic epic1 = new Epic("epic1", "fdf");
-//        Epic epic2 = new Epic("epic2", "222");
-//        Subtask subtask1 = new Subtask("sub1", "долг по матрице", IN_PROGRESS);
-//        Subtask subtask2 = new Subtask("sub2", "dfdf", Progress.NEW);
-//        Subtask subtask3 = new Subtask("sub3", "сdfdf", IN_PROGRESS);
-//
-//        taskManager.createEpic(epic1);
-//        taskManager.createEpic(epic2);
-//        taskManager.createSubTask(subtask1);
-//        taskManager.createSubTask(subtask2);
-//        taskManager.createSubTask(subtask3);
-//        taskManager.createTask(task1);
-//
-//
-//        System.out.println(taskManager.getTaskById(2));
-//        System.out.println(taskManager.getEpicById(3));
-//        System.out.println(taskManager.getSubtaskById(4));
-//        System.out.println(taskManager.getEpicById(7));
-//        System.out.println(taskManager.getSubtaskById(5));
-//        System.out.println("История вызовов " + taskManager.getHistory());
-//
-//        System.out.println("Отсортированные задачи " + taskManager.getPrioritizedTasks());
-//
-//    }
 
     @BeforeEach
     public void setUp() {
