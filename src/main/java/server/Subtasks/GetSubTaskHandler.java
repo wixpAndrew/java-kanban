@@ -16,10 +16,10 @@ import java.util.List;
 
 public class GetSubTaskHandler implements HttpHandler {
     private ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
 
-    public GetSubTaskHandler (ITaskManager taskManager) {
+    public GetSubTaskHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
