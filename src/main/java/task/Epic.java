@@ -25,9 +25,16 @@ public class Epic extends Task {
     }
 
     public void deleteSubTask(Subtask subtask) {
-        subList.stream()
-                .filter((n) -> Objects.equals(n.getId(), subtask.getId()))
-                .forEach(subList::remove);
+        int index = -1;
+        for (int i = 0; i < subList.size(); i++) {
+            if (Objects.equals(subList.get(i).getId(), subtask.getId())) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0) {
+            subList.remove(index);
+        }
     }
 
     public void calculateStatus() {

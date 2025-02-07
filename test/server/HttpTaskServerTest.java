@@ -131,21 +131,16 @@ public class HttpTaskServerTest  {
         task.setDuration( Duration.ofMinutes(5));
         task.setStartTime(LocalDateTime.now());
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(task);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/tasks");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(201, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         List<Task> tasksFromManager = taskManager.getTasks();
 
         assertNotNull(tasksFromManager, "Задачи не возвращаются");
@@ -160,21 +155,17 @@ public class HttpTaskServerTest  {
         epic.setDuration( Duration.ofMinutes(5));
         epic.setStartTime(LocalDateTime.now());
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(epic);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/epics");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         // проверяем код ответа
         assertEquals(201, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         List<Epic> epicsFromTaskManger = (List<Epic>) taskManager.getEpics();
 
         assertNotNull(epicsFromTaskManger, "Задачи не возвращаются");
@@ -185,26 +176,22 @@ public class HttpTaskServerTest  {
 
     @Test
     public void testAddSubTask() throws IOException, InterruptedException {
-        // создаём задачу
+
         Subtask subtask = new Subtask("sub1", "до", IN_PROGRESS);
         subtask.setDuration( Duration.ofMinutes(5));
         subtask.setStartTime(LocalDateTime.now());
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(subtask);
 
-        // создаём HTTP-клиент и запрос
+
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/subtasks");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(201, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         List<Subtask> tasksFromManager = taskManager.getAllSubs();
 
         assertNotNull(tasksFromManager, "Задачи не возвращаются");
@@ -220,21 +207,16 @@ public class HttpTaskServerTest  {
         task.setStartTime(LocalDateTime.now());
         taskManager.createTask(task);
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(task);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/history");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         taskManager.getTaskById(1);
         List<Task> epicsFromTaskManger = (List<Task>) taskManager.getHistory();
 
@@ -254,21 +236,16 @@ public class HttpTaskServerTest  {
         task.setStartTime(LocalDateTime.now());
         taskManager.createTask(task);
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(task);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/task_by_id/1");
         HttpRequest request = HttpRequest.newBuilder().uri(url).GET().build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         Task taskFromTaskManager = taskManager.getTaskById(1);
 
         assertNotNull(task, "Задачи не возвращаются");
@@ -277,27 +254,22 @@ public class HttpTaskServerTest  {
 
     @Test
     public void testGetEpicById() throws IOException, InterruptedException {
-        // создаём задачу
+
         Epic epic = new Epic("epic1", "fdf");
         epic.setDuration( Duration.ofMinutes(5));
         epic.setStartTime(LocalDateTime.now());
         taskManager.createEpic(epic);
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(epic);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/epic_by_id/1");
         HttpRequest request = HttpRequest.newBuilder().uri(url).GET().build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         Epic taskFromTaskManager = taskManager.getEpicById(1);
 
         assertNotNull(epic, "Задачи не возвращаются");
@@ -306,27 +278,22 @@ public class HttpTaskServerTest  {
 
     @Test
     public void testGetSubTaskById() throws IOException, InterruptedException {
-        // создаём задачу
+
         Subtask subtask = new Subtask("sub1", "долг по матрице", IN_PROGRESS);
         subtask.setDuration( Duration.ofMinutes(5));
         subtask.setStartTime(LocalDateTime.now());
         taskManager.createSubTask(subtask);
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(subtask);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/subtask_by_id/1");
         HttpRequest request = HttpRequest.newBuilder().uri(url).GET().build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         Subtask subTaskFromTaskManager = taskManager.getSubtaskById(1);
 
         assertNotNull(subtask, "Задачи не возвращаются");
@@ -338,27 +305,22 @@ public class HttpTaskServerTest  {
 
     @Test
     public void testDeleteTaskById() throws IOException, InterruptedException {
-        // создаём задачу
+
         Task task = new Task("Test 2",  Progress.NEW, "Testing task 2");
         task.setDuration( Duration.ofMinutes(5));
         task.setStartTime(LocalDateTime.now());
         taskManager.createTask(task);
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(task);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/task_by_id/1");
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         List<Subtask> taskFromTaskManager = taskManager.getAllSubs();
 
         assertNotNull(task, "Задачи не возвращаются");
@@ -367,27 +329,22 @@ public class HttpTaskServerTest  {
 
     @Test
     public void testDeleteEpicById() throws IOException, InterruptedException {
-        // создаём задачу
+
         Epic epic = new Epic("epic1", "fdf");
         epic.setDuration( Duration.ofMinutes(5));
         epic.setStartTime(LocalDateTime.now());
         taskManager.createEpic(epic);
 
-        // конвертируем её в JSON
         String taskJson = gson.toJson(epic);
 
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/epic_by_id/1");
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         List<Epic> taskFromTaskManager = (List<Epic>) taskManager.getEpics();
 
         assertNotNull(epic, "Задачи не возвращаются");
@@ -396,16 +353,18 @@ public class HttpTaskServerTest  {
 
     @Test
     public void testDeleteSubTaskById() throws IOException, InterruptedException  {
-        // создаём задачу
+
         Subtask subtask = new Subtask("sub1", "долг по матрице", IN_PROGRESS);
+        Epic epic = new Epic("epic1", "fdf");
+        taskManager.createEpic(epic);
         subtask.setDuration( Duration.ofMinutes(5));
         subtask.setStartTime(LocalDateTime.now());
-        taskManager.createSubTask(subtask);
+        subtask.setEpicId(1);
+        taskManager.addSubtask(subtask);
 
-        String taskJson = gson.toJson(subtask);
 
         HttpClient client = HttpClient.newHttpClient();
-        URI url = URI.create("http://localhost:8080/subtask_by_id/1");
+        URI url = URI.create("http://localhost:8080/subtask_by_id/2");
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -423,35 +382,31 @@ public class HttpTaskServerTest  {
 
     @Test
     public void testGetEpicSubTasks() throws IOException, InterruptedException {
-        // создаём задачу
+
         Epic epic = new Epic("epic1", "fdf");
-        Subtask subtask = new Subtask("sub1", "долг по матрице", IN_PROGRESS);
+        Subtask subtask1 = new Subtask("sub1", "дpijm", IN_PROGRESS);
+        Subtask subtask2 = new Subtask("sub2", "дpijm", IN_PROGRESS);
+        subtask1.setEpicId(1);
+        subtask2.setEpicId(1);
         epic.setDuration( Duration.ofMinutes(5));
         epic.setStartTime(LocalDateTime.now());
         taskManager.createEpic(epic);
-        taskManager.createSubTask(subtask);
+        taskManager.createSubTask(subtask1);
+        taskManager.addSubtask(subtask1);
+        taskManager.createSubTask(subtask2);
+        taskManager.addSubtask(subtask2);
 
-        // конвертируем её в JSON
-        String taskJson = gson.toJson(epic);
-
-        // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/epic_subtasks/1");
         HttpRequest request = HttpRequest.newBuilder().uri(url).GET().build();
 
-        // вызываем рест, отвечающий за создание задач
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что создалась одна задача с корректным именем
         List<Subtask> taskFromTaskManager = (List<Subtask>) taskManager.getAllEpicSubTasks(1);
 
         assertNotNull(epic, "Задачи не возвращаются");
-        assertEquals(taskFromTaskManager.size(), 1);
+        assertEquals(taskFromTaskManager.size(), 2);
     } //+++
-
-
-
 }

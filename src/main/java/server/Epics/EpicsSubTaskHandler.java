@@ -21,7 +21,7 @@ import java.util.List;
 public class EpicsSubTaskHandler implements HttpHandler {
 
     private ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
     public EpicsSubTaskHandler (ITaskManager taskManager) {
         this.taskManager = taskManager;
@@ -64,8 +64,7 @@ public class EpicsSubTaskHandler implements HttpHandler {
         Epic epic_by_path = null;
 
         try {
-            String idString = extractIdFromPath(httpExchange.getRequestURI().toString());
-            assert idString != null;
+            String idString = String.valueOf(extractIdFromPath(httpExchange.getRequestURI().toString()));
             int id = Integer.parseInt(idString);
             epic_by_path = taskManager.getEpicById(id);
         } catch (NullPointerException exception) {
@@ -85,15 +84,14 @@ public class EpicsSubTaskHandler implements HttpHandler {
         }
     }
 
-    public static String extractIdFromPath(String path) {
-        // Находим индекс начала и конца id в строке
-        int startIndex = path.indexOf("epics/") + 6;
-        int endIndex = path.indexOf("/subtasks");
+    public  int extractIdFromPath(String path) {
+        int lastSlashIndex = path.lastIndexOf('/');
 
-        if (startIndex != -1 && endIndex != -1) {
-            return path.substring(startIndex, endIndex);
+        if (lastSlashIndex == -1) {
+            throw new IllegalArgumentException("Путь не содержит '/'");
         }
+        String idStr = path.substring(lastSlashIndex + 1);
 
-        return null;
+        return Integer.parseInt(idStr);
     }
 }
