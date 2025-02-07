@@ -30,7 +30,7 @@ public class GetTasksHandler implements HttpHandler {
         String exchangeMethod = httpExchange.getRequestMethod();
         System.out.println("Тело запроса:\n" + body);
 
-        Gson gson_builder = new GsonBuilder()
+        Gson gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
@@ -61,7 +61,7 @@ public class GetTasksHandler implements HttpHandler {
         switch (exchangeMethod) {
             case "GET" :
                 List<Task> tasks = taskManager.getTasks();
-                String response = gson_builder.toJson(tasks);
+                String response = gsonBuilder.toJson(tasks);
 
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
@@ -72,7 +72,7 @@ public class GetTasksHandler implements HttpHandler {
             case "POST" :
                 StringBuilder sb = new StringBuilder(body);
                 String json = sb.toString();
-                Task task = gson_builder.fromJson(json, Task.class);
+                Task task = gsonBuilder.fromJson(json, Task.class);
 
                 if (task.getId() == null) {
                     taskManager.createTask(task);

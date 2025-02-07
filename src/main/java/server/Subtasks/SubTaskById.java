@@ -34,7 +34,7 @@ public class SubTaskById implements HttpHandler {
         String exchangeMethod = httpExchange.getRequestMethod();
 
 
-        Gson gson_builder = new GsonBuilder()
+        Gson gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
@@ -69,7 +69,7 @@ public class SubTaskById implements HttpHandler {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
 
-                String response = gson_builder.toJson(result);
+                String response = gsonBuilder.toJson(result);
 
                 httpExchange.sendResponseHeaders(200, response.getBytes().length);
                 try (OutputStream os = httpExchange.getResponseBody()) {
