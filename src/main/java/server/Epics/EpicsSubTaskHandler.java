@@ -22,7 +22,7 @@ public class EpicsSubTaskHandler implements HttpHandler {
     private ITaskManager taskManager;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
-    public EpicsSubTaskHandler (ITaskManager taskManager) {
+    public EpicsSubTaskHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
@@ -32,8 +32,7 @@ public class EpicsSubTaskHandler implements HttpHandler {
         InputStream inputStream = httpExchange.getRequestBody();
         String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         String exchangeMethod = httpExchange.getRequestMethod();
-
-        Gson gson_builder = new GsonBuilder()
+        Gson gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
@@ -60,21 +59,21 @@ public class EpicsSubTaskHandler implements HttpHandler {
                     }
                 }).create();
 
-        Epic epic_by_path = null;
+        Epic epicByPath = null;
 
         try {
             String idString = String.valueOf(extractIdFromPath(httpExchange.getRequestURI().toString()));
             int id = Integer.parseInt(idString);
-            epic_by_path = taskManager.getEpicById(id);
+            epicByPath = taskManager.getEpicById(id);
         } catch (NullPointerException exception) {
             exception.getMessage();
             httpExchange.sendResponseHeaders(404, 0);
         }
 
-        assert epic_by_path != null;
-        List<Subtask> result = taskManager.getAllEpicSubTasks(epic_by_path.getId());
+        assert epicByPath != null;
+        List<Subtask> result = taskManager.getAllEpicSubTasks(epicByPath.getId());
 
-        String response = gson_builder.toJson(result);
+        String response = gsonBuilder.toJson(result);
 
         httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
         try (OutputStream os = httpExchange.getResponseBody()) {
