@@ -224,7 +224,7 @@ public class HttpTaskServerTest  {
         assertEquals(1, epicsFromTaskManger.size(), "Некорректное количество задач");
         assertEquals("task1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
     } // +++
-    
+
     //--------------------------------------------------------------------------
     //по айдишникам GET  -------------------------------------------------------------
 
