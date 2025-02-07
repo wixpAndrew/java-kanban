@@ -75,9 +75,10 @@ public class InMemoryTaskManager implements ITaskManager {
         task.setId(generateId());
         tasks.put(task.getId(), task);
     }
+
     // Epic
     // -------------------------------------------------------------------------------------------------
-    
+
     @Override
     public int addEpic(Epic epic) {
         if (epic.getId() == null) {
