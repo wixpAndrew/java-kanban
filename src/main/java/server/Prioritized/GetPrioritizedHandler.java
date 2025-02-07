@@ -17,9 +17,10 @@ import java.util.List;
 public class GetPrioritizedHandler implements HttpHandler {
     private ITaskManager taskManager;
 
-    public GetPrioritizedHandler (ITaskManager taskManager) {
+    public GetPrioritizedHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
