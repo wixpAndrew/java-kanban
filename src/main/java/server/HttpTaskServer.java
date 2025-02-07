@@ -5,10 +5,10 @@ import manager.ITaskManager;
 import server.Epics.EpicByIdHandler;
 import server.Epics.EpicsSubTaskHandler;
 import server.Epics.GetEpicsHandler;
+import server.History.GetHistoryHandler;
+import server.Prioritized.GetPrioritizedHandler;
 import server.Subtasks.SubTaskById;
 import server.Tasks.*;
-import server.Epics.GetEpicsHandler;
-import server.Tasks.GetPrioritizedHandler;
 import server.Subtasks.GetSubTaskHandler;
 import task.*;
 
@@ -40,7 +40,7 @@ public class HttpTaskServer {
         httpServer.createContext("/epic_subtasks", new EpicsSubTaskHandler(taskManager));
         // with id
         httpServer.createContext("/prioritized", new GetPrioritizedHandler(taskManager));
-        httpServer.createContext("/history", new GetPrioritizedHandler(taskManager));
+        httpServer.createContext("/history", new GetHistoryHandler(taskManager));
         //other
         httpServer.start();
 
