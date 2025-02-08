@@ -70,6 +70,7 @@ public class GetTasksHandler implements HttpHandler {
                 break;
 
             case "POST" :
+                String respons = "круто";
                 StringBuilder sb = new StringBuilder(body);
                 String json = sb.toString();
                 Task task = gsonBuilder.fromJson(json, Task.class);
@@ -80,9 +81,8 @@ public class GetTasksHandler implements HttpHandler {
                     taskManager.updateTask(task);
                 }
 
+                httpExchange.sendResponseHeaders(201, respons.getBytes(StandardCharsets.UTF_8).length);
                 try (OutputStream os = httpExchange.getResponseBody()) {
-                    String respons = "круто";
-                    httpExchange.sendResponseHeaders(201, respons.getBytes(StandardCharsets.UTF_8).length);
                     os.write(respons.getBytes(StandardCharsets.UTF_8));
                 }
                 break;
