@@ -69,13 +69,14 @@ public class GetEpicsHandler implements HttpHandler {
                 break;
             case "POST" :
                 StringBuilder sb = new StringBuilder(body);
-                String respons = "круто";
+                String respon = "круто";
                 String json = sb.toString();
                 Epic epic = gsonBuilder.fromJson(json, Epic.class);
                 taskManager.createEpic(epic);
-                httpExchange.sendResponseHeaders(201, respons.getBytes(StandardCharsets.UTF_8).length);
+
                 try (OutputStream os = httpExchange.getResponseBody()) {
-                    os.write(respons.getBytes(StandardCharsets.UTF_8));
+                    httpExchange.sendResponseHeaders(201, respon.getBytes(StandardCharsets.UTF_8).length);
+                    os.write(respon.getBytes(StandardCharsets.UTF_8));
                 }
                 break;
         }
