@@ -3,6 +3,7 @@ package server;
 import com.google.gson.*;
 import manager.ITaskManager;
 import manager.InMemoryTaskManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import task.Epic;
@@ -70,6 +71,11 @@ public class HttpTaskServerTest {
             System.out.println(Arrays.toString(ex.getStackTrace()));
         }
 
+    }
+
+    @AfterEach
+    public void shutDown() {
+        taskServer.stop();
     }
 
     // POST и получение -------------------------------------

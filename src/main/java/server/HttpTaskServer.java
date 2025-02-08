@@ -19,14 +19,14 @@ public class HttpTaskServer {
 
     private static final int PORT = 8080;
     ITaskManager taskManager;
+    HttpServer httpServer;
 
     public HttpTaskServer(ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
     public void start() throws IOException {
-        HttpServer httpServer = HttpServer.create(new InetSocketAddress(PORT), 0);
-
+         httpServer = HttpServer.create(new InetSocketAddress(PORT), 0);
 
         httpServer.createContext("/hello", new HelloHandler());//+++
 
@@ -47,7 +47,8 @@ public class HttpTaskServer {
         System.out.println("HTTP-сервер запущен на " + PORT + " порту!");
     }
 
-
-
+    public void stop() {
+        httpServer.stop(2);
+    }
 }
 
