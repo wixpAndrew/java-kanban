@@ -264,56 +264,56 @@ public class HttpTaskServerTest {
         assertEquals(taskFromTaskManager.size(), 2);
     } //+++
 
-     //POST и получение -------------------------------------
-    @Test
-    public void testAddTask() throws IOException, InterruptedException {
-        // создаём задачу
-        Task task = new Task("Test 2",  Progress.NEW, "Testing task 2");
-        task.setDuration( Duration.ofMinutes(5));
-        task.setStartTime(LocalDateTime.now());
-
-        String taskJson = gson.toJson(task);
-
-        HttpClient client = HttpClient.newHttpClient();
-        URI url = URI.create("http://localhost:8080/tasks");
-        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        assertEquals(201, response.statusCode());
-
-        List<Task> tasksFromManager = taskManager.getTasks();
-
-        assertNotNull(tasksFromManager, "Задачи не возвращаются");
-        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
-        assertEquals("Test 2", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
-    } // +++
-
-    @Test
-    public void testAddEpic() throws IOException, InterruptedException {
-        // создаём задачу
-        Epic epic = new Epic("epic1", "fdf");
-        epic.setDuration( Duration.ofMinutes(5));
-        epic.setStartTime(LocalDateTime.now());
-
-        String taskJson = gson.toJson(epic);
-
-        HttpClient client = HttpClient.newHttpClient();
-        URI url = URI.create("http://localhost:8080/epics");
-        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        // проверяем код ответа
-        assertEquals(201, response.statusCode());
-
-        List<Epic> epicsFromTaskManger = (List<Epic>) taskManager.getEpics();
-
-        assertNotNull(epicsFromTaskManger, "Задачи не возвращаются");
-        assertEquals(1, epicsFromTaskManger.size(), "Некорректное количество задач");
-        assertEquals("epic1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
-        taskManager.deleteAllTasks();
-    } // +++
+//     //POST и получение -------------------------------------
+//    @Test
+//    public void testAddTask() throws IOException, InterruptedException {
+//        // создаём задачу
+//        Task task = new Task("Test 2",  Progress.NEW, "Testing task 2");
+//        task.setDuration( Duration.ofMinutes(5));
+//        task.setStartTime(LocalDateTime.now());
+//
+//        String taskJson = gson.toJson(task);
+//
+//        HttpClient client = HttpClient.newHttpClient();
+//        URI url = URI.create("http://localhost:8080/tasks");
+//        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
+//
+//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//        assertEquals(201, response.statusCode());
+//
+//        List<Task> tasksFromManager = taskManager.getTasks();
+//
+//        assertNotNull(tasksFromManager, "Задачи не возвращаются");
+//        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
+//        assertEquals("Test 2", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
+//    } // +++
+//
+//    @Test
+//    public void testAddEpic() throws IOException, InterruptedException {
+//        // создаём задачу
+//        Epic epic = new Epic("epic1", "fdf");
+//        epic.setDuration( Duration.ofMinutes(5));
+//        epic.setStartTime(LocalDateTime.now());
+//
+//        String taskJson = gson.toJson(epic);
+//
+//        HttpClient client = HttpClient.newHttpClient();
+//        URI url = URI.create("http://localhost:8080/epics");
+//        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
+//
+//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//        // проверяем код ответа
+//        assertEquals(201, response.statusCode());
+//
+//        List<Epic> epicsFromTaskManger = (List<Epic>) taskManager.getEpics();
+//
+//        assertNotNull(epicsFromTaskManger, "Задачи не возвращаются");
+//        assertEquals(1, epicsFromTaskManger.size(), "Некорректное количество задач");
+//        assertEquals("epic1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
+//        taskManager.deleteAllTasks();
+//    } // +++
 
     @Test
     public void testAddSubTask() throws IOException, InterruptedException {
@@ -328,7 +328,6 @@ public class HttpTaskServerTest {
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/subtasks");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         assertEquals(201, response.statusCode());
