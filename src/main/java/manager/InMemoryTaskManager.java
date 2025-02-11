@@ -13,7 +13,7 @@ public class InMemoryTaskManager implements ITaskManager {
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private int count = 0;
-    Set<Task> prioritTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+    private final Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
     public InMemoryTaskManager() {
         historyManager = Managers.getDefaultHistory();
@@ -22,14 +22,16 @@ public class InMemoryTaskManager implements ITaskManager {
     private int generateId() {
         return ++count;
     }
+
     // Task
     //-----------------------------------------------------------
-
-
     @Override
     public int addTask(Task task) {
         if (task.getId() == null) {
             task.setId(generateId());
+        }
+        if (task.getStartTime() != null) {
+            prioritizedTasks.add(task);
         }
         tasks.put(task.getId(), task);
         return task.getId();
@@ -75,6 +77,9 @@ public class InMemoryTaskManager implements ITaskManager {
         if (epic.getId() == null) {
             epic.setId(generateId());
         }
+        if (epic.getStartTime() != null) {
+            prioritizedTasks.add(epic);
+        }
         epics.put(epic.getId(), epic);
         return epic.getId();
     }
@@ -116,9 +121,15 @@ public class InMemoryTaskManager implements ITaskManager {
     //---------------------------------------------------------------------------------------------
     @Override
     public int addSubtask(Subtask subtask) {
-        if (subtask.getId() == null) {
+
+        Optional.ofNullable(subtask.getId()).orElseGet(() -> {
             subtask.setId(generateId());
-        }
+            return subtask.getId();
+        });
+
+        Optional.ofNullable(subtask.getStartTime())
+                .ifPresent(startTime -> prioritizedTasks.add(subtask));
+
         subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getEpicId()).addSubTask(subtask);
         return subtask.getId();
@@ -188,17 +199,17 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public List<Task> getPrioritizedTasks() {
-        return new ArrayList<Task>(prioritTasks);
+        return new ArrayList<Task>(prioritizedTasks);
     }
 
     @Override
-    public boolean isItRightWorkingTasks() {
+    public boolean isHereCrossing() { // есть ли пересечение? да - true/ нет - false;
         boolean res = false;
-        List<Task> lis = new ArrayList<>(prioritTasks);
+        List<Task> lisOfPrioritizedTasks = new ArrayList<>(prioritizedTasks);
 
-        for (int i = 0; i < lis.size() - 1; i++) {
-            Task task1 = lis.get(i);
-            Task task2 = lis.get(i + 1);
+        for (int i = 0; i < lisOfPrioritizedTasks.size() - 1; i++) {
+            Task task1 = lisOfPrioritizedTasks.get(i);
+            Task task2 = lisOfPrioritizedTasks.get(i + 1);
 
             // Проверка на null для времени начала и окончания
             if (task1.getStartTime() == null || task1.getEndTime() == null || task2.getStartTime() == null || task2.getEndTime() == null) {

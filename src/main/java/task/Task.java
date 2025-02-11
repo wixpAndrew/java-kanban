@@ -1,20 +1,17 @@
 package task;
-
-import jdk.jfr.DataAmount;
-import java.sql.SQLOutput;
+import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Task {
+public class Task implements Serializable {
 
     private String name;
     private Progress status;
     private Integer id;
     private String description;
     private LocalDateTime startTime;
-     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private Duration duration;
     private LocalDateTime endTime;
 
@@ -24,10 +21,10 @@ public class Task {
         this.description = description;
 
         if (status == null) {
-        // ???
+            this.status = null;
         } else if (status.equals(Progress.IN_PROGRESS)) {
             String strTime = LocalDateTime.now().format(formatter);
-            startTime= LocalDateTime.parse(strTime, formatter);
+            startTime = LocalDateTime.parse(strTime, formatter);
         } else if (status.equals(Progress.DONE)) {
             String strTime = LocalDateTime.now().format(formatter);
             endTime = LocalDateTime.parse(strTime, formatter);
@@ -71,15 +68,21 @@ public class Task {
     }
 
     public String tasktoString() {
-            return this.getId() + "," + "TASK" + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + ",";
+            return this.getId() + ","
+                    + "TASK" + ","
+                    + this.getName() + ","
+                    + this.getStatus() + ","
+                    + this.getDescription() + ","
+                    + this.getStartTime() + ","
+                    + this.getDuration();
     }
+
     public LocalDateTime getEndTime() {
             if (startTime != null && duration != null && endTime == null) {
                 return startTime.plusMinutes(duration.toMinutes());
             } else if (endTime != null) {
                 return endTime;
-            }
-            else {
+            } else {
                 System.out.println("Ошибка при возвращении конеч. времени");
                 return null;
             }
@@ -88,9 +91,7 @@ public class Task {
     public LocalDateTime getStartTime() {
         if (startTime != null) {
             return startTime;
-        }
-        else {
-            System.out.println("Ошибка при выводе старта !");
+        } else {
             return null;
         }
     }
