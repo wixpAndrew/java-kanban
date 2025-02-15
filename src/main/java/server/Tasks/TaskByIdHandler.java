@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import server.UtilHelper;
 import task.Task;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class TaskByIdHandler implements HttpHandler {
 
     private ITaskManager taskManager;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+    Gson gson = UtilHelper.getGsonBuilder(formatter);
 
     public TaskByIdHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
@@ -33,33 +35,6 @@ public class TaskByIdHandler implements HttpHandler {
         System.out.println("Тело запроса:\n" + name);
         String exchangeMethod = httpExchange.getRequestMethod();
 
-        Gson gsonBuilder = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                    @Override
-                    public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), formatter);
-                    }
-                })
-                .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
-                    @Override
-                    public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
-                        return new JsonPrimitive(src.toString()); // Преобразуем LocalDateTime в строку ISO
-                    }
-                })
-                .registerTypeAdapter(Duration.class, new JsonDeserializer<Duration>() {
-                    @Override
-                    public Duration deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-                        return Duration.parse(json.getAsString()); // Преобразуем строку в Duration
-                    }
-                })
-                .registerTypeAdapter(Duration.class, new JsonSerializer<Duration>() {
-                    @Override
-                    public JsonElement serialize(Duration src, Type typeOfSrc, JsonSerializationContext context) {
-                        return new JsonPrimitive(src.toString()); // Преобразуем Duration в строку ISO
-                    }
-                }).create();
-
         switch (exchangeMethod) {
             case "GET":
                 try {
@@ -68,7 +43,7 @@ public class TaskByIdHandler implements HttpHandler {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
 
-                String response = gsonBuilder.toJson(result);
+                String response = gson.toJson(result);
 
                 httpExchange.sendResponseHeaders(200, response.getBytes().length);
                 try (OutputStream os = httpExchange.getResponseBody()) {

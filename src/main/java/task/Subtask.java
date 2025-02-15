@@ -14,7 +14,7 @@ public class Subtask extends Task { // подзадача
     public Subtask(String name, String description, Progress status) {
         super(name, status, description);
         if (status.equals(Progress.IN_PROGRESS)) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String str = LocalDateTime.now().format(formatter);
             startTime = LocalDateTime.parse(str, formatter);
         } else if (status.equals(Progress.DONE)) {

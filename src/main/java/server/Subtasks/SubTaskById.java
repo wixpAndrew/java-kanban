@@ -1,24 +1,23 @@
 package server.Subtasks;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import server.UtilHelper;
 import task.Subtask;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class SubTaskById implements HttpHandler {
+public class SubTaskById  implements HttpHandler {
 
-    private ITaskManager taskManager;
+    private final ITaskManager taskManager;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+    Gson gson = UtilHelper.getGsonBuilder(formatter);
 
     public SubTaskById(ITaskManager taskManager) {
         this.taskManager = taskManager;
@@ -33,34 +32,6 @@ public class SubTaskById implements HttpHandler {
         System.out.println("Тело запроса:\n" + name);
         String exchangeMethod = httpExchange.getRequestMethod();
 
-
-        Gson gsonBuilder = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                    @Override
-                    public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), formatter);
-                    }
-                })
-                .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
-                    @Override
-                    public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
-                        return new JsonPrimitive(src.toString()); // Преобразуем LocalDateTime в строку ISO
-                    }
-                })
-                .registerTypeAdapter(Duration.class, new JsonDeserializer<Duration>() {
-                    @Override
-                    public Duration deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-                        return Duration.parse(json.getAsString()); // Преобразуем строку в Duration
-                    }
-                })
-                .registerTypeAdapter(Duration.class, new JsonSerializer<Duration>() {
-                    @Override
-                    public JsonElement serialize(Duration src, Type typeOfSrc, JsonSerializationContext context) {
-                        return new JsonPrimitive(src.toString()); // Преобразуем Duration в строку ISO
-                    }
-                }).create();
-
         switch (exchangeMethod) {
             case "GET" :
                 try {
@@ -69,7 +40,7 @@ public class SubTaskById implements HttpHandler {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
 
-                String response = gsonBuilder.toJson(result);
+                String response = gson.toJson(result);
 
                 httpExchange.sendResponseHeaders(200, response.getBytes().length);
                 try (OutputStream os = httpExchange.getResponseBody()) {

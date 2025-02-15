@@ -13,7 +13,7 @@ public class Task implements Serializable {
     @Expose private Integer id;
     @Expose private String description;
     @Expose private LocalDateTime startTime;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
     @Expose private Duration duration;
     @Expose private LocalDateTime endTime;
 

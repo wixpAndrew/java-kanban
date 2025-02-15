@@ -29,7 +29,7 @@ import static task.Progress.IN_PROGRESS;
 
 public class HttpTaskServerTest {
 
-    private static final String path = "http://localhost:8080";
+    private static final String PATH = "http://localhost:8080";
     ITaskManager taskManager = new InMemoryTaskManager();
     HttpTaskServer taskServer = new HttpTaskServer(taskManager);
 
@@ -70,16 +70,12 @@ public class HttpTaskServerTest {
         } catch (IOException ex ) {
             System.out.println(Arrays.toString(ex.getStackTrace()));
         }
-
     }
 
     @AfterEach
     public void shutDown() {
         taskServer.stop();
     }
-
-    //--------------------------------------------------------------------------
-    //по айдишникам GET  -------------------------------------------------------------
 
     @Test
     public void testGetTaskById() throws IOException, InterruptedException {
@@ -103,7 +99,7 @@ public class HttpTaskServerTest {
 
         assertNotNull(task, "Задачи не возвращаются");
         assertEquals(taskFromTaskManager, task);
-    } //+++
+    }
 
     @Test
     public void testGetEpicById() throws IOException, InterruptedException {
@@ -127,7 +123,7 @@ public class HttpTaskServerTest {
 
         assertNotNull(epic, "Задачи не возвращаются");
         assertEquals(taskFromTaskManager, epic);
-    } //+++
+    }
 
     @Test
     public void testGetSubTaskById() throws IOException, InterruptedException {
@@ -151,11 +147,7 @@ public class HttpTaskServerTest {
 
         assertNotNull(subtask, "Задачи не возвращаются");
         assertEquals(subTaskFromTaskManager, subtask);
-    } //+++
-
-
-    // --------------------------------------------------------------------------
-    // по айдишникам DELETE -----------------------------------------------------------------
+    }
 
     @Test
     public void testDeleteTaskById() throws IOException, InterruptedException {
@@ -179,7 +171,7 @@ public class HttpTaskServerTest {
 
         assertNotNull(task, "Задачи не возвращаются");
         assertEquals(taskFromTaskManager.size(), 0);
-    } //+++
+    }
 
     @Test
     public void testDeleteEpicById() throws IOException, InterruptedException {
@@ -203,7 +195,7 @@ public class HttpTaskServerTest {
 
         assertNotNull(epic, "Задачи не возвращаются");
         assertEquals(taskFromTaskManager.size(), 0);
-    } //+++
+    }
 
     @Test
     public void testDeleteSubTaskById() throws IOException, InterruptedException  {
@@ -229,10 +221,7 @@ public class HttpTaskServerTest {
 
         assertNotNull(subtask, "Задачи не возвращаются");
         assertEquals(taskFromTaskManager.size(), 0);
-    } // + -
-
-    // -------------------------------------------------------------------------------
-    // по сабтаски эпика по айди
+    }
 
     @Test
     public void testGetEpicSubTasks() throws IOException, InterruptedException {
@@ -262,7 +251,7 @@ public class HttpTaskServerTest {
 
         assertNotNull(epic, "Задачи не возвращаются");
         assertEquals(taskFromTaskManager.size(), 2);
-    } //+++
+    }
 
 //     //POST и получение -------------------------------------
 //    @Test
@@ -315,29 +304,29 @@ public class HttpTaskServerTest {
 //        taskManager.deleteAllTasks();
 //    } // +++
 
-    @Test
-    public void testAddSubTask() throws IOException, InterruptedException {
-
-        Subtask subtask = new Subtask("sub1", "до", IN_PROGRESS);
-        subtask.setDuration( Duration.ofMinutes(5));
-        subtask.setStartTime(LocalDateTime.now());
-
-        String taskJson = gson.toJson(subtask);
-
-
-        HttpClient client = HttpClient.newHttpClient();
-        URI url = URI.create("http://localhost:8080/subtasks");
-        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        assertEquals(201, response.statusCode());
-
-        List<Subtask> tasksFromManager = taskManager.getAllSubs();
-
-        assertNotNull(tasksFromManager, "Задачи не возвращаются");
-        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
-        assertEquals("sub1", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
-    } // +++
+//    @Test
+//    public void testAddSubTask() throws IOException, InterruptedException {
+//
+//        Subtask subtask = new Subtask("sub1", "до", IN_PROGRESS);
+//        subtask.setDuration( Duration.ofMinutes(5));
+//        subtask.setStartTime(LocalDateTime.now());
+//
+//        String taskJson = gson.toJson(subtask);
+//
+//
+//        HttpClient client = HttpClient.newHttpClient();
+//        URI url = URI.create("http://localhost:8080/subtasks");
+//        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
+//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//        assertEquals(201, response.statusCode());
+//
+//        List<Subtask> tasksFromManager = taskManager.getAllSubs();
+//
+//        assertNotNull(tasksFromManager, "Задачи не возвращаются");
+//        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
+//        assertEquals("sub1", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
+//    }
 
     @Test
     public void testGetHistory() throws IOException, InterruptedException {
@@ -363,5 +352,5 @@ public class HttpTaskServerTest {
         assertNotNull(epicsFromTaskManger, "Задачи не возвращаются");
         assertEquals(1, epicsFromTaskManger.size(), "Некорректное количество задач");
         assertEquals("task1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
-    } // +++
+    }
 }

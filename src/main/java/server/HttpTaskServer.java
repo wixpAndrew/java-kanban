@@ -18,8 +18,8 @@ import java.net.InetSocketAddress;
 public class HttpTaskServer {
 
     private static final int PORT = 8080;
-    ITaskManager taskManager;
-    HttpServer httpServer;
+    private final ITaskManager taskManager;
+    private HttpServer httpServer;
 
     public HttpTaskServer(ITaskManager taskManager) {
         this.taskManager = taskManager;
@@ -30,18 +30,15 @@ public class HttpTaskServer {
 
         httpServer.createContext("/hello", new HelloHandler());//+++
 
-        httpServer.createContext("/tasks", new GetTasksHandler(taskManager));//+++
-        httpServer.createContext("/subtasks", new GetSubTaskHandler(taskManager));//+++
-        httpServer.createContext("/epics", new GetEpicsHandler(taskManager));//+++
-        //classic
-        httpServer.createContext("/task_by_id", new TaskByIdHandler(taskManager));//+++
-        httpServer.createContext("/epic_by_id", new EpicByIdHandler(taskManager));//+++
-        httpServer.createContext("/subtask_by_id", new SubTaskById(taskManager));// +
+        httpServer.createContext("/tasks", new GetTasksHandler(taskManager));
+        httpServer.createContext("/subtasks", new GetSubTaskHandler(taskManager));
+        httpServer.createContext("/epics", new GetEpicsHandler(taskManager));
+        httpServer.createContext("/task_by_id", new TaskByIdHandler(taskManager));
+        httpServer.createContext("/epic_by_id", new EpicByIdHandler(taskManager));
+        httpServer.createContext("/subtask_by_id", new SubTaskById(taskManager));
         httpServer.createContext("/epic_subtasks", new EpicsSubTaskHandler(taskManager));
-        // with id
         httpServer.createContext("/prioritized", new GetPrioritizedHandler(taskManager));
         httpServer.createContext("/history", new GetHistoryHandler(taskManager));
-        //other
         httpServer.start();
 
         System.out.println("HTTP-сервер запущен на " + PORT + " порту!");

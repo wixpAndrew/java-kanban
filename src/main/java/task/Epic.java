@@ -25,16 +25,7 @@ public class Epic extends Task {
     }
 
     public void deleteSubTask(Subtask subtask) {
-        int index = -1;
-        for (int i = 0; i < subList.size(); i++) {
-            if (Objects.equals(subList.get(i).getId(), subtask.getId())) {
-                index = i;
-                break;
-            }
-        }
-        if (index >= 0) {
-            subList.remove(index);
-        }
+        subList.remove(subtask);
     }
 
     public void calculateStatus() {
@@ -105,7 +96,6 @@ public class Epic extends Task {
         LocalDateTime result = list.get(0).getStartTime();
 
         if (list.size() == 1) return list.get(0).getStartTime();
-
 
         for (int i = 0; i < list.size() - 1; i++) {
             if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()) {

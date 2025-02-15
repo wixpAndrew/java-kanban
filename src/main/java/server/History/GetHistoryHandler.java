@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 public class GetHistoryHandler implements HttpHandler {
-    private ITaskManager taskManager;
+    private final ITaskManager taskManager;
 
     public GetHistoryHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
