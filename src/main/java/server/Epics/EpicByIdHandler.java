@@ -53,6 +53,7 @@ public class EpicByIdHandler implements HttpHandler {
                 break;
         }
 }
+
     public static String extractAfterSlash(String url) {
         int slashIndex = url.indexOf("/");
 
