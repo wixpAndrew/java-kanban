@@ -27,38 +27,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static task.Progress.IN_PROGRESS;
 
-public class HttpTaskServerTest {
+public class HttpTaskServerTest extends UtilHelper {
 
     private static final String PATH = "http://localhost:8080";
     ITaskManager taskManager = new InMemoryTaskManager();
     HttpTaskServer taskServer = new HttpTaskServer(taskManager);
 
-    Gson gson = new GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
-            .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                @Override
-                public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                    return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-                }
-            })
-            .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
-                @Override
-                public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
-                    return new JsonPrimitive(src.toString()); // Преобразуем LocalDateTime в строку ISO
-                }
-            })
-            .registerTypeAdapter(Duration.class, new JsonDeserializer<Duration>() {
-                @Override
-                public Duration deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-                    return Duration.parse(json.getAsString()); // Преобразуем строку в Duration
-                }
-            })
-            .registerTypeAdapter(Duration.class, new JsonSerializer<Duration>() {
-                @Override
-                public JsonElement serialize(Duration src, Type typeOfSrc, JsonSerializationContext context) {
-                    return new JsonPrimitive(src.toString()); // Преобразуем Duration в строку ISO
-                }
-            }).create();
+    Gson gson = UtilHelper.getGsonBuilder();
 
     @BeforeEach
     public void setUp() {
@@ -67,7 +42,7 @@ public class HttpTaskServerTest {
         taskManager.deleteAllTasks();
         try {
             taskServer.start();
-        } catch (IOException ex ) {
+        } catch (IOException ex) {
             System.out.println(Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -80,8 +55,8 @@ public class HttpTaskServerTest {
     @Test
     public void testGetTaskById() throws IOException, InterruptedException {
         // создаём задачу
-        Task task = new Task("Test 2",  Progress.NEW, "Testing task 2");
-        task.setDuration( Duration.ofMinutes(5));
+        Task task = new Task("Test 2", Progress.NEW, "Testing task 2");
+        task.setDuration(Duration.ofMinutes(5));
         task.setStartTime(LocalDateTime.now());
         taskManager.createTask(task);
 
@@ -105,7 +80,7 @@ public class HttpTaskServerTest {
     public void testGetEpicById() throws IOException, InterruptedException {
 
         Epic epic = new Epic("epic1", "fdf");
-        epic.setDuration( Duration.ofMinutes(5));
+        epic.setDuration(Duration.ofMinutes(5));
         epic.setStartTime(LocalDateTime.now());
         taskManager.createEpic(epic);
 
@@ -129,7 +104,7 @@ public class HttpTaskServerTest {
     public void testGetSubTaskById() throws IOException, InterruptedException {
 
         Subtask subtask = new Subtask("sub1", "долг по матрице", IN_PROGRESS);
-        subtask.setDuration( Duration.ofMinutes(5));
+        subtask.setDuration(Duration.ofMinutes(5));
         subtask.setStartTime(LocalDateTime.now());
         taskManager.createSubTask(subtask);
 
@@ -152,8 +127,8 @@ public class HttpTaskServerTest {
     @Test
     public void testDeleteTaskById() throws IOException, InterruptedException {
 
-        Task task = new Task("Test 2",  Progress.NEW, "Testing task 2");
-        task.setDuration( Duration.ofMinutes(5));
+        Task task = new Task("Test 2", Progress.NEW, "Testing task 2");
+        task.setDuration(Duration.ofMinutes(5));
         task.setStartTime(LocalDateTime.now());
         taskManager.createTask(task);
 
@@ -177,7 +152,7 @@ public class HttpTaskServerTest {
     public void testDeleteEpicById() throws IOException, InterruptedException {
 
         Epic epic = new Epic("epic1", "fdf");
-        epic.setDuration( Duration.ofMinutes(5));
+        epic.setDuration(Duration.ofMinutes(5));
         epic.setStartTime(LocalDateTime.now());
         taskManager.createEpic(epic);
 
@@ -198,12 +173,12 @@ public class HttpTaskServerTest {
     }
 
     @Test
-    public void testDeleteSubTaskById() throws IOException, InterruptedException  {
+    public void testDeleteSubTaskById() throws IOException, InterruptedException {
 
         Subtask subtask = new Subtask("sub1", "долг по матрице", IN_PROGRESS);
         Epic epic = new Epic("epic1", "fdf");
         taskManager.createEpic(epic);
-        subtask.setDuration( Duration.ofMinutes(5));
+        subtask.setDuration(Duration.ofMinutes(5));
         subtask.setStartTime(LocalDateTime.now());
         subtask.setEpicId(1);
         taskManager.addSubtask(subtask);
@@ -231,7 +206,7 @@ public class HttpTaskServerTest {
         Subtask subtask2 = new Subtask("sub2", "дpijm", IN_PROGRESS);
         subtask1.setEpicId(1);
         subtask2.setEpicId(1);
-        epic.setDuration( Duration.ofMinutes(5));
+        epic.setDuration(Duration.ofMinutes(5));
         epic.setStartTime(LocalDateTime.now());
         taskManager.createEpic(epic);
         taskManager.createSubTask(subtask1);
@@ -253,104 +228,76 @@ public class HttpTaskServerTest {
         assertEquals(taskFromTaskManager.size(), 2);
     }
 
-//     //POST и получение -------------------------------------
-//    @Test
-//    public void testAddTask() throws IOException, InterruptedException {
-//        // создаём задачу
-//        Task task = new Task("Test 2",  Progress.NEW, "Testing task 2");
-//        task.setDuration( Duration.ofMinutes(5));
-//        task.setStartTime(LocalDateTime.now());
-//
-//        String taskJson = gson.toJson(task);
-//
-//        HttpClient client = HttpClient.newHttpClient();
-//        URI url = URI.create("http://localhost:8080/tasks");
-//        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-//
-//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//
-//        assertEquals(201, response.statusCode());
-//
-//        List<Task> tasksFromManager = taskManager.getTasks();
-//
-//        assertNotNull(tasksFromManager, "Задачи не возвращаются");
-//        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
-//        assertEquals("Test 2", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
-//    } // +++
-//
-//    @Test
-//    public void testAddEpic() throws IOException, InterruptedException {
-//        // создаём задачу
-//        Epic epic = new Epic("epic1", "fdf");
-//        epic.setDuration( Duration.ofMinutes(5));
-//        epic.setStartTime(LocalDateTime.now());
-//
-//        String taskJson = gson.toJson(epic);
-//
-//        HttpClient client = HttpClient.newHttpClient();
-//        URI url = URI.create("http://localhost:8080/epics");
-//        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-//
-//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//
-//        // проверяем код ответа
-//        assertEquals(201, response.statusCode());
-//
-//        List<Epic> epicsFromTaskManger = (List<Epic>) taskManager.getEpics();
-//
-//        assertNotNull(epicsFromTaskManger, "Задачи не возвращаются");
-//        assertEquals(1, epicsFromTaskManger.size(), "Некорректное количество задач");
-//        assertEquals("epic1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
-//        taskManager.deleteAllTasks();
-//    } // +++
-
-//    @Test
-//    public void testAddSubTask() throws IOException, InterruptedException {
-//
-//        Subtask subtask = new Subtask("sub1", "до", IN_PROGRESS);
-//        subtask.setDuration( Duration.ofMinutes(5));
-//        subtask.setStartTime(LocalDateTime.now());
-//
-//        String taskJson = gson.toJson(subtask);
-//
-//
-//        HttpClient client = HttpClient.newHttpClient();
-//        URI url = URI.create("http://localhost:8080/subtasks");
-//        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//
-//        assertEquals(201, response.statusCode());
-//
-//        List<Subtask> tasksFromManager = taskManager.getAllSubs();
-//
-//        assertNotNull(tasksFromManager, "Задачи не возвращаются");
-//        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
-//        assertEquals("sub1", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
-//    }
-
     @Test
-    public void testGetHistory() throws IOException, InterruptedException {
+    public void testAddTask() throws IOException, InterruptedException {
         // создаём задачу
-        Task task = new Task("task1", Progress.NEW, "dfdf");
-        task.setDuration( Duration.ofMinutes(5));
+        Task task = new Task("Test 2", Progress.NEW, "Testing task 2");
+        task.setDuration(Duration.ofMinutes(5));
         task.setStartTime(LocalDateTime.now());
-        taskManager.createTask(task);
 
         String taskJson = gson.toJson(task);
 
         HttpClient client = HttpClient.newHttpClient();
-        URI url = URI.create("http://localhost:8080/history");
+        URI url = URI.create("http://localhost:8080/tasks");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(200, response.statusCode());
+        assertEquals(201, response.statusCode());
 
-        taskManager.getTaskById(1);
-        List<Task> epicsFromTaskManger = (List<Task>) taskManager.getHistory();
+        List<Task> tasksFromManager = taskManager.getTasks();
+
+        assertNotNull(tasksFromManager, "Задачи не возвращаются");
+        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
+        assertEquals("Test 2", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
+    }
+
+    @Test
+    public void testAddEpic() throws IOException, InterruptedException {
+        // создаём задачу
+        Epic epic = new Epic("epic1", "fdf");
+        epic.setDuration(Duration.ofMinutes(5));
+        epic.setStartTime(LocalDateTime.now());
+
+        String taskJson = gson.toJson(epic);
+
+        HttpClient client = HttpClient.newHttpClient();
+        URI url = URI.create("http://localhost:8080/epics");
+        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // проверяем код ответа
+        assertEquals(201, response.statusCode());
+
+        List<Epic> epicsFromTaskManger = (List<Epic>) taskManager.getEpics();
 
         assertNotNull(epicsFromTaskManger, "Задачи не возвращаются");
         assertEquals(1, epicsFromTaskManger.size(), "Некорректное количество задач");
-        assertEquals("task1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
+        assertEquals("epic1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
+        taskManager.deleteAllTasks();
+    }
+    @Test
+    public void testAddSubTask() throws IOException, InterruptedException {
+
+        Subtask subtask = new Subtask("sub1", "до", IN_PROGRESS);
+        subtask.setDuration(Duration.ofMinutes(5));
+        subtask.setStartTime(LocalDateTime.now());
+
+        String taskJson = gson.toJson(subtask);
+
+
+        HttpClient client = HttpClient.newHttpClient();
+        URI url = URI.create("http://localhost:8080/subtasks");
+        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(201, response.statusCode());
+
+        List<Subtask> tasksFromManager = taskManager.getAllSubs();
+
+        assertNotNull(tasksFromManager, "Задачи не возвращаются");
+        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
+        assertEquals("sub1", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
     }
 }

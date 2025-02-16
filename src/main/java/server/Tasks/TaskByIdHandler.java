@@ -18,9 +18,8 @@ import java.time.format.DateTimeFormatter;
 
 public class TaskByIdHandler implements HttpHandler {
 
-    private ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    Gson gson = UtilHelper.getGsonBuilder(formatter);
+    private final ITaskManager taskManager;
+    Gson gson = UtilHelper.getGsonBuilder();
 
     public TaskByIdHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;

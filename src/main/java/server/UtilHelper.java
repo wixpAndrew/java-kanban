@@ -9,13 +9,15 @@ import java.time.format.DateTimeFormatter;
 
 public class UtilHelper {
 
-    public static Gson getGsonBuilder(DateTimeFormatter format) {
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+
+    public static Gson getGsonBuilder() {
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
                     public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), format);
+                        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), formatter);
                     }
                 })
                 .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {

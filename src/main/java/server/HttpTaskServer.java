@@ -4,13 +4,12 @@ import com.sun.net.httpserver.HttpServer;
 import manager.ITaskManager;
 import server.Epics.EpicByIdHandler;
 import server.Epics.EpicsSubTaskHandler;
-import server.Epics.GetEpicsHandler;
+import server.Epics.EpicsHandler;
 import server.History.GetHistoryHandler;
 import server.Prioritized.GetPrioritizedHandler;
 import server.Subtasks.SubTaskById;
 import server.Tasks.*;
-import server.Subtasks.GetSubTaskHandler;
-import task.*;
+import server.Subtasks.SubTaskHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -30,9 +29,9 @@ public class HttpTaskServer {
 
         httpServer.createContext("/hello", new HelloHandler());//+++
 
-        httpServer.createContext("/tasks", new GetTasksHandler(taskManager));
-        httpServer.createContext("/subtasks", new GetSubTaskHandler(taskManager));
-        httpServer.createContext("/epics", new GetEpicsHandler(taskManager));
+        httpServer.createContext("/tasks", new TasksHandler(taskManager));
+        httpServer.createContext("/subtasks", new SubTaskHandler(taskManager));
+        httpServer.createContext("/epics", new EpicsHandler(taskManager));
         httpServer.createContext("/task_by_id", new TaskByIdHandler(taskManager));
         httpServer.createContext("/epic_by_id", new EpicByIdHandler(taskManager));
         httpServer.createContext("/subtask_by_id", new SubTaskById(taskManager));

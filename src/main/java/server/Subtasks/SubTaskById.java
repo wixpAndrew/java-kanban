@@ -11,13 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.time.format.DateTimeFormatter;
 
 public class SubTaskById  implements HttpHandler {
 
     private final ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    Gson gson = UtilHelper.getGsonBuilder(formatter);
+    Gson gson = UtilHelper.getGsonBuilder();
 
     public SubTaskById(ITaskManager taskManager) {
         this.taskManager = taskManager;

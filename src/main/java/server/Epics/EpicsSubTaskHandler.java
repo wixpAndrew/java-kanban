@@ -18,8 +18,7 @@ import java.util.List;
 public class EpicsSubTaskHandler implements HttpHandler {
 
     private final ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    Gson gson = UtilHelper.getGsonBuilder(formatter);
+    Gson gson = UtilHelper.getGsonBuilder();
 
     public EpicsSubTaskHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;

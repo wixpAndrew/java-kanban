@@ -9,16 +9,14 @@ import task.Subtask;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class GetSubTaskHandler implements HttpHandler {
+public class SubTaskHandler implements HttpHandler {
     private final ITaskManager taskManager;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    Gson gson = UtilHelper.getGsonBuilder(formatter);
+    Gson gson = UtilHelper.getGsonBuilder();
 
 
-    public GetSubTaskHandler(ITaskManager taskManager) {
+    public SubTaskHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
@@ -52,9 +50,7 @@ public class GetSubTaskHandler implements HttpHandler {
                     taskManager.updateSubTask(subtask);
                 }
                 try (OutputStream os = httpExchange.getResponseBody()) {
-                    String respons = "круто";
-                    httpExchange.sendResponseHeaders(201, respons.getBytes(StandardCharsets.UTF_8).length);
-                    os.write(respons.getBytes(StandardCharsets.UTF_8));
+                    httpExchange.sendResponseHeaders(201,0);
                 }
                 break;
         }
