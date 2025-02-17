@@ -2,6 +2,7 @@ package task;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,25 +86,28 @@ public class Epic extends Task {
     public LocalDateTime getStartTime() {
         if (subList.isEmpty()) return null;
 
-        List<Subtask> list = new ArrayList<>();
+        List<LocalDateTime> list = new ArrayList<>();
 
         subList.stream()
                 .filter(Objects::nonNull)
-                .forEach(list::add);
+                .forEach(v -> list.add(v.getStartTime()));
 
-        if (list.isEmpty()) return null;
+        Comparator<LocalDateTime> localDateTimeComparator = (o1, o2) -> o1.compareTo(o2);
+        LocalDateTime minDate = list.stream()
+                .min(localDateTimeComparator)
+                .orElse(null);
 
-        LocalDateTime result = list.get(0).getStartTime();
-
-        if (list.size() == 1) return list.get(0).getStartTime();
-
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()) {
-                result = list.get(i).getStartTime();
-            } else if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
-                result = list.get(i).getStartTime();
-            }
-        }
-        return result;
+//        LocalDateTime result = list.get(0).getStartTime();
+//
+//        if (list.size() == 1) return list.get(0).getStartTime();
+//
+//        for (int i = 0; i < list.size() - 1; i++) {
+//            if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()) {
+//                result = list.get(i).getStartTime();
+//            } else if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
+//                result = list.get(i).getStartTime();
+//            }
+//        }
+        return minDate;
     }
 }

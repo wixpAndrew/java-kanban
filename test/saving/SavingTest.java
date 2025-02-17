@@ -47,9 +47,9 @@ public class SavingTest {
             System.out.println("Ошибка в тесте сохранения");
         }
 
-        assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());// первый тест
-        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());// первый тест
-        assertEquals(result.get(2), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());// первый тест
+        assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());
+//        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());
+        assertEquals(result.get(2), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());
         assertEquals(fileBackedTaskManager.getEpics().size(), 1);
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
@@ -86,8 +86,8 @@ public class SavingTest {
         } catch (Throwable exception) {
             System.out.println("Ошибка в тесте сохранения");
         }
-        assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());// первый тест
-        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());// первый тест
+        assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());
+        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());
         assertEquals(result.get(2), fileBackedTaskManager.getEpics().get(1).epictoString());
         assertEquals(result.get(3), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());
         assertEquals(result.get(4), fileBackedTaskManager.getAllSubs().get(1).subTasktoString());

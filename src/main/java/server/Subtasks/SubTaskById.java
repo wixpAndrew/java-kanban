@@ -33,7 +33,9 @@ public class SubTaskById  implements HttpHandler {
         switch (exchangeMethod) {
             case "GET" :
                 try {
-                    result = taskManager.getSubtaskById(Integer.parseInt(extractAfterSlash(httpExchange.getRequestURI().toString())));
+                    String path = httpExchange.getRequestURI().getPath();
+                    String idString = path.substring(path.lastIndexOf('/') +1);
+                    result = taskManager.getSubtaskById(Integer.parseInt(idString));
                 } catch (NullPointerException exception) {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
@@ -48,7 +50,9 @@ public class SubTaskById  implements HttpHandler {
                 break;
             case "DELETE" :
                 try {
-                    taskManager.deleteSub(Integer.parseInt(extractAfterSlash(httpExchange.getRequestURI().toString())));
+                    String path = httpExchange.getRequestURI().getPath();
+                    String idString = path.substring(path.lastIndexOf('/') +1);
+                    taskManager.deleteSub(Integer.parseInt(idString));
                     httpExchange.sendResponseHeaders(200, 0);
                 } catch (NullPointerException exception) {
                     httpExchange.sendResponseHeaders(404, 0);
@@ -57,15 +61,5 @@ public class SubTaskById  implements HttpHandler {
                 break;
             }
         }
-
-    public static String extractAfterSlash(String url) {
-        int slashIndex = url.indexOf("/");
-
-        if (slashIndex != -1 && slashIndex < url.length() - 1) {
-            return url.substring(slashIndex + 15); // <-- НЕ МЕНЯТЬ НАЗВАНИЕ КОНТЕКСТА
-        } else {
-            return "";
-        }
     }
-}
 

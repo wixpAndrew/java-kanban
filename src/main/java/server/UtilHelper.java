@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 public class UtilHelper {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
     public static Gson getGsonBuilder() {
         Gson gson = new GsonBuilder()
