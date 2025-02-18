@@ -86,28 +86,16 @@ public class Epic extends Task {
     public LocalDateTime getStartTime() {
         if (subList.isEmpty()) return null;
 
-        List<LocalDateTime> list = new ArrayList<>();
+        List<LocalDateTime> listOfDateTime = new ArrayList<>();
 
         subList.stream()
-                .filter(Objects::nonNull)
-                .forEach(v -> list.add(v.getStartTime()));
+                .filter(v -> v != null && v.getStartTime() != null)
+                .forEach(v -> listOfDateTime.add(v.getStartTime()));
 
-        Comparator<LocalDateTime> localDateTimeComparator = (o1, o2) -> o1.compareTo(o2);
-        LocalDateTime minDate = list.stream()
+        Comparator<LocalDateTime> localDateTimeComparator = LocalDateTime::compareTo;
+        LocalDateTime minDate = listOfDateTime.stream()
                 .min(localDateTimeComparator)
                 .orElse(null);
-
-//        LocalDateTime result = list.get(0).getStartTime();
-//
-//        if (list.size() == 1) return list.get(0).getStartTime();
-//
-//        for (int i = 0; i < list.size() - 1; i++) {
-//            if (list.get(i).getStartTime() == list.get(i + 1).getStartTime()) {
-//                result = list.get(i).getStartTime();
-//            } else if (list.get(i).getStartTime().isBefore(list.get(i + 1).getStartTime())) {
-//                result = list.get(i).getStartTime();
-//            }
-//        }
         return minDate;
     }
 }

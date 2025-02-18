@@ -75,10 +75,11 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
 
         fileBackedTaskManager.addTask(task);
         fileBackedTaskManager.addEpic(epic);
+        fileBackedTaskManager.addEpic(epic2);
 
         subtask1.setEpicId(epic.getId());
         fileBackedTaskManager.addSubtask(subtask1);
-        fileBackedTaskManager.addEpic(epic2);
+
         subtask2.setEpicId(epic2.getId());
         fileBackedTaskManager.addSubtask(subtask2);
 
