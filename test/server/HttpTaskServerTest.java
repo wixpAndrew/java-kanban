@@ -288,13 +288,7 @@ public class HttpTaskServerTest extends UtilHelper {
         HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
         URI url = URI.create("http://localhost:8080/subtasks");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-        HttpResponse<Void> response = null;
-        try {
-             response = client.send(request, HttpResponse.BodyHandlers.discarding());
-        } catch (Exception e) {
-            System.err.println(e.getMessage() + " at " + LocalTime.now());
-            e.printStackTrace();
-        }
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         assertEquals(201, response.statusCode());
 
