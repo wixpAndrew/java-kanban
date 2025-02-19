@@ -57,7 +57,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     Subtask subtask = new Subtask(splitLine.get(2), splitLine.get(4), Progress.valueOf(splitLine.get(3)));
                     if (!splitLine.get(6).equals("null")) {
                         subtask.setStartTime(LocalDateTime.parse(splitLine.get(6), UtilHelper.formatter));
-                    } else {subtask.setStartTime(null);}
+                    } else {
+                        subtask.setStartTime(null);
+                    }
                     subtask.setId(Integer.parseInt(splitLine.get(0)));
                     subtask.setEpicId(Integer.parseInt(splitLine.get(5)));
                     fileBackedTaskManager.addSubtask(subtask);
