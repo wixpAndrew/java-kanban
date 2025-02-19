@@ -34,7 +34,7 @@ public class TaskByIdHandler implements HttpHandler {
             case "GET":
                 try {
                     String path = httpExchange.getRequestURI().getPath();
-                    String idString = path.substring(path.lastIndexOf('/') +1);
+                    String idString = path.substring(path.lastIndexOf('/') + 1);
                     result = taskManager.getTaskById(Integer.parseInt(idString));
                 } catch (NullPointerException exception) {
                     httpExchange.sendResponseHeaders(404, 0);
@@ -51,7 +51,7 @@ public class TaskByIdHandler implements HttpHandler {
             case "DELETE" :
                 try {
                     String path = httpExchange.getRequestURI().getPath();
-                    String idString = path.substring(path.lastIndexOf('/') +1);
+                    String idString = path.substring(path.lastIndexOf('/') + 1);
                     taskManager.deleteTask(Integer.parseInt(idString));
                     httpExchange.sendResponseHeaders(200, 0);
                 } catch (NullPointerException exception) {
@@ -62,6 +62,3 @@ public class TaskByIdHandler implements HttpHandler {
         }
     }
 }
-
-
-

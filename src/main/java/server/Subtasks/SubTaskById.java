@@ -34,7 +34,7 @@ public class SubTaskById  implements HttpHandler {
             case "GET" :
                 try {
                     String path = httpExchange.getRequestURI().getPath();
-                    String idString = path.substring(path.lastIndexOf('/') +1);
+                    String idString = path.substring(path.lastIndexOf('/') + 1);
                     result = taskManager.getSubtaskById(Integer.parseInt(idString));
                 } catch (NullPointerException exception) {
                     httpExchange.sendResponseHeaders(404, 0);
@@ -51,7 +51,7 @@ public class SubTaskById  implements HttpHandler {
             case "DELETE" :
                 try {
                     String path = httpExchange.getRequestURI().getPath();
-                    String idString = path.substring(path.lastIndexOf('/') +1);
+                    String idString = path.substring(path.lastIndexOf('/') + 1);
                     taskManager.deleteSub(Integer.parseInt(idString));
                     httpExchange.sendResponseHeaders(200, 0);
                 } catch (NullPointerException exception) {
