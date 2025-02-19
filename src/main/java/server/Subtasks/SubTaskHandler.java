@@ -25,9 +25,7 @@ public class SubTaskHandler implements HttpHandler {
 
         String exchangeMethod = httpExchange.getRequestMethod();
         InputStream inputStream = httpExchange.getRequestBody();
-        var headers = httpExchange.getRequestHeaders();
         String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-        inputStream.close();
 
         switch (exchangeMethod) {
             case "GET" :
@@ -44,15 +42,17 @@ public class SubTaskHandler implements HttpHandler {
             case "POST" :
                 StringBuilder sb = new StringBuilder(body);
                 String json = sb.toString();
+                String respon = "ok";
                 Subtask subtask = gson.fromJson(json, Subtask.class);
                 if (subtask.getId() == null) {
                     taskManager.createSubTask(subtask);
                 } else {
                     taskManager.updateSubTask(subtask);
                 }
-                headers.add("Connection", "close");
-                httpExchange.sendResponseHeaders(201,-1);
-                httpExchange.getResponseBody().close();
+                try (OutputStream os = httpExchange.getResponseBody()) {
+                    httpExchange.sendResponseHeaders(200, respon.getBytes(StandardCharsets.UTF_8).length);
+                    os.write(respon.getBytes(StandardCharsets.UTF_8));
+                }
                 break;
         }
     }
