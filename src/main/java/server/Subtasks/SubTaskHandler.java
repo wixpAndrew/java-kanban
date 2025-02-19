@@ -49,9 +49,7 @@ public class SubTaskHandler implements HttpHandler {
                 } else {
                     taskManager.updateSubTask(subtask);
                 }
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    httpExchange.sendResponseHeaders(201,0);
-                }
+                httpExchange.sendResponseHeaders(201,-1);
                 break;
         }
     }
