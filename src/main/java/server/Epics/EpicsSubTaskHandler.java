@@ -29,7 +29,7 @@ public class EpicsSubTaskHandler implements HttpHandler {
 
         try {
             String path = httpExchange.getRequestURI().getPath();
-            String idString = path.substring(path.lastIndexOf('/') +1);
+            String idString = path.substring(path.lastIndexOf('/') + 1);
             int id = Integer.parseInt(idString);
             epicByPath = taskManager.getEpicById(id);
         } catch (NullPointerException exception) {
