@@ -8,14 +8,14 @@ import java.time.format.DateTimeFormatter;
 
 public class Task implements Serializable {
 
-    @Expose private String name;
+    @Expose  private String name;
     @Expose private Progress status;
     @Expose private Integer id;
     @Expose private String description;
-    @Expose private LocalDateTime startTime;
+    @Expose protected LocalDateTime startTime;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    @Expose private Duration duration;
-    @Expose private LocalDateTime endTime;
+    @Expose protected Duration duration;
+    @Expose protected LocalDateTime endTime;
 
 
     public Task(String name, Progress status, String description) {

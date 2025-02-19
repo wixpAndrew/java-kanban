@@ -7,9 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Subtask extends Task { // подзадача
     private Integer epicId;
-    public  LocalDateTime startTime;
-    private Duration duration;
-    private LocalDateTime endTime;
 
     public Subtask(String name, String description, Progress status) {
         super(name, status, description);

@@ -48,7 +48,7 @@ public class SavingTest {
         }
 
         assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());
-//        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());
+        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());
         assertEquals(result.get(2), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());
         assertEquals(fileBackedTaskManager.getEpics().size(), 1);
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
