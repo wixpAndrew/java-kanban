@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import org.junit.runner.Request;
 import server.UtilHelper;
 import task.Subtask;
 
@@ -23,10 +24,11 @@ public class SubTaskHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        InputStream inputStream = httpExchange.getRequestBody();
-
-        String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         String exchangeMethod = httpExchange.getRequestMethod();
+        InputStream inputStream = httpExchange.getRequestBody();
+        var headers = httpExchange.getRequestHeaders();
+        String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        inputStream.close();
 
         switch (exchangeMethod) {
             case "GET" :
@@ -49,6 +51,7 @@ public class SubTaskHandler implements HttpHandler {
                 } else {
                     taskManager.updateSubTask(subtask);
                 }
+                headers.add("Connection", "close");
                 httpExchange.sendResponseHeaders(201,-1);
                 httpExchange.getResponseBody().close();
                 break;
