@@ -275,27 +275,27 @@ public class HttpTaskServerTest extends UtilHelper {
 //        assertEquals("epic1", epicsFromTaskManger.get(0).getName(), "Некорректное имя задачи");
 //        taskManager.deleteAllTasks();
 //    }
-//    @Test
-//    public void testAddSubTask() throws IOException, InterruptedException {
-//
-//        Subtask subtask = new Subtask("sub1", "до", IN_PROGRESS);
-//        subtask.setDuration(Duration.ofMinutes(5));
-//        subtask.setStartTime(LocalDateTime.now());
-//
-//        String taskJson = gson.toJson(subtask);
-//
-//
-//        HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
-//        URI url = URI.create("http://localhost:8080/subtasks");
-//        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
-//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//
-//        assertEquals(201, response.statusCode());
-//
-//        List<Subtask> tasksFromManager = taskManager.getAllSubs();
-//
-//        assertNotNull(tasksFromManager, "Задачи не возвращаются");
-//        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
-//        assertEquals("sub1", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
-//    }
+    @Test
+    public void testAddSubTask() throws IOException, InterruptedException {
+
+        Subtask subtask = new Subtask("sub1", "до", IN_PROGRESS);
+        subtask.setDuration(Duration.ofMinutes(5));
+        subtask.setStartTime(LocalDateTime.now());
+
+        String taskJson = gson.toJson(subtask);
+
+
+        HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
+        URI url = URI.create("http://localhost:8080/subtasks");
+        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(201, response.statusCode());
+
+        List<Subtask> tasksFromManager = taskManager.getAllSubs();
+
+        assertNotNull(tasksFromManager, "Задачи не возвращаются");
+        assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
+        assertEquals("sub1", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
+    }
 }

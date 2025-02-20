@@ -43,7 +43,12 @@ public class SubTaskHandler implements HttpHandler {
                 StringBuilder sb = new StringBuilder(body);
                 String json = sb.toString();
                 String respon = "ok";
-                Subtask subtask = gson.fromJson(json, Subtask.class);
+                Subtask subtask;
+                try {
+                     subtask = gson.fromJson(json, Subtask.class);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 if (subtask.getId() == null) {
                     taskManager.createSubTask(subtask);
                 } else {
