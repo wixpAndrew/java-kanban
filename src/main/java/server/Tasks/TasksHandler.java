@@ -42,7 +42,12 @@ public class TasksHandler implements HttpHandler {
             case "POST" :
                 StringBuilder sb = new StringBuilder(body);
                 String json = sb.toString();
-                Task task = gson.fromJson(json, Task.class);
+                Task task;
+                try {
+                     task = gson.fromJson(json, Task.class);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
 
                 if (task.getId() == null) {
                     taskManager.createTask(task);

@@ -54,6 +54,7 @@ public class SavingTest {
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
     }
+
     @Test
     public void testWithALotOfTypes() throws IOException, ManagerSaveException {
         Path tempFilePath = Files.createTempFile(null, ".txt");
