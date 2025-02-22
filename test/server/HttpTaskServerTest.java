@@ -240,7 +240,7 @@ public class HttpTaskServerTest extends UtilHelper {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(201, response.statusCode());
+        assertEquals(200, response.statusCode());
 
         List<Task> tasksFromManager = taskManager.getTasks();
 

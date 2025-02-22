@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import server.BaseHttpHandler;
 import server.UtilHelper;
 import task.Epic;
 
@@ -38,11 +39,7 @@ public class EpicByIdHandler implements HttpHandler {
                     httpExchange.sendResponseHeaders(404, 0);
                 }
                 String response = gson.toJson(result);
-                httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    assert result != null;
-                    os.write(response.getBytes());
-                }
+                BaseHttpHandler.sendText(httpExchange, response);
                 break;
             case "DELETE" :
                 try {
@@ -51,7 +48,7 @@ public class EpicByIdHandler implements HttpHandler {
                     taskManager.deleteEpic(Integer.parseInt(idString));
                     httpExchange.sendResponseHeaders(200, 0);
                 } catch (NullPointerException exception) {
-                    httpExchange.sendResponseHeaders(404, 0);
+                   BaseHttpHandler.sendNotFound(httpExchange, "");
                 }
                 httpExchange.getResponseBody().close();
                 break;

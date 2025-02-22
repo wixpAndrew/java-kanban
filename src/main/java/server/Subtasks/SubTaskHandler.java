@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import server.BaseHttpHandler;
 import server.UtilHelper;
 import task.Subtask;
 
@@ -33,10 +34,7 @@ public class SubTaskHandler implements HttpHandler {
                 List<Subtask> tasks = taskManager.getAllSubs();
                 String response = gson.toJson(tasks);
 
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
-                    os.write(response.getBytes(StandardCharsets.UTF_8));
-                }
+                BaseHttpHandler.sendText(httpExchange, response);
                 break;
 
             case "POST" :
@@ -54,10 +52,7 @@ public class SubTaskHandler implements HttpHandler {
                 } else {
                     taskManager.updateSubTask(subtask);
                 }
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    httpExchange.sendResponseHeaders(200, respon.getBytes(StandardCharsets.UTF_8).length);
-                    os.write(respon.getBytes(StandardCharsets.UTF_8));
-                }
+               BaseHttpHandler.sendText(httpExchange, respon);
                 break;
         }
     }

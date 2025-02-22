@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import server.BaseHttpHandler;
 import server.UtilHelper;
 import task.Task;
 
@@ -11,7 +12,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class TasksHandler implements HttpHandler {
+public class TasksHandler  implements HttpHandler  {
     private final ITaskManager taskManager;
      Gson gson = UtilHelper.getGsonBuilder();
 
@@ -54,9 +55,7 @@ public class TasksHandler implements HttpHandler {
                 } else {
                     taskManager.updateTask(task);
                 }
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    httpExchange.sendResponseHeaders(201,0);
-                }
+                BaseHttpHandler.sendText(httpExchange, "");
                 break;
         }
     }

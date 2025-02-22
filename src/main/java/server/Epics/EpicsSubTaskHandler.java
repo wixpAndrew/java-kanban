@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import server.BaseHttpHandler;
 import server.UtilHelper;
 import task.Epic;
 import task.Subtask;
@@ -33,19 +34,13 @@ public class EpicsSubTaskHandler implements HttpHandler {
             int id = Integer.parseInt(idString);
             epicByPath = taskManager.getEpicById(id);
         } catch (NullPointerException exception) {
-            exception.getMessage();
-            httpExchange.sendResponseHeaders(404, 0);
+            BaseHttpHandler.sendNotFound(httpExchange, "");
         }
 
         assert epicByPath != null;
         List<Subtask> result = taskManager.getAllEpicSubTasks(epicByPath.getId());
 
         String response = gson.toJson(result);
-
-        httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
-        try (OutputStream os = httpExchange.getResponseBody()) {
-            assert result != null;
-            os.write(response.getBytes());
-        }
+        BaseHttpHandler.sendText(httpExchange, response);
     }
 }

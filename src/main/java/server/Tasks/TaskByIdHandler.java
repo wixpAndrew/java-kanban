@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.ITaskManager;
+import server.BaseHttpHandler;
 import server.UtilHelper;
 import task.Task;
 
@@ -41,21 +42,16 @@ public class TaskByIdHandler implements HttpHandler {
                 }
 
                 String response = gson.toJson(result);
-
-                httpExchange.sendResponseHeaders(200, response.getBytes().length);
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    assert result != null;
-                    os.write(response.getBytes());
-                }
+               BaseHttpHandler.sendText(httpExchange, response);
                 break;
             case "DELETE" :
                 try {
                     String path = httpExchange.getRequestURI().getPath();
                     String idString = path.substring(path.lastIndexOf('/') + 1);
                     taskManager.deleteTask(Integer.parseInt(idString));
-                    httpExchange.sendResponseHeaders(200, 0);
+                    BaseHttpHandler.sendText(httpExchange, "");
                 } catch (NullPointerException exception) {
-                    httpExchange.sendResponseHeaders(404, 0);
+                    BaseHttpHandler.sendNotFound(httpExchange, "");
                 }
                 httpExchange.getResponseBody().close();
                 break;
