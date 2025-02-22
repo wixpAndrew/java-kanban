@@ -228,14 +228,14 @@ public class HttpTaskServerTest extends UtilHelper {
 
     @Test
     public void testAddTask() throws IOException, InterruptedException {
-        // создаём задачу
+
         Task task = new Task("Test 2", Progress.NEW, "Testing task 2");
         task.setDuration(Duration.ofMinutes(5));
         task.setStartTime(LocalDateTime.now());
 
         String taskJson = gson.toJson(task);
 
-        HttpClient client = HttpClient.newHttpClient();
+        HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
         URI url = URI.create("http://localhost:8080/tasks");
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(HttpRequest.BodyPublishers.ofString(taskJson)).build();
 

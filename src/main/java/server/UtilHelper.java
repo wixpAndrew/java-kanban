@@ -23,7 +23,7 @@ public class UtilHelper {
                 .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
                     @Override
                     public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
-                        return new JsonPrimitive(src.toString());
+                        return new JsonPrimitive(formatter.format(src));
                     }
                 })
                 .registerTypeAdapter(Duration.class, new JsonDeserializer<Duration>() {
