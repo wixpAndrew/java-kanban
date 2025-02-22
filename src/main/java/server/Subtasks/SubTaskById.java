@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class SubTaskById  implements HttpHandler {
 
     private final ITaskManager taskManager;
-    Gson gson = UtilHelper.getGsonBuilder();
+    private final  Gson gson = UtilHelper.getGsonBuilder();
 
     public SubTaskById(ITaskManager taskManager) {
         this.taskManager = taskManager;

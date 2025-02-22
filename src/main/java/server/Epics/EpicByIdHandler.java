@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class EpicByIdHandler implements HttpHandler {
 
     private final ITaskManager taskManager;
-    Gson gson = UtilHelper.getGsonBuilder();
+    private final  Gson gson = UtilHelper.getGsonBuilder();
 
     public EpicByIdHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;

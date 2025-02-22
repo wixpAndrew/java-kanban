@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TasksHandler implements HttpHandler {
     private final ITaskManager taskManager;
-    Gson gson = UtilHelper.getGsonBuilder();
+     Gson gson = UtilHelper.getGsonBuilder();
 
     public TasksHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;

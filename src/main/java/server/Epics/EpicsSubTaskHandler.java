@@ -16,7 +16,7 @@ import java.util.List;
 public class EpicsSubTaskHandler implements HttpHandler {
 
     private final ITaskManager taskManager;
-    Gson gson = UtilHelper.getGsonBuilder();
+     Gson gson = UtilHelper.getGsonBuilder();
 
     public EpicsSubTaskHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
