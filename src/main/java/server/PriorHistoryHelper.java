@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 public class PriorHistoryHelper {
+    
     static Gson gson = new GsonBuilder()
             .excludeFieldsWithoutExposeAnnotation()
             .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
@@ -21,7 +22,7 @@ public class PriorHistoryHelper {
                     return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
                 }
             }).create();
-    
+
     public static void sendFinalMes(List<Task> tasks, HttpExchange httpExchange) {
         String response = gson.toJson(tasks);
         try (OutputStream os = httpExchange.getResponseBody()) {

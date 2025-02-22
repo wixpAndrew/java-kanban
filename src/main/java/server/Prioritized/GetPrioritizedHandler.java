@@ -12,6 +12,7 @@ import java.util.List;
 
 public class GetPrioritizedHandler implements HttpHandler {
     private final ITaskManager taskManager;
+
     public GetPrioritizedHandler(ITaskManager taskManager) {
         this.taskManager = taskManager;
     }
