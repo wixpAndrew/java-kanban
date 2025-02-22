@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 public class PriorHistoryHelper {
-    
     static Gson gson = new GsonBuilder()
             .excludeFieldsWithoutExposeAnnotation()
             .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
