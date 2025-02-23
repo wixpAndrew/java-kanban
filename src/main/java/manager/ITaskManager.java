@@ -25,10 +25,12 @@ public interface ITaskManager {
 
     Map<Integer, Task> getTaskMap();
 
+    void createTask(Task task);
+
     // Epic
     int addEpic(Epic epic);
 
-    Collection<Epic> getAllEpics();
+    Collection<Epic> getEpics();
 
     Epic getEpicById(Integer id);
 
@@ -37,6 +39,9 @@ public interface ITaskManager {
     void deleteEpic(int taskID);
 
     void updateEpic(Epic epic);
+
+    void createEpic(Epic epic);
+    //-------------------------------------
 
     int addSubtask(Subtask subtask);
 
@@ -53,6 +58,8 @@ public interface ITaskManager {
     List<Subtask> getAllSubs();
 
     List<Task> getHistory();
+
+    void createSubTask(Subtask subtask);
 
     HistoryManager getHistoryManager();
 

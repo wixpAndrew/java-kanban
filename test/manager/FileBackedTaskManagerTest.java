@@ -59,9 +59,9 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         }
 
         assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());// первый тест
-        assertEquals(result.get(1), fileBackedTaskManager.getAllEpics().get(0).epictoString());// первый тест
+        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());// первый тест
         assertEquals(result.get(2), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());// первый тест
-        assertEquals(fileBackedTaskManager.getAllEpics().size(), 1);
+        assertEquals(fileBackedTaskManager.getEpics().size(), 1);
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
     }
@@ -75,10 +75,11 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
 
         fileBackedTaskManager.addTask(task);
         fileBackedTaskManager.addEpic(epic);
+        fileBackedTaskManager.addEpic(epic2);
 
         subtask1.setEpicId(epic.getId());
         fileBackedTaskManager.addSubtask(subtask1);
-        fileBackedTaskManager.addEpic(epic2);
+
         subtask2.setEpicId(epic2.getId());
         fileBackedTaskManager.addSubtask(subtask2);
 
@@ -98,11 +99,11 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
             System.out.println("Ошибка в тесте сохранения");
         }
         assertEquals(result.get(0), fileBackedTaskManager.getTasks().get(0).tasktoString());// первый тест
-        assertEquals(result.get(1), fileBackedTaskManager.getAllEpics().get(0).epictoString());// первый тест
-        assertEquals(result.get(2), fileBackedTaskManager.getAllEpics().get(1).epictoString());
+        assertEquals(result.get(1), fileBackedTaskManager.getEpics().get(0).epictoString());// первый тест
+        assertEquals(result.get(2), fileBackedTaskManager.getEpics().get(1).epictoString());
         assertEquals(result.get(3), fileBackedTaskManager.getAllSubs().get(0).subTasktoString());
         assertEquals(result.get(4), fileBackedTaskManager.getAllSubs().get(1).subTasktoString());
-        assertEquals(fileBackedTaskManager.getAllEpics().size(), 2);
+        assertEquals(fileBackedTaskManager.getEpics().size(), 2);
         assertEquals(fileBackedTaskManager.getAllSubs().size(), 2);
         assertEquals(fileBackedTaskManager.getTasks().size(), 1);
     }
@@ -115,7 +116,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         fileBackedTaskManager.save();
         FileBackedTaskManager.loadFromFile(file);
 
-        assertEquals(fileBackedTaskManager.getAllEpics(), new ArrayList<>());
+        assertEquals(fileBackedTaskManager.getEpics(), new ArrayList<>());
         assertEquals(fileBackedTaskManager.getTasks(), new ArrayList<>());
         assertEquals(fileBackedTaskManager.getAllSubs(), new ArrayList<>());
 

@@ -4,6 +4,7 @@ import task.Epic;
 import task.Managers;
 import task.Subtask;
 import task.Task;
+import com.google.gson.*;
 
 import java.util.*;
 
@@ -70,8 +71,14 @@ public class InMemoryTaskManager implements ITaskManager {
         return tasks;
     }
 
+    public void createTask(Task task) {
+        task.setId(generateId());
+        tasks.put(task.getId(), task);
+    }
+
     // Epic
     // -------------------------------------------------------------------------------------------------
+
     @Override
     public int addEpic(Epic epic) {
         if (epic.getId() == null) {
@@ -85,7 +92,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public List<Epic> getAllEpics() {
+    public List<Epic> getEpics() {
         return new ArrayList<>(epics.values());
     }
 
@@ -117,8 +124,15 @@ public class InMemoryTaskManager implements ITaskManager {
         epics.put(epic.getId(), epic);
     }
 
+    @Override
+    public void createEpic(Epic epic) {
+        epic.setId(generateId());
+        epics.put(epic.getId(), epic);
+    }
+
     // Subtasks
     //---------------------------------------------------------------------------------------------
+
     @Override
     public int addSubtask(Subtask subtask) {
 
@@ -183,6 +197,12 @@ public class InMemoryTaskManager implements ITaskManager {
     @Override
     public Map<Integer, Subtask> getSubTasksMap() {
         return subtasks;
+    }
+
+    @Override
+    public void createSubTask(Subtask subtask) {
+        subtask.setId(generateId());
+        subtasks.put(subtask.getId(), subtask);
     }
 
     // ----------------------------------------------------------------------------------------------

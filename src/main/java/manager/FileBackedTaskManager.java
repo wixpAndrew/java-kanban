@@ -1,7 +1,9 @@
 package manager;
 
+import server.UtilHelper;
 import task.*;
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -18,7 +20,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fileWriter.write(task.tasktoString());
                 fileWriter.write("\n");
             }
-            for (Epic epic : super.getAllEpics()) {
+            for (Epic epic : super.getEpics()) {
                 fileWriter.write(epic.epictoString());
                 fileWriter.write("\n");
             }
@@ -53,6 +55,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 }
                 case "SUBTASK" -> {
                     Subtask subtask = new Subtask(splitLine.get(2), splitLine.get(4), Progress.valueOf(splitLine.get(3)));
+                    if (!splitLine.get(6).equals("null")) {
+                        subtask.setStartTime(LocalDateTime.parse(splitLine.get(6), UtilHelper.formatter));
+                    } else {
+                        subtask.setStartTime(null);
+                    }
                     subtask.setId(Integer.parseInt(splitLine.get(0)));
                     subtask.setEpicId(Integer.parseInt(splitLine.get(5)));
                     fileBackedTaskManager.addSubtask(subtask);

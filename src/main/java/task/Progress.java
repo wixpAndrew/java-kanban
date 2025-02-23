@@ -1,7 +1,7 @@
 package task;
 
-public enum Progress { // статусы задачи
-    NEW,
+public enum Progress {
     IN_PROGRESS,
-    DONE;
+    DONE,
+    NEW
 }
